@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+
+@layer base {
+  html {
+    @apply transition-colors duration-300;
+  }
+}
+
+body {
+  @apply bg-base-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100
+}
+
+/* @plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: "#1F1A70 ";
+  --color-secondary: #f43098;
+  --color-accent: #10B981;
+  --color-base-100: #F3F4F6;
+  --color-neutral: #374151;
+  --color-error: #F43F5E;
+} */
+
+[data-theme="light"] {
+  --color-primary: #3B82F6;
+  /* buttons, links */
+  --color-secondary: #EC4899;
+  /* secondary buttons, highlights */
+  --color-accent: #10B981;
+  /* badges, small highlights */
+  --color-base-100: #F9FAFB;
+  /* background */
+  --color-neutral: #1F2937;
+  /* body text */
+  --color-error: #EF4444;
+  /* error text */
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-primary: #60A5FA;
+  --color-secondary: #F472B6;
+  --color-accent: #34D399;
+  --color-base-100: #111827;
+  --color-neutral: #F3F4F6;
+  --color-error: #F87171;
+}
+
+/* Apply to body and text */
+body {
+  background-color: var(--color-base-100);
+  color: var(--color-neutral);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Button classes */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #fff;
+}
+
+.accent {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+/* ✅ * {
+  font-family: "Poppins", sans-serif;
+} */

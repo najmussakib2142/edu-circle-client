@@ -1,0 +1,14 @@
+.active {
+  text-decoration: underline;
+  text-decoration-color: #1F1A70;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+  color: #1F1A70;
+  transition: all 0.3s ease;
+}
+
+html[data-theme='dark'] .active {
+  text-decoration-color: #f43098;
+  color: #f43098;
+}

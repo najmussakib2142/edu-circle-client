@@ -1,0 +1,116 @@
+import Lottie from 'lottie-react';
+import React, { use, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import registerLottie from '../../assets/lotties/register.json'
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from '../../provider/AuthContext';
+
+const Register = () => {
+
+    const { createUser, setUser, updateUser } = use(AuthContext)
+    const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate();
+    const [error, setError] = useState('')
+
+    const handleRegister = e => {
+        e.preventDefault();
+        setError('');
+        const form = e.target;
+        const formData = new FormData(form)
+        const email = formData.get('email')
+        const password = formData.get('password')
+        const name = formData.get('name')
+        const photo = formData.get('photo')
+        console.log({ email, password, name, photo });
+
+        // create user
+        createUser(email, password)
+            .then(result => {
+
+                const user = result.user;
+                updateUser({ displayName: name, photoURL: photo })
+                    .then(() => {
+                        setUser({ ...user, displayName: name, photoURL: photo })
+                        console.log(result.user);
+                        alert('Registration Successful!')
+                        navigate('/')
+                    })
+                    .catch((error) => {
+                        setError(error.message)
+                        setUser(user)
+                    })
+            })
+            .catch(error => {
+                const errorCode = error.code;
+                setError(errorCode);
+            })
+    }
+
+    return (
+        <div>
+            <div className="hero bg-base-200 py-20">
+                <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="text-center lg:text-left">
+                        <Lottie style={{ width: '600px' }} animationData={registerLottie} loop={true} ></Lottie>
+                    </div>
+                    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                        <div className="card-body">
+                            <h1 className="text-4xl font-bold text-primary text-center">Register your account</h1>
+                            <form onSubmit={handleRegister} className="fieldset">
+                                {/* name */}
+                                <label className="label">Your Name</label>
+                                <input required name='name' type="text" className="input select-primary " placeholder="Enter your name" />
+                                {/* photo */}
+                                <label className="label">Photo URL</label>
+                                <input required name='photo' type="text" className="input select-primary" placeholder="Enter your URL" />
+                                {/* email */}
+                                <label className="label">Email</label>
+                                <input required name='email' type="email" className="input select-primary" placeholder="Email" />
+                                {/* password */}
+                                <label className="label">Password</label>
+                                <div className='relative'>
+                                    <input
+                                        required
+                                        name='password'
+                                        type={showPassword ? 'text' : "password"}
+                                        className="input select-primary"
+                                        placeholder="Password"
+                                    />
+                                    <button
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className='absolute btn btn-xs right-5 top-2'
+                                        type='button'
+                                    >
+                                        {showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
+                                    </button>
+                                </div>
+                                {/* check box */}
+                                <label className="label py-1">
+                                    <input name='terms' type="checkbox" className="checkbox" />
+                                    Accept Term & conditions
+                                </label>
+                                
+                                {error && <p className='text-red-500 text-sm'>{error}</p>}
+
+                                <button className="btn  mt-4">Register</button>
+
+                                <button
+                                    className="btn hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-100 hover:border hover:border-primary dark:border-gray-600 dark:hover:bg-gray-700 transition mt-1 bg-base-100 text-black border-[#e5e5e5]">
+
+                                    <svg aria-label="Google logo" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+                                    Login with Google
+                                </button>
+
+                                <p className='text-center pt-3'>Already Have An Account ?
+                                    <Link className='text-blue-600 hover:underline' to="/auth/login"> Login </Link></p>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Register;
