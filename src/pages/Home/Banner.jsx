@@ -81,7 +81,7 @@ const Banner = () => {
                     </div>
 
                     <Link to={'/allGroups'}>
-                        <button className="mt-4 border-blue-600 border-s-8 border-b-8  bg-primary hover:text-primary hover:bg-base-100  hover:border hover:border-primary text-white font-semibold px-6 py-3 rounded-lg transition">
+                        <button className="mt-4 hover:border-blue-600 hover:border-s-8 hover:border-b-8  bg-gray-800 dark:bg-base-700 dark:border-primary hover:text-primary hover:bg-base-100  hover:border  text-white font-semibold px-6 py-3 rounded-lg transition">
                             Browse Hobby Groups
                         </button>
                         {/* <button className="mt-8 bg-primary dark:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-lg transition hover:text-primary dark:hover:text-secondary hover:bg-base-100 dark:hover:bg-gray-700 hover:border hover:border-primary dark:hover:border-secondary">

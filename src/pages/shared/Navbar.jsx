@@ -25,7 +25,7 @@ const Navbar = () => {
     const links = <>
         <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/">Home</NavLink></li>
         <li className='text-[#101828]  dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/AllGroups">Assignments</NavLink></li>
-        <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createGroup">Create Assignment </NavLink></li>
+        <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
         <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="myGroups">My Attempts </NavLink></li>
 
     </>

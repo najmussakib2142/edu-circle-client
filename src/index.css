@@ -38,18 +38,18 @@ body {
   /* background */
   --color-neutral: #1F2937;
   /* body text */
-  --color-error: #EF4444;
+  --color-error: #ca2525;
   /* error text */
 }
 
 /* Dark Theme */
 [data-theme="dark"] {
   --color-primary: #60A5FA;
-  --color-secondary: #F472B6;
+  --color-secondary: #f43098;
   --color-accent: #34D399;
   --color-base-100: #111827;
   --color-neutral: #F3F4F6;
-  --color-error: #F87171;
+  --color-error: #e63434;
 }
 
 /* Apply to body and text */

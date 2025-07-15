@@ -104,6 +104,8 @@ const Register = () => {
 
                                 <button className="btn  mt-4">Register</button>
 
+                                <div className="divider">OR</div>
+
                                 <button onClick={handleGoogleLogIn}
                                     className="btn hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-100 hover:border hover:border-primary dark:border-gray-600 dark:hover:bg-gray-700 transition mt-1 bg-base-100 text-black border-[#e5e5e5]">
 
