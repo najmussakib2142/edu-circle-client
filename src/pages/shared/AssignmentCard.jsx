@@ -40,7 +40,7 @@ const AssignmentCard = ({ assignment, isCreator }) => {
                 </div>
 
                 <div className="card-actions mt-4 flex-wrap gap-2">
-                    <Link to={`/assignments/${_id}`} className="btn btn-sm btn-info text-white">
+                    <Link to={`/assignment/${_id}`} className="btn btn-sm btn-info text-white">
                         <FaEye /> View
                     </Link>
 

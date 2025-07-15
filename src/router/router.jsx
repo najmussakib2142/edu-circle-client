@@ -6,6 +6,8 @@ import RootLayout from "../layouts/RootLayout";
 import Register from "../pages/Register/Register";
 import SignIn from "../pages/SignIn/SignIn";
 import CreateAssignment from "../pages/Create Assignment/CreateAssignment";
+import AssignmentDetails from "../pages/Assignment Details/AssignmentDetails";
+import Loading from "../pages/shared/Loading";
 
 
 const router = createBrowserRouter([
@@ -28,7 +30,13 @@ const router = createBrowserRouter([
             {
                 path: 'createAssignment',
                 element: <CreateAssignment></CreateAssignment>
-            }
+            },
+            {
+                path: 'assignment/:id',
+                element: <AssignmentDetails></AssignmentDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>
+            },
         ]
     },
 ]);
