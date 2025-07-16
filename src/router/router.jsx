@@ -14,6 +14,8 @@ import MySubmissions from "../pages/MySubmissions/MySubmissions";
 import Assignments from "../pages/Home/Assignments";
 import AllAssignments from "../pages/Home/AllAssignments";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
+import PendingAssignments from "../pages/PendingAssignments/PendingAssignments";
 
 const router = createBrowserRouter([
     {
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>
             },
+            {
+                path: 'update/:id',
+                element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>
+            },
+            {
+                path: 'pendingAssignments',
+                element: <PrivateRoute><PendingAssignments></PendingAssignments></PrivateRoute>
+            }
         ]
     },
     {

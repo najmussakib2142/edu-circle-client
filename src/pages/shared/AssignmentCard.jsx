@@ -82,7 +82,7 @@ const AssignmentCard = ({ assignment }) => {
                         <FaEye /> View
                     </Link>
 
-                    <Link to={`/assignments/update/${_id}`} className="btn btn-sm btn-warning text-white">
+                    <Link to={`/update/${_id}`} className="btn btn-sm btn-warning text-white">
                         <FaEdit /> Update
                     </Link>
 
