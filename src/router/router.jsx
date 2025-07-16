@@ -65,7 +65,9 @@ const router = createBrowserRouter([
             },
             {
                 path: 'update/:id',
-                element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>
+                element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
+                loader: ({params}) =>  fetch(`http://localhost:5000/assignments/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: 'pendingAssignments',

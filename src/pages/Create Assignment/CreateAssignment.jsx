@@ -23,7 +23,7 @@ const CreateAssignment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Basic validation
+
         if (!title || !description || !marks || !thumbnail || !difficulty) {
             return Swal.fire('Error!', 'Please fill out all fields.', 'error');
         }
@@ -64,6 +64,7 @@ const CreateAssignment = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
 
                 {/* Title */}
+                
                 <input
                     type="text"
                     placeholder="Assignment Title"
