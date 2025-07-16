@@ -13,6 +13,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import MySubmissions from "../pages/MySubmissions/MySubmissions";
 import Assignments from "../pages/Home/Assignments";
 import AllAssignments from "../pages/Home/AllAssignments";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: "*",
+        element: <ErrorPage></ErrorPage>
+    }
 ]);
 
 export default router;

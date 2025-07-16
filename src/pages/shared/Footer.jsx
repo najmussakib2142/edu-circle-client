@@ -7,8 +7,8 @@ const Footer = () => {
     // const { theme, toggleTheme } = useTheme();
 
     return (
-        <footer className="px-6 py-12 bg-base-100 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-100">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <footer className="px-6 backdrop-blur transition-all duration-300 shadow-lg py-12 bg-transparent  border-t border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-100">
+            <div className="max-w-7xl pl-10 mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
                 {/* About */}
                 <div>
@@ -19,8 +19,8 @@ const Footer = () => {
                 </div>
 
                 {/* Quick Links */}
-                <div>
-                    <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-gray-100">Quick Links</h3>
+                <div className="hidden md:block">
+                    <h3 className="text-lg  font-semibold mb-3 text-gray-900 dark:text-gray-100">Quick Links</h3>
                     <ul className="space-y-2">
                         <li><Link to="/" className="hover:text-primary">Home</Link></li>
                         <li><Link to="/AllGroups" className="hover:text-primary">Assignments</Link></li>
@@ -44,17 +44,8 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-gray-100">Customize</h3>
 
-                    {/* Theme Toggle */}
-                    {/* <button
-                        onClick={toggleTheme}
-                        className="flex items-center gap-2 p-2 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors mb-4"
-                    >
-                        {theme === 'dark' ? <LuSun className="text-yellow-400" /> : <LuMoon className="text-indigo-500" />}
-                        <span className="text-sm">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-                    </button> */}
-
                     {/* Social Icons */}
-                    <div className="flex space-x-4 mt-2">
+                    <div className="flex space-x-4 mt-2 ">
                         <a href="#" aria-label="Facebook" className="text-xl hover:text-primary"><LuFacebook /></a>
                         <a href="#" aria-label="Twitter" className="text-xl hover:text-primary"><LuTwitter /></a>
                         <a href="#" aria-label="LinkedIn" className="text-xl hover:text-primary"><LuLinkedin /></a>
