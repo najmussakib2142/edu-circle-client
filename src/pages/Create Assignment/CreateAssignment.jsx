@@ -3,9 +3,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
-// import { useAuth } from '../../provider/AuthContext';  // If you're keeping creator info
 import axios from 'axios';
 import { AuthContext } from '../../provider/AuthContext';
+import { delay } from 'motion';
+import useAuth from '../../hooks/useAuth';
 
 const CreateAssignment = () => {
     const [title, setTitle] = useState('');
@@ -16,7 +17,7 @@ const CreateAssignment = () => {
     const [dueDate, setDueDate] = useState(new Date());
 
     const navigate = useNavigate();
-    const { user } = use(AuthContext); // if you want to keep creator info
+    const { user } = useAuth();
 
     // Handle form submit
     const handleSubmit = async (e) => {
@@ -38,8 +39,8 @@ const CreateAssignment = () => {
             thumbnail,
             difficulty,
             dueDate,
-            creatorEmail: user?.email,  // optional
-            creatorName: user?.displayName,  // optional
+            creatorEmail: user?.email,
+            creatorName: user?.displayName,
         };
 
         try {
@@ -47,7 +48,8 @@ const CreateAssignment = () => {
             const res = await axios.post('http://localhost:5000/assignments', newAssignment);
             if (res.data.insertedId) {
                 Swal.fire('Success!', 'Assignment created successfully!', 'success');
-                navigate('/AllGroups');
+                navigate('/assignments');
+
             }
         } catch (error) {
             console.error(error);

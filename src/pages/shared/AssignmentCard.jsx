@@ -3,9 +3,13 @@ import { motion } from "framer-motion";
 // import { motion } from "motion/react"
 import { Link } from "react-router";
 import { FaTrash, FaEdit, FaEye } from "react-icons/fa";
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
 
 
-const AssignmentCard = ({ assignment, isCreator }) => {
+const AssignmentCard = ({ assignment }) => {
+    const {user} = useAuth()
 
     const {
         _id,
@@ -16,6 +20,40 @@ const AssignmentCard = ({ assignment, isCreator }) => {
         difficulty,
         creatorEmail,
     } = assignment;
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the assignment!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:5000/assignments/${id}?email=${user.email}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
+                            // Optional: refresh data or remove card from UI
+                        }
+                    })
+                    .catch(err => {
+                        if (err.response && err.response?.status === 403) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Permission Denied',
+                                text: 'You can only delete your own assignments..',
+                            });
+                            // Swal.fire('Unauthorized', 'You can only delete your own assignments.', 'error');
+                        } else {
+                            Swal.fire('Error', 'Something went wrong.', 'error');
+                        }
+                    });
+            }
+        })
+    }
 
 
     return (
@@ -44,26 +82,12 @@ const AssignmentCard = ({ assignment, isCreator }) => {
                         <FaEye /> View
                     </Link>
 
-                    {/* {isCreator && (
-                        <>
-                            <Link to={`/assignments/update/${_id}`} className="btn btn-sm btn-warning text-white">
-                                <FaEdit /> Update
-                            </Link>
-
-                            <button
-                                // onClick={() => handleDelete(_id)}
-                                className="btn btn-sm btn-error text-white"
-                            >
-                                <FaTrash /> Delete
-                            </button>
-                        </>
-                    )} */}
                     <Link to={`/assignments/update/${_id}`} className="btn btn-sm btn-warning text-white">
                         <FaEdit /> Update
                     </Link>
 
                     <button
-                        // onClick={() => handleDelete(_id)}
+                        onClick={() => handleDelete(_id)}
                         className="btn btn-sm btn-error text-white"
                     >
                         <FaTrash /> Delete

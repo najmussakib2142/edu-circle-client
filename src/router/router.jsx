@@ -37,13 +37,6 @@ const router = createBrowserRouter([
                 element: <AllAssignments></AllAssignments>,
                 hydrateFallbackElement: <Loading></Loading>
             },
-            // {
-            //     path: 'assignmentSubmission/:id',
-            //     element: <AssignmentSubmission></AssignmentSubmission>,
-            //     loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
-            //     hydrateFallbackElement: <Loading></Loading>
-
-            // },
             {
                 path: 'mySubmissions',
                 element:
