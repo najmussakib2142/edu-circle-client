@@ -8,7 +8,11 @@ import SignIn from "../pages/SignIn/SignIn";
 import CreateAssignment from "../pages/Create Assignment/CreateAssignment";
 import AssignmentDetails from "../pages/Assignment Details/AssignmentDetails";
 import Loading from "../pages/shared/Loading";
-
+import PrivateRoute from "../routes/PrivateRoute";
+// import AssignmentSubmission from "../assignment Submission/AssignmentSubmission";
+import MySubmissions from "../pages/MySubmissions/MySubmissions";
+import Assignments from "../pages/Home/Assignments";
+import AllAssignments from "../pages/Home/AllAssignments";
 
 const router = createBrowserRouter([
     {
@@ -28,12 +32,38 @@ const router = createBrowserRouter([
                 element: <SignIn></SignIn>
             },
             {
+                path: 'assignments',
+                loader: () => fetch('http://localhost:5000/assignments'),
+                element: <AllAssignments></AllAssignments>,
+                hydrateFallbackElement: <Loading></Loading>
+            },
+            // {
+            //     path: 'assignmentSubmission/:id',
+            //     element: <AssignmentSubmission></AssignmentSubmission>,
+            //     loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
+            //     hydrateFallbackElement: <Loading></Loading>
+
+            // },
+            {
+                path: 'mySubmissions',
+                element:
+                    <PrivateRoute>
+                        <MySubmissions></MySubmissions>
+                    </PrivateRoute>
+            },
+            {
                 path: 'createAssignment',
-                element: <CreateAssignment></CreateAssignment>
+                element:
+                    <PrivateRoute>
+                        <CreateAssignment></CreateAssignment>
+                    </PrivateRoute>
             },
             {
                 path: 'assignment/:id',
-                element: <AssignmentDetails></AssignmentDetails>,
+                element:
+                    <PrivateRoute>
+                        <AssignmentDetails></AssignmentDetails>
+                    </PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>
             },

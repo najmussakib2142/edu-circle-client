@@ -1,6 +1,6 @@
 import React, { use, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import registerLottie from '../../assets/lotties/register.json'
 import Lottie from 'lottie-react';
 import { AuthContext } from '../../provider/AuthContext';
@@ -8,8 +8,11 @@ import { AuthContext } from '../../provider/AuthContext';
 const SignIn = () => {
 
     const { signInUser, googleSignIn } = use(AuthContext)
-
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const location = useLocation();
+    console.log('location in signin', location);
+    const navigate = useNavigate();
+    const from = location.state || '/'
 
     const handleSignIn = e => {
         e.preventDefault();
@@ -22,7 +25,8 @@ const SignIn = () => {
         signInUser(email, password)
             .then(result => {
                 console.log(result.user)
-                alert('successfully login')
+                alert('successfully login');
+                navigate(from)
             })
             .catch(error => {
                 console.log(error);
@@ -34,6 +38,7 @@ const SignIn = () => {
         googleSignIn()
             .then((result) => {
                 console.log(result.user);
+                navigate(from)
             })
             .error(error => {
                 console.log(error.message);

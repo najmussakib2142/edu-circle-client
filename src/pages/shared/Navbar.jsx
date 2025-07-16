@@ -24,10 +24,14 @@ const Navbar = () => {
 
     const links = <>
         <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/">Home</NavLink></li>
-        <li className='text-[#101828]  dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/AllGroups">Assignments</NavLink></li>
-        <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
-        <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="myGroups">My Attempts </NavLink></li>
+        <li className='text-[#101828]  dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/assignments">Assignments</NavLink></li>
+        {
+            user && <>
+                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
+                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li>
 
+            </>
+        }
     </>
 
     return (
@@ -141,8 +145,8 @@ const Navbar = () => {
                                     {/* Dropdown menu items */}
                                     <ul tabIndex={0} className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                         {/* <li><span className="font-semibold">{user.displayName}</span></li> */}
-                                        <li><NavLink to="/createGroup">Create Assignment</NavLink></li>
-                                        <li><NavLink to="/myGroups">My Attempts</NavLink></li>
+                                        <li><NavLink to="/createAssignment">Create Assignment</NavLink></li>
+                                        <li><NavLink to="/mySubmissions">My Submissions</NavLink></li>
                                         {/* <li><button onClick={handleSignOut}>Sign Out</button></li> */}
                                     </ul>
                                 </div>

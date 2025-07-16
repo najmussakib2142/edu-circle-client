@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 
 const Assignments = ({ assignmentsPromise }) => {
+    
     const assignments = use(assignmentsPromise)
 
     return (
