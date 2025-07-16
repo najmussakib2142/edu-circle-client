@@ -29,13 +29,15 @@ const AssignmentDetails = () => {
 
         const submission = {
             assignmentId: assignment._id,
+            assignmentTitle: assignment.title, 
+            marks: assignment.marks,
             studentEmail: user.email,
             submissionLink: e.target.link.value,
             note: e.target.note.value,
             status: 'pending',
             submittedAt: new Date(),
         }
-        console.log(submission);
+        // console.log(submission);
         axios.post('http://localhost:5000/submissions', submission)
             .then(res => {
                 console.log(res.data);
@@ -49,6 +51,7 @@ const AssignmentDetails = () => {
                     });
 
                 }
+                e.target.reset()
             })
             .catch(error => {
                 console.log(error);
