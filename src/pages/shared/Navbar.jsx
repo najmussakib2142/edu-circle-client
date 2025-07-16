@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { useTheme } from '../../provider/ThemeContext';
@@ -10,6 +10,30 @@ const Navbar = () => {
 
     const { theme, toggleTheme } = useTheme();
     const { user, signOutUser } = use(AuthContext)
+
+    const [showNavbar, setShowNavbar] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling Down
+                setShowNavbar(false);
+            } else {
+                // Scrolling Up
+                setShowNavbar(true);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
+
 
     const handleSignOut = () => {
         signOutUser()
@@ -36,8 +60,9 @@ const Navbar = () => {
 
     return (
         <div>
-            <div>
-                <div className="navbar lg:fixed py-0  sticky top-0 z-50 md:px-8 lg:px-12 bg-base-100/80 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300 shadow-md">
+            <div className={`fixed top-0 w-full bg-white z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+                } shadow`}>
+                <div className="navbar  py-0  z-50 md:px-8 lg:px-12 bg-base-100/80 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300 shadow-md">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

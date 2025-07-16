@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import Banner from './Banner';
 import Assignments from './Assignments';
 import Loading from '../shared/Loading';
+import CountSection from '../shared/CountSection';
 
 const Home = () => {
 
@@ -13,6 +14,7 @@ const Home = () => {
             <Suspense fallback={<Loading></Loading>}>
                 <Assignments assignmentsPromise={assignmentsPromise}></Assignments>
             </Suspense>
+            <CountSection></CountSection>
         </div>
     );
 };

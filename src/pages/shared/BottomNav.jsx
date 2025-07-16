@@ -10,9 +10,9 @@ const BottomNav = () => {
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY < lastScrollY) {
-                setShowNav(true);
-            } else {
                 setShowNav(false);
+            } else {
+                setShowNav(true);
             }
             setLastScrollY(window.scrollY);
         };

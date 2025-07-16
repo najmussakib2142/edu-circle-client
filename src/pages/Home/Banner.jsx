@@ -1,8 +1,8 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { Link } from 'react-router';
-import { motion } from "motion/react"
+import { Link } from 'react-router'; // fixed import
+import { motion } from 'framer-motion'; // fixed import
 
 const Banner = () => {
     return (
@@ -43,21 +43,43 @@ const Banner = () => {
                     </div>
                 </Carousel>
             </div>
-            <div className="text-center py-12 px-5">
+
+            {/* Animated Text Block */}
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-center py-12 px-5"
+            >
                 <motion.h1
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1, transition: { duration: 1 } }}
-                    className="text-4xl md:text-5xl font-bold text-[#101828] dark:text-gray-300">
-                    Discover Your Hobby Tribe
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true }}
+                    className="text-4xl md:text-5xl font-bold text-[#101828] dark:text-gray-300"
+                >
+                    Welcome to eduCircle
                 </motion.h1>
+
                 <motion.p
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1, transition: { duration: 2 } }}
-                    className="text-gray-600 dark:text-gray-500 text-lg md:text-xl mt-4 max-w-3xl mx-auto">
-                    Join vibrant hobby groups, meet like-minded people, and fuel <br className="hidden md:block" /> your passion.
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.2, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="text-gray-600 dark:text-gray-500 text-lg md:text-xl mt-4 max-w-3xl mx-auto"
+                >
+                    Learn, grow, and achieve with the best courses and instructors. <br className="hidden md:block" />
                 </motion.p>
 
-                <div className='flex flex-col items-center mt-4'>
+                {/* Search & CTA Button */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center mt-4"
+                >
                     <div className="join border rounded-md">
                         <div>
                             <label className="input validator join-item">
@@ -73,26 +95,27 @@ const Banner = () => {
                                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                                     </g>
                                 </svg>
-                                <input type="text" placeholder="" required />
+                                <input type="text" placeholder="Your email here" required />
                             </label>
                             <div className="validator-hint hidden">Enter valid email address</div>
                         </div>
-                        <button className="btn btn-ghost join-item">Search</button>
+                        <button className="btn btn-ghost join-item">Subscribe</button>
                     </div>
 
-                    <Link to={'/allGroups'}>
-                        <button className="mt-4 hover:border-blue-600 hover:border-s-8 hover:border-b-8  bg-gray-800 dark:bg-base-700 dark:border-primary hover:text-primary hover:bg-base-100  hover:border  text-white font-semibold px-6 py-3 rounded-lg transition">
-                            Browse Hobby Groups
-                        </button>
-                        {/* <button className="mt-8 bg-primary dark:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-lg transition hover:text-primary dark:hover:text-secondary hover:bg-base-100 dark:hover:bg-gray-700 hover:border hover:border-primary dark:hover:border-secondary">
-                        Browse Hobby Groups
-                    </button> */}
-
+                    {/* CTA Button with hover animation */}
+                    <Link to={'/assignments'}>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="mt-4 hover:border-blue-600  hover:border-s-8 hover:border-b-8 bg-gray-800 dark:bg-base-700 dark:border dark:border-primary hover:text-primary hover:bg-base-100 hover:border text-white font-semibold px-6 py-3 rounded-lg transition"
+                        >
+                            Discover Your Circle
+                        </motion.button>
                     </Link>
-
-                </div>
-            </div>
-        </section>);
+                </motion.div>
+            </motion.div>
+        </section>
+    );
 };
 
 export default Banner;
