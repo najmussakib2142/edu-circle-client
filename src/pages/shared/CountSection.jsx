@@ -22,7 +22,7 @@ const stats = [
 
 const CountSection = () => {
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section className="py-16  bg-transparent">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10">
           Our Impact

@@ -48,7 +48,7 @@ const SignIn = () => {
 
     return (
         <div>
-            <div className="hero bg-base-200 py-20">
+            <div className="hero py-20">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
                         <Lottie style={{ width: '600px' }} animationData={registerLottie} loop={true} ></Lottie>

@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { useTheme } from '../../provider/ThemeContext';
 import { AuthContext } from '../../provider/AuthContext';
+import { motion } from "framer-motion";
+
 
 
 
@@ -51,8 +53,8 @@ const Navbar = () => {
         <li className='text-[#101828]  dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/assignments">Assignments</NavLink></li>
         {
             user && <>
-                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
-                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li>
+                {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
+                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
                 <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/pendingAssignments">Pending Assignments</NavLink></li>
 
             </>
@@ -171,8 +173,8 @@ const Navbar = () => {
                                     {/* Dropdown menu items */}
                                     <ul tabIndex={0} className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                         {/* <li><span className="font-semibold">{user.displayName}</span></li> */}
-                                        <li><NavLink to="/createAssignment">Create Assignment</NavLink></li>
-                                        <li><NavLink to="/mySubmissions">My Submissions</NavLink></li>
+                                        <li className=''><NavLink to="/createAssignment">Create Assignments</NavLink></li>
+                                        <li><NavLink to="/mySubmissions">My Attempted Assignments </NavLink></li>
                                         {/* <li><button onClick={handleSignOut}>Sign Out</button></li> */}
                                     </ul>
                                 </div>
@@ -182,8 +184,11 @@ const Navbar = () => {
 
                         {
                             user ? <button onClick={handleSignOut} className='btn border-primary text-primary hover:bg-primary hover:text-white hover:border-primary'>Sign Out</button> : <>
-                                <NavLink to="/register" className="btn border-primary text-primary  hover:bg-primary hover:text-white hover:border-primary">Register</NavLink>
-                                <NavLink to="/signIn" className="btn border-primary text-primary  hover:bg-primary hover:text-white hover:border-primary">SignIn</NavLink>
+                                <NavLink to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
+             dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</NavLink>
+                                <NavLink
+                                    to="/signIn" className="btn bg-primary text-white border-primary hover:bg-white hover:text-primary hover:border-primary
+             dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</NavLink>
 
                             </>
                         }
