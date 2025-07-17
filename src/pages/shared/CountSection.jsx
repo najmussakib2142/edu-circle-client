@@ -4,43 +4,49 @@ import { FaGraduationCap, FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa
 
 const stats = [
   {
-    icon: <FaGraduationCap className="text-4xl text-blue-500" />,
+    icon: <FaGraduationCap className="text-5xl text-blue-600" />,
     value: 1200,
-    label: 'Students Enrolled',
+    label: 'Students Successfully Enrolled',
   },
   {
-    icon: <FaChalkboardTeacher className="text-4xl text-green-500" />,
-    value: 85,
-    label: 'Expert Instructors',
+    icon: <FaChalkboardTeacher className="text-5xl text-green-600" />,
+    value: 100,
+    label: 'Certified Expert Instructors',
   },
   {
-    icon: <FaBookOpen className="text-4xl text-purple-500" />,
-    value: 250,
-    label: 'Courses Available',
+    icon: <FaBookOpen className="text-5xl text-purple-600" />,
+    value: 50,
+    label: 'Interactive Courses Offered',
   },
 ];
 
 const CountSection = () => {
   return (
-    <section className="py-16  bg-transparent">
+    <section className="py-16 bg-transparent">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10">
-          Our Impact
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-white mb-12">
+          Our Growing Community
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl transition"
+              className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md hover:shadow-xl transition-transform hover:scale-105"
               data-aos="fade-up"
-              data-aos-delay={index * 100} // << This is perfectly placed here
+              data-aos-delay={index * 100}
             >
               <div className="mb-4 flex justify-center">{stat.icon}</div>
-              <h3 className="text-4xl font-extrabold text-blue-600 dark:text-white">
-                <CountUp end={stat.value} duration={2.5} />
+              <h3 className="text-4xl font-extrabold text-blue-700 dark:text-white">
+                <CountUp end={stat.value} duration={3} />+
               </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">{stat.label}</p>
+              <p className="mt-2 text-gray-700 dark:text-gray-300 font-medium">
+                {stat.label}
+              </p>
+              {/* Optional: Add description under label */}
+              {/* <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Description or impact statement.
+              </p> */}
             </div>
           ))}
         </div>
