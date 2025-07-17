@@ -33,8 +33,7 @@ const BottomNav = () => {
             <NavLink className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary' to="/assignments">Assignments</NavLink>
             {
                 user && <>
-                    <NavLink className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary' to="/createAssignment">Create</NavLink>
-                    <NavLink className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary' to="/mySubmissions">Submissions</NavLink>
+                            <NavLink className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary' to="/pendingAssignments">Pending Assignments</NavLink>
 
                 </>
             }

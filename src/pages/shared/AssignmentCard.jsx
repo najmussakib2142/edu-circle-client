@@ -64,10 +64,10 @@ const AssignmentCard = ({ assignment }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1 }}
-            className="card w-full bg-base-100 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition duration-300"
+            className="card w-full bg-base-100 shadow-2xl shadow-blue-300 dark:shadow-md dark:shadow-blue-400 hover:shadow-xl transition duration-300"
         >
             <figure>
-                <img src={thumbnail} alt={title} className="h-48 w-full object-cover rounded-t-xl" />
+                <img src={thumbnail} alt={title} className="h-48  w-full object-cover rounded-t-xl" />
             </figure>
             <div className="card-body">
                 <h2 className="card-title text-primary">{title}</h2>

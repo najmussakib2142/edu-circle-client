@@ -15,7 +15,7 @@ const RootLayout = () => {
             <nav className=''>
                 <Navbar></Navbar>
             </nav>
-            <main className='max-w-7xl mx-auto'>
+            <main className='max-w-6xl mx-auto'>
                 {state == "loading" ? <Loading /> : <Outlet></Outlet>}
             </main>
             

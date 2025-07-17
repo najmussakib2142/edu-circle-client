@@ -16,6 +16,7 @@ import AllAssignments from "../pages/Home/AllAssignments";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import PendingAssignments from "../pages/PendingAssignments/PendingAssignments";
+import assignmentLoader from "../api/assignmentLoader";
 
 const router = createBrowserRouter([
     {
@@ -43,25 +44,20 @@ const router = createBrowserRouter([
             {
                 path: 'mySubmissions',
                 element:
-                    <PrivateRoute>
-                        <MySubmissions></MySubmissions>
-                    </PrivateRoute>
+                    <PrivateRoute><MySubmissions></MySubmissions></PrivateRoute>
             },
             {
                 path: 'createAssignment',
                 element:
-                    <PrivateRoute>
-                        <CreateAssignment></CreateAssignment>
-                    </PrivateRoute>
+                    <PrivateRoute><CreateAssignment></CreateAssignment> </PrivateRoute>
             },
             {
                 path: 'assignment/:id',
                 element:
-                    <PrivateRoute>
-                        <AssignmentDetails></AssignmentDetails>
-                    </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/assignments/${params.id}`),
-                hydrateFallbackElement: <Loading></Loading>
+                    <PrivateRoute><AssignmentDetails></AssignmentDetails></PrivateRoute>,
+                loader: assignmentLoader,
+                hydrateFallbackElement: <Loading></Loading>,
+                // errorElement: <ErrorPage></ErrorPage>
             },
             {
                 path: 'update/:id',

@@ -8,13 +8,13 @@ import { mySubmissionsPromise } from '../../api/submissionsApi';
 const MySubmissions = () => {
 
     const { user } = useAuth()
-    console.log(user);
+    // console.log(user.accessToken);
 
     return (
         <div>
             <Suspense fallback={<Loading></Loading>}>
                 <SubmissionsList
-                    mySubmissionsPromise={mySubmissionsPromise(user.email)}
+                    mySubmissionsPromise={mySubmissionsPromise(user.email, user.accessToken)}
                 >
                 </SubmissionsList>
             </Suspense>

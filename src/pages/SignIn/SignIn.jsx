@@ -1,7 +1,7 @@
 import React, { use, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router';
-import registerLottie from '../../assets/lotties/register.json'
+import registerLottie from '../../assets/lotties/12.json'
 import Lottie from 'lottie-react';
 import { AuthContext } from '../../provider/AuthContext';
 
@@ -51,7 +51,7 @@ const SignIn = () => {
             <div className="hero py-20">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
-                        <Lottie style={{ width: '600px' }} animationData={registerLottie} loop={true} ></Lottie>
+                        <Lottie className="w-full min-w-[300px] max-w-[550px] mx-auto" animationData={registerLottie} loop={true} ></Lottie>
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className="card-body">

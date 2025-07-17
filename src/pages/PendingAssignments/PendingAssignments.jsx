@@ -12,14 +12,24 @@ const PendingAssignments = () => {
     const [feedback, setFeedback] = useState('');
     const [error, setError] = useState('');
 
-
-    //Load pending submissions
     useEffect(() => {
-        axios
-            .get('http://localhost:5000/submissions?status=pending')
-            .then((res) => setSubmissions(res.data))
-            .catch((err) => console.error('Error loading submissions:', err));
-    }, []);
+        const fetchSubmissions = async () => {
+            if (!user) return;
+
+            const token = await user.getIdToken();
+
+            axios
+                .get(`http://localhost:5000/submissions?status=pending`, {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((res) => setSubmissions(res.data))
+                .catch((err) => console.error('Error loading submissions:', err));
+        };
+
+        fetchSubmissions();
+    }, [user]);
 
     if (loading || !user) {
         return <Loading></Loading>
@@ -115,11 +125,11 @@ const PendingAssignments = () => {
 
             {/* Modal */}
             {selected && (
-                <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-lg transition-all bg-opacity-50 z-50">
-                    <div className="bg-white dark:bg-gray-800 p-7 rounded shadow-lg max-w-md w-full relative">
+                <div className="fixed   inset-0 backdrop-blur-lg transition-all bg-opacity-40 flex items-center justify-center z-50">
+                    <div className="bg-white border border-primary bg-gradient-to-br from-indigo-100 via-blue-100 to-blue-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-gray-900 dark:text-gray-100  dark:bg-gray-800 p-7 rounded-md shadow-lg max-w-md w-full relative">
                         <button
                             onClick={() => setSelected(null)}
-                            className="absolute top-2 right-2 text-gray-500 hover:text-black dark:hover:text-white"
+                            className="absolute top-2 right-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
                         >
                             ✕
                         </button>
@@ -139,6 +149,7 @@ const PendingAssignments = () => {
                                 View Note
                             </a>
                         </p>
+                        
 
                         <div className="mt-4">
                             {error && <p className="text-red-500 text-sm mb-2">{error}</p>}

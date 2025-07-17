@@ -46,9 +46,9 @@ const Footer = () => {
 
                     {/* Social Icons */}
                     <div className="flex space-x-4 mt-2 ">
-                        <a href="#" aria-label="Facebook" className="text-xl hover:text-primary"><LuFacebook /></a>
-                        <a href="#" aria-label="Twitter" className="text-xl hover:text-primary"><LuTwitter /></a>
-                        <a href="#" aria-label="LinkedIn" className="text-xl hover:text-primary"><LuLinkedin /></a>
+                        <a target="blank" href="https://www.facebook.com/programmingHero/" aria-label="Facebook" className="text-xl hover:text-primary"><LuFacebook /></a>
+                        <a target="blank" href="https://x.com/ProgrammingHero" aria-label="Twitter" className="text-xl hover:text-primary"><LuTwitter /></a>
+                        <a target="blank" href="https://bd.linkedin.com/company/programminghero" aria-label="LinkedIn" className="text-xl hover:text-primary"><LuLinkedin /></a>
                     </div>
                 </div>
 

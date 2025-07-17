@@ -5,6 +5,7 @@ import { use, useState } from 'react';
 import { AuthContext } from '../../provider/AuthContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import useAccessToken from '../../api/useAccessToken';
 
 
 const AssignmentDetails = () => {
@@ -13,6 +14,7 @@ const AssignmentDetails = () => {
     console.log(assignment);
     const [showModal, setShowModal] = useState(false);
     const { user } = use(AuthContext)
+    const {accessToken} = useAccessToken()
 
     const {
         title,
@@ -29,7 +31,7 @@ const AssignmentDetails = () => {
 
         const submission = {
             assignmentId: assignment._id,
-            assignmentTitle: assignment.title, 
+            assignmentTitle: assignment.title,
             marks: assignment.marks,
             studentEmail: user.email,
             submissionLink: e.target.link.value,
@@ -38,7 +40,12 @@ const AssignmentDetails = () => {
             submittedAt: new Date(),
         }
         // console.log(submission);
-        axios.post('http://localhost:5000/submissions', submission)
+
+        axios.post('http://localhost:5000/submissions', submission, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {
@@ -52,9 +59,15 @@ const AssignmentDetails = () => {
 
                 }
                 e.target.reset()
+                setShowModal(false);
             })
             .catch(error => {
-                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: 'Please try again later.',
+                    error
+                });
             })
 
     }
@@ -90,7 +103,7 @@ const AssignmentDetails = () => {
             {/* <SubmissionModal></SubmissionModal> */}
             {showModal && (
                 <div className="fixed inset-0 backdrop-blur-lg transition-all bg-opacity-40 flex items-center justify-center z-50">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full">
+                    <div className="bg-white bg-gradient-to-br from-indigo-100 via-blue-100 to-blue-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full">
                         <h3 className="text-xl font-semibold mb-4">Submit Assignment</h3>
 
                         <form onSubmit={handleSubmit}>

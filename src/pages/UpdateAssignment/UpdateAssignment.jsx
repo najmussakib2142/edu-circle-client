@@ -5,13 +5,17 @@ import DatePicker from 'react-datepicker';
 import { useLoaderData, useParams } from 'react-router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import useAccessToken from '../../api/useAccessToken';
+import Loading from '../shared/Loading';
 
 const UpdateAssignment = () => {
 
     const { user } = useAuth();
     const { id } = useParams()
     // const navigate = useNavigate()
-    const { _id, dueDate } = useLoaderData()
+    const { _id } = useLoaderData()
+    // const [accessToken, setAccessToken] = useState('');
+    const {accessToken, loading} = useAccessToken()
 
     const [formData, setFormData] = useState({
         title: '',
@@ -23,21 +27,58 @@ const UpdateAssignment = () => {
         userEmail: user?.email || '',
         userName: user?.displayName || ''
     })
+    // useEffect(() => {
+    //     const getToken = async () => {
+    //         if (user) {
+    //             const token = await user.getIdToken();
+    //             setAccessToken(token);
+    //         }
+    //     };
+    //     getToken();
+    // }, [user]);
 
+    // useEffect(() => {
+    //     if (!accessToken || !id) return;
+
+    //     axios.get(`http://localhost:5000/assignments/${id}`, {
+    //         headers: {
+    //             Authorization: `Bearer ${accessToken}`
+    //         }
+    //     })
+    //         .then(res => {
+    //             const assignment = res.data;
+    //             setFormData({
+    //                 ...assignment,
+    //                 dueDate: new Date(assignment.dueDate)
+    //             })
+    //         })
+    //         .catch(error => {
+    //             Swal.fire('Error!', 'Failed to load assignment data.', 'error', error);
+    //         })
+    // }, [id, accessToken])
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/assignments/${id}`)
-            .then(res => {
+        if (loading || !accessToken || !id) return
+
+        const fetchAssignment = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/assignments/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
                 const assignment = res.data;
                 setFormData({
                     ...assignment,
                     dueDate: new Date(assignment.dueDate)
-                })
-            })
-            .catch(error => {
+                });
+            } catch (error) {
                 Swal.fire('Error!', 'Failed to load assignment data.', 'error', error);
-            })
-    }, [id])
+            }
+        };
+
+        fetchAssignment();
+    }, [id,loading, accessToken]);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -67,7 +108,8 @@ const UpdateAssignment = () => {
                 fetch(`http://localhost:5000/assignments/${id}`, {
                     method: "PUT",
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(updateAssignment)
                 })

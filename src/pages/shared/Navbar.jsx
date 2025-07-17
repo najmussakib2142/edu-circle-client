@@ -149,6 +149,7 @@ const Navbar = () => {
                                 {user?.displayName || user?.email}
                             </div>
                         </div> */}
+                        
                         {
                             user && (
                                 <div className="dropdown dropdown-end group relative">
@@ -184,11 +185,11 @@ const Navbar = () => {
 
                         {
                             user ? <button onClick={handleSignOut} className='btn border-primary text-primary hover:bg-primary hover:text-white hover:border-primary'>Sign Out</button> : <>
-                                <NavLink to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
-             dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</NavLink>
-                                <NavLink
+                                <Link to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
+             dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</Link>
+                                <Link
                                     to="/signIn" className="btn bg-primary text-white border-primary hover:bg-white hover:text-primary hover:border-primary
-             dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</NavLink>
+             dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</Link>
 
                             </>
                         }

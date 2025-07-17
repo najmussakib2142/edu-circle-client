@@ -1,7 +1,7 @@
 import Lottie from 'lottie-react';
 import React, { use, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import registerLottie from '../../assets/lotties/register.json'
+import registerLottie from '../../assets/lotties/11.json'
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
 
@@ -59,10 +59,8 @@ const Register = () => {
     return (
         <div>
             <div className="hero py-20">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left">
-                        <Lottie style={{width:600}} animationData={registerLottie} loop={true} ></Lottie>
-                    </div>
+                <div className="hero-content flex-col gap-10 lg:flex-row-reverse">
+
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className="card-body">
                             <h1 className="text-4xl font-bold text-primary text-center">Register your account</h1>
@@ -118,6 +116,14 @@ const Register = () => {
 
                             </form>
                         </div>
+                    </div>
+
+                    <div className="text-center lg:text-left">
+                        <Lottie
+                            className="w-full min-w-[300px] max-w-[550px] mx-auto"
+                            animationData={registerLottie}
+                            loop={true}
+                        ></Lottie>
                     </div>
                 </div>
             </div>

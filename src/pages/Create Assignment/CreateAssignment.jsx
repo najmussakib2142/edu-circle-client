@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
@@ -7,6 +7,8 @@ import axios from 'axios';
 import { AuthContext } from '../../provider/AuthContext';
 import { delay } from 'motion';
 import useAuth from '../../hooks/useAuth';
+import useAccessToken from '../../api/useAccessToken';
+import Loading from '../shared/Loading';
 
 const CreateAssignment = () => {
     const [title, setTitle] = useState('');
@@ -18,11 +20,26 @@ const CreateAssignment = () => {
 
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { accessToken, loading } = useAccessToken()
+    console.log(accessToken);
 
+
+    useEffect(() => {
+        if (!accessToken && !loading) {
+            navigate('/login');
+        }
+    }, [accessToken, loading, navigate])
     // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (loading) {
+            return <Loading></Loading>
+        }
+
+        if (!accessToken) {
+            return Swal.fire('Unauthorized', 'No access token found.', 'error');
+        }
 
         if (!title || !description || !marks || !thumbnail || !difficulty) {
             return Swal.fire('Error!', 'Please fill out all fields.', 'error');
@@ -45,7 +62,15 @@ const CreateAssignment = () => {
 
         try {
             // POST to server (replace url)
-            const res = await axios.post('http://localhost:5000/assignments', newAssignment);
+            // const accessToken = await user.getIdToken();
+            const res = await axios.post('http://localhost:5000/assignments',
+                newAssignment,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
             if (res.data.insertedId) {
                 Swal.fire('Success!', 'Assignment created successfully!', 'success');
                 navigate('/assignments');
@@ -64,7 +89,7 @@ const CreateAssignment = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
 
                 {/* Title */}
-                
+
                 <input
                     type="text"
                     placeholder="Assignment Title"

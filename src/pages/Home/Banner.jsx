@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'; // fixed import
 
 const Banner = () => {
     return (
-        <section className="max-w-7xl mx-auto">
+        <section className="max-w-5xl mx-auto">
             <div className="overflow-hidden">
                 <Carousel
                     autoPlay
@@ -80,7 +80,7 @@ const Banner = () => {
                     viewport={{ once: true }}
                     className="flex flex-col items-center mt-4"
                 >
-                    <div className="join border rounded-md">
+                    <form className="join border rounded-md">
                         <div>
                             <label className="input validator join-item">
                                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -99,15 +99,15 @@ const Banner = () => {
                             </label>
                             <div className="validator-hint hidden">Enter valid email address</div>
                         </div>
-                        <button className="btn btn-ghost join-item">Subscribe</button>
-                    </div>
+                        <button  className="btn btn-ghost join-item">Subscribe</button>
+                    </form>
 
                     {/* CTA Button with hover animation */}
                     <Link to={'/assignments'}>
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="mt-4 hover:border-blue-600  hover:border-s-8 hover:border-b-8 bg-gray-800 dark:bg-base-700 dark:border dark:border-primary hover:text-primary hover:bg-base-100 hover:border text-white font-semibold px-6 py-3 rounded-lg transition"
+                            className="mt-4 hover:border-primary  hover:border-s-4 hover:border-b-4 bg-gray-800 dark:bg-base-700 dark:border dark:border-primary  hover:bg-base-100 hover:border text-white font-semibold px-6 py-3 rounded-lg transition"
                         >
                             Discover Your Circle
                         </motion.button>
