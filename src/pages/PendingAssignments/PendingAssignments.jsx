@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import Loading from '../shared/Loading';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const PendingAssignments = () => {
     const { user, loading } = useAuth()
@@ -25,7 +27,7 @@ const PendingAssignments = () => {
                     },
                 })
                 .then((res) => setSubmissions(res.data))
-                .catch((err) => console.error('Error loading submissions:', err));
+                .catch((err) => toast.error(err.message, 'Error loading submissions'));
         };
 
         fetchSubmissions();
@@ -38,7 +40,7 @@ const PendingAssignments = () => {
 
     // Submit mark & feedback
     const handleSubmit = async () => {
-        if (!mark || !feedback) return alert('Both fields are required');
+        if (!mark || !feedback) return toast.warning('Both fields are required');;
 
         if (selected.studentEmail === user.email) {
             setError("You can't mark your own submission.");
@@ -53,24 +55,29 @@ const PendingAssignments = () => {
             });
 
             if (res.data.modifiedCount > 0) {
-                alert('Marked successfully!');
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Marked successfully!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
                 setSubmissions((prev) => prev.filter((s) => s._id !== selected._id));
                 setSelected(null);
                 setMark('');
                 setFeedback('');
                 setError('');
             } else {
-                alert('Something went wrong while updating.');
+                toast.error('Something went wrong while updating.');
             }
         } catch (err) {
-            console.error('Error submitting mark:', err);
-            alert('Failed to mark the assignment.');
+            toast.error(err.message, 'Error submitting mark:');
+            toast.error('Failed to mark the assignment.');
         }
     };
 
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-5xl mx-auto p-6">
             <h2 className="text-3xl font-bold mb-6 pt-6 text-primary text-center">📝 Pending Assignments</h2>
 
             <div className="overflow-x-auto">
@@ -149,7 +156,7 @@ const PendingAssignments = () => {
                                 View Note
                             </a>
                         </p>
-                        
+
 
                         <div className="mt-4">
                             {error && <p className="text-red-500 text-sm mb-2">{error}</p>}

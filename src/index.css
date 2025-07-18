@@ -12,27 +12,12 @@
   }
 }
 
-/* body {
-  @apply bg-base-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100
-} */
-
 body {
-  @apply bg-gradient-to-br min-h-screen from-indigo-100 via-blue-100 to-blue-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-gray-900 dark:text-gray-100;
+  @apply bg-gradient-to-br min-h-screen from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-gray-900 dark:text-gray-100;
 }
 
-/* @plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-primary: "#1F1A70 ";
-  --color-secondary: #f43098;
-  --color-accent: #10B981;
-  --color-base-100: #F3F4F6;
-  --color-neutral: #374151;
-  --color-error: #F43F5E;
-} */
-
 [data-theme="light"] {
-  --color-primary: #3B82F6;
+  --color-primary: #324b73;
   /* buttons, links */
   --color-secondary: #EC4899;
   /* secondary buttons, highlights */
@@ -48,7 +33,7 @@ body {
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --color-primary: #60A5FA;
+  --color-primary: #1471e3;
   --color-secondary: #f43098;
   --color-accent: #34D399;
   --color-base-100: #111827;
@@ -83,6 +68,3 @@ body {
   color: var(--color-error);
 }
 
-/* ✅ * {
-  font-family: "Poppins", sans-serif;
-} */

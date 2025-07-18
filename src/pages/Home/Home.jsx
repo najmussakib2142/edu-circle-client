@@ -5,13 +5,18 @@ import Loading from '../shared/Loading';
 import CountSection from '../shared/CountSection';
 import FeatureSection from '../FeatureSection/FeatureSection';
 import FAQSection from '../FAQSection/FAQSection';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
 
     const assignmentsPromise = fetch('http://localhost:5000/assignments')
         .then(res => res.json())
     return (
-        <div>
+        <div className=''>
+            <Helmet>
+                <title>EduCircle || Home</title>
+            </Helmet>
+
             <Banner></Banner>
             <Suspense fallback={<Loading></Loading>}>
                 <Assignments assignmentsPromise={assignmentsPromise}></Assignments>

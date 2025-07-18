@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import registerLottie from '../../assets/lotties/11.json'
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
+import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
 
@@ -21,7 +23,22 @@ const Register = () => {
         const password = formData.get('password')
         const name = formData.get('name')
         const photo = formData.get('photo')
-        console.log({ email, password, name, photo });
+
+        const uppercaseReg = /[A-Z]/;
+        const lowercaseReg = /[a-z]/;
+
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters long!");
+            return;
+        }
+        if (!uppercaseReg.test(password)) {
+            setError("Password must contain at least one uppercase letter!");
+            return;
+        }
+        if (!lowercaseReg.test(password)) {
+            setError("Password must contain at least one lowercase letter!");
+            return;
+        }
 
         // create user
         createUser(email, password)
@@ -31,9 +48,8 @@ const Register = () => {
                 updateUser({ displayName: name, photoURL: photo })
                     .then(() => {
                         setUser({ ...user, displayName: name, photoURL: photo })
-                        console.log(result.user);
-                        alert('Registration Successful!')
-                        navigate('/')
+                        // console.log(result.user);
+                        toast.success("Registration Successful!"); navigate('/')
                     })
                     .catch((error) => {
                         setError(error.message)
@@ -48,16 +64,21 @@ const Register = () => {
 
     const handleGoogleLogIn = () => {
         googleSignIn()
-            .then((result) => {
-                console.log(result.user);
+            .then(() => {
+                toast.success("Logged in with Google!");
+                navigate(location.state ? location.state : "/");
             })
             .error(error => {
-                console.log(error.message);
+                toast.error(error.message)
             })
     }
 
     return (
         <div>
+            <Helmet>
+                <title>EduCircle || Register</title>
+            </Helmet>
+
             <div className="hero py-20">
                 <div className="hero-content flex-col gap-10 lg:flex-row-reverse">
 
@@ -120,7 +141,7 @@ const Register = () => {
 
                     <div className="text-center lg:text-left">
                         <Lottie
-                            className="w-full min-w-[300px] max-w-[550px] mx-auto"
+                            className="w-full min-w-[400px] max-w-[550px] mx-auto"
                             animationData={registerLottie}
                             loop={true}
                         ></Lottie>

@@ -6,7 +6,7 @@ const SubmissionsList = ({ mySubmissionsPromise }) => {
     const submissions = use(mySubmissionsPromise);
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-5xl mx-auto p-6">
             <h2 className="text-3xl font-bold mb-6 text-primary text-center">📚 My Submissions</h2>
 
             <div className="overflow-x-auto">

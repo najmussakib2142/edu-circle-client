@@ -12,10 +12,11 @@ const RootLayout = () => {
 
     return (
         <div className=' mt-[70px]'>
+            
             <nav className=''>
                 <Navbar></Navbar>
             </nav>
-            <main className='max-w-6xl mx-auto'>
+            <main className=''>
                 {state == "loading" ? <Loading /> : <Outlet></Outlet>}
             </main>
             

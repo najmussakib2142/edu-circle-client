@@ -4,6 +4,8 @@ import { LuMoon, LuSun } from 'react-icons/lu';
 import { useTheme } from '../../provider/ThemeContext';
 import { AuthContext } from '../../provider/AuthContext';
 import { motion } from "framer-motion";
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 
 
@@ -38,14 +40,29 @@ const Navbar = () => {
 
 
     const handleSignOut = () => {
-        signOutUser()
-            .then(() => {
-                console.log('sign Out Success');
-                alert('successfully Sign Out')
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to log out?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1471e3",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, log me out!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                signOutUser()
+                    .then(() => {
+                        Swal.fire({
+                            title: "Logged out!",
+                            text: "You have been successfully logged out.",
+                            icon: "success"
+                        });
+                    })
+                    .catch((error) => {
+                        toast.error(error.message);
+                    })
+            }
+        })
     }
 
     const links = <>
@@ -149,7 +166,7 @@ const Navbar = () => {
                                 {user?.displayName || user?.email}
                             </div>
                         </div> */}
-                        
+
                         {
                             user && (
                                 <div className="dropdown dropdown-end group relative">

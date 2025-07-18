@@ -21,7 +21,7 @@ const CreateAssignment = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const { accessToken, loading } = useAccessToken()
-    console.log(accessToken);
+    // console.log(accessToken);
 
 
     useEffect(() => {
@@ -77,8 +77,8 @@ const CreateAssignment = () => {
 
             }
         } catch (error) {
-            console.error(error);
-            Swal.fire('Error!', 'Something went wrong.', 'error');
+            // console.error(error);
+            Swal.fire('Error!', 'Something went wrong.', 'error', error);
         }
     };
 

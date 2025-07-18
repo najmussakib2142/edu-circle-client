@@ -8,7 +8,6 @@ import { mySubmissionsPromise } from '../../api/submissionsApi';
 const MySubmissions = () => {
 
     const { user } = useAuth()
-    // console.log(user.accessToken);
 
     return (
         <div>

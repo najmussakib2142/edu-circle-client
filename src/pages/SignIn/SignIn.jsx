@@ -4,50 +4,69 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import registerLottie from '../../assets/lotties/12.json'
 import Lottie from 'lottie-react';
 import { AuthContext } from '../../provider/AuthContext';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 
 const SignIn = () => {
 
     const { signInUser, googleSignIn } = use(AuthContext)
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
-    console.log('location in signin', location);
+    // console.log('location in signin', location);
     const navigate = useNavigate();
     const from = location.state || '/'
+    const [error, setError] = useState("")
 
     const handleSignIn = e => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+        // console.log(email, password);
 
         // signIn user
         signInUser(email, password)
             .then(result => {
-                console.log(result.user)
-                alert('successfully login');
+                const user = result.user;
+                // console.log(user);
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful!",
+                    text: `Welcome back, ${user.displayName || user.email}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
                 navigate(from)
             })
             .catch(error => {
-                console.log(error);
+                const errorCode = error.code;
+                // const errorMessage = error.message;
+                setError(errorCode)
+
             })
 
     }
 
     const handleGoogleLogIn = () => {
         googleSignIn()
-            .then((result) => {
-                console.log(result.user);
+            .then(() => {
+                toast.success("Logged in with Google!");
                 navigate(from)
             })
             .error(error => {
-                console.log(error.message);
+                const errorCode = error.code;
+                setError(errorCode)
             })
     }
 
 
     return (
         <div>
+            <Helmet>
+                <title>EduCircle || SignIN</title>
+            </Helmet>
             <div className="hero py-20">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
@@ -84,7 +103,7 @@ const SignIn = () => {
                                     Accept Term & conditions
                                 </label> */}
                                 <div><a className="link link-hover">Forgot password?</a></div>
-
+                                {error && <p className='text-red-500 text-sm'>{error}</p>}
                                 <button className="btn  mt-4">Sign In</button>
                                 <div className="divider">OR</div>
                                 <button onClick={handleGoogleLogIn}

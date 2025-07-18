@@ -23,7 +23,7 @@ const stats = [
 const CountSection = () => {
   return (
     <section className="py-16 bg-transparent">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-10">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-white mb-12">
           Our Growing Community
         </h2>
@@ -43,10 +43,6 @@ const CountSection = () => {
               <p className="mt-2 text-gray-700 dark:text-gray-300 font-medium">
                 {stat.label}
               </p>
-              {/* Optional: Add description under label */}
-              {/* <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Description or impact statement.
-              </p> */}
             </div>
           ))}
         </div>

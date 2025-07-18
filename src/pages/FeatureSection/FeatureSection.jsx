@@ -1,25 +1,75 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { FaFolderOpen } from "react-icons/fa";
+import { IoChevronDown } from "react-icons/io5";
+
 
 const FeatureSection = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <section className="py-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <div className="max-w-6xl mx-auto px-4 text-center">
+    <section className="w-full py-12  bg-blue-100 dark:bg-gray-700
+ ">
+      <div className="max-w-4xl mx-auto px-4">
         <motion.h2
-          className="text-4xl font-bold mb-10"      
+          className="text-3xl sm:text-4xl font-bold mb-10 text-center"
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           Features That Empower Learning
         </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {/* 📱 Small devices: Folder toggle */}
+        <div className="sm:hidden">
+          {!open ? (
+            <button
+              onClick={() => setOpen(true)}
+              className="w-full p-6 bg-gray-100 dark:bg-gray-800 rounded-xl text-left text-lg font-semibold shadow hover:shadow-md transition flex items-center justify-between"
+            >
+              <span className="flex items-center gap-3 text-blue-600">
+                <FaFolderOpen className="text-2xl" />
+                Open Features Folder
+              </span>
+              <IoChevronDown className="text-xl text-blue-600" />
+            </button>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {features.map((feature, i) => (
+                <motion.div
+                  key={i}
+                  className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.1, delay: i * 0.1 }}
+                >
+                  <div className="text-3xl mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm">{feature.description}</p>
+                </motion.div>
+              ))}
+              <button
+                onClick={() => setOpen(false)}
+                className="text-sm text-blue-600 underline mt-4"
+              >
+                ▲ Hide Features
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* 💻 Medium and up: Normal grid */}
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {features.map((feature, i) => (
             <motion.div
               key={i}
               className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition-all"
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.1, delay: i * 0.1 }}
             >
               <div className="text-3xl mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>

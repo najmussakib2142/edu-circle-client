@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import AssignmentCard from '../shared/AssignmentCard';
 import { motion } from "framer-motion";
 import axios from 'axios';
+import { IoSearch } from "react-icons/io5";
+import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
+
 
 
 const AllAssignments = () => {
@@ -21,7 +25,7 @@ const AllAssignments = () => {
             const res = await axios.get('http://localhost:5000/assignments', { params });
             setAssignments(res.data);
         } catch (error) {
-            console.error('Failed to fetch assignments:', error);
+            toast.error(error.message, "Failed to fetch assignments");
         }
     }
 
@@ -30,12 +34,15 @@ const AllAssignments = () => {
     }, [difficulty, searchText]);
 
     return (
-        <div className="px-4 py-12 md:px-10">
-            <h2 className="text-4xl text-center font-bold mb-8 text-primary">🔥 Hot Assignments</h2>
+        <div className="px-3 py-12 md:px-10">
+            <Helmet>
+                <title>EduCircle || Assignments</title>
+            </Helmet>
 
-            {/* Filter + Search */}
+            <h2 className="text-4xl text-center font-bold mb-4 mt-3 text-primary"> Featured Assignments </h2>
+            <p className='text-xl text-center font-medium mb-6 dark:text-gray-400'>See what learners are engaging with the most.</p>
             <div className="flex flex-wrap gap-4 mb-8 justify-center">
-                {/* Difficulty Filter */}
+                {/*  Filter */}
                 <select
                     className="select select-bordered w-48"
                     value={difficulty}
@@ -49,6 +56,7 @@ const AllAssignments = () => {
 
                 {/* Search */}
                 <input
+
                     type="text"
                     className="input input-bordered w-full max-w-xs"
                     placeholder="Search by title..."
@@ -59,7 +67,7 @@ const AllAssignments = () => {
 
             {/* Assignment Cards */}
             <motion.div
-                className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                className="grid gap-6 px-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                 initial="hidden"
                 animate="visible"
                 variants={{

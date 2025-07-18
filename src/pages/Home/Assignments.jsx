@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Assignments = ({ assignmentsPromise }) => {
     const assignments = use(assignmentsPromise);
-    const [showAll, setShowAll] = useState(false); // toggle flag
+    const [showAll, setShowAll] = useState(false);
 
     const visibleAssignments = showAll
         ? assignments
@@ -15,11 +15,13 @@ const Assignments = ({ assignmentsPromise }) => {
     };
 
     return (
-        <div className="px-4 py-7 md:px-10">
-            <h2 className="text-4xl text-center font-bold mb-8 text-primary">🔥 Hot Assignments</h2>
+        <div className="px-4 max-w-5xl mx-auto py-7 px-4 md:px-6">
+            <h2 className="text-4xl text-center font-bold mb-3 text-primary">Top Picks for You</h2>
+            <p className='text-xl text-center text-gray-600 font-medium mb-10 dark:text-gray-500'>Challenge your skills with our top picks.</p>
+
 
             <motion.div
-                className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                className="grid gap-5 px-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                 initial="hidden"
                 animate="visible"
                 variants={{

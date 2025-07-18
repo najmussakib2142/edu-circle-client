@@ -37,21 +37,8 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            // if (currentUser) {
-            //     const token = await currentUser.getIdToken(); // 🔐 get Firebase ID token
-            //     setUser({
-            //         email: currentUser.email,
-            //         displayName: currentUser.displayName,
-            //         accessToken: token, // ✅ Add accessToken
-            //     });
-            // } else {
-            //     setUser(null);
-            // }
             setLoading(false);
-            console.log('user in the auth state change', currentUser);
             setUser(currentUser);
-            // setLoading(false)
-            // console.log('user in the auth state change', currentUser);
         })
         return () => {
             unSubscribe();

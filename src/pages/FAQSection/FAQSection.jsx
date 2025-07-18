@@ -2,7 +2,7 @@ import React from "react";
 
 const FAQSection = () => {
     return (
-        <div className="my-16 px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="my-16 px-6 md:px-12 max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold mb-10 text-center dark:text-white">
                 Frequently Asked Questions
             </h2>

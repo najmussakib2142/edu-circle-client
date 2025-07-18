@@ -27,35 +27,6 @@ const UpdateAssignment = () => {
         userEmail: user?.email || '',
         userName: user?.displayName || ''
     })
-    // useEffect(() => {
-    //     const getToken = async () => {
-    //         if (user) {
-    //             const token = await user.getIdToken();
-    //             setAccessToken(token);
-    //         }
-    //     };
-    //     getToken();
-    // }, [user]);
-
-    // useEffect(() => {
-    //     if (!accessToken || !id) return;
-
-    //     axios.get(`http://localhost:5000/assignments/${id}`, {
-    //         headers: {
-    //             Authorization: `Bearer ${accessToken}`
-    //         }
-    //     })
-    //         .then(res => {
-    //             const assignment = res.data;
-    //             setFormData({
-    //                 ...assignment,
-    //                 dueDate: new Date(assignment.dueDate)
-    //             })
-    //         })
-    //         .catch(error => {
-    //             Swal.fire('Error!', 'Failed to load assignment data.', 'error', error);
-    //         })
-    // }, [id, accessToken])
 
     useEffect(() => {
         if (loading || !accessToken || !id) return
@@ -92,8 +63,6 @@ const UpdateAssignment = () => {
         const form = e.target;
         const formData = new FormData(form);
         const updateAssignment = Object.fromEntries(formData.entries());
-
-        // const assignment = updateAssignment.name;
 
         Swal.fire({
             title: "Are you sure?",
