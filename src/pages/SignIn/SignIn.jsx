@@ -6,7 +6,7 @@ import Lottie from 'lottie-react';
 import { AuthContext } from '../../provider/AuthContext';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
 const SignIn = () => {
 
@@ -64,9 +64,9 @@ const SignIn = () => {
 
     return (
         <div>
-            <Helmet>
+            {/* <Helmet>
                 <title>EduCircle || SignIN</title>
-            </Helmet>
+            </Helmet> */}
             <div className="hero py-20">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">

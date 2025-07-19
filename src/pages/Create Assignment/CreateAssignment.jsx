@@ -21,11 +21,14 @@ const CreateAssignment = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const { accessToken, loading } = useAccessToken()
-    // console.log(accessToken);
+    const [validationErrors, setValidationErrors] = useState({});
+    // const token = user.accessToken;
+    // console.log(token);
 
 
     useEffect(() => {
         if (!accessToken && !loading) {
+            
             navigate('/login');
         }
     }, [accessToken, loading, navigate])
@@ -40,14 +43,40 @@ const CreateAssignment = () => {
         if (!accessToken) {
             return Swal.fire('Unauthorized', 'No access token found.', 'error');
         }
+        // if (!title || !description || !marks || !thumbnail || !difficulty) {
+        //     return Swal.fire('Error!', 'Please fill out all fields.', 'error');
+        // }
+        // if (description.length < 20) {
+        //     return Swal.fire('Error!', 'Description must be at least 20 characters.', 'error');
+        // }
 
-        if (!title || !description || !marks || !thumbnail || !difficulty) {
-            return Swal.fire('Error!', 'Please fill out all fields.', 'error');
+        const errors = {};
+
+        if (!title) {
+            errors.title = 'Title is required.';
+        }
+        if (!description) {
+            errors.description = 'Description is required.';
+        } else if (description.length < 20) {
+            errors.description = 'Description must be at least 20 characters.';
         }
 
-        if (description.length < 20) {
-            return Swal.fire('Error!', 'Description must be at least 20 characters.', 'error');
+        if (!marks) {
+            errors.marks = 'Marks are required.';
+        } else if (isNaN(marks)) {
+            errors.marks = 'Marks must be a number.';
         }
+
+        if (!thumbnail) errors.thumbnail = 'Thumbnail URL is required.';
+        if (!difficulty) errors.difficulty = 'Please select a difficulty level.';
+
+        if (Object.keys(errors).length > 0) {
+            setValidationErrors(errors);
+            return;
+        }
+
+        setValidationErrors({});
+
 
         const newAssignment = {
             title,
@@ -63,7 +92,7 @@ const CreateAssignment = () => {
         try {
             // POST to server (replace url)
             // const accessToken = await user.getIdToken();
-            const res = await axios.post('http://localhost:5000/assignments',
+            const res = await axios.post('https://edu-circle-server-seven.vercel.app/assignments',
                 newAssignment,
                 {
                     headers: {
@@ -98,6 +127,9 @@ const CreateAssignment = () => {
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
+                {validationErrors.title && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
+                )}
 
                 {/* Description */}
                 <textarea
@@ -108,6 +140,9 @@ const CreateAssignment = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     required
                 />
+                {validationErrors.description && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.description}</p>
+                )}
 
                 {/* Marks */}
                 <input
@@ -118,16 +153,22 @@ const CreateAssignment = () => {
                     onChange={(e) => setMarks(e.target.value)}
                     required
                 />
+                {validationErrors.marks && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.marks}</p>
+                )}
 
                 {/* Thumbnail URL */}
                 <input
-                    type="text"
+                    type="url"
                     placeholder="Thumbnail Image URL"
                     className="input input-bordered w-full"
                     value={thumbnail}
                     onChange={(e) => setThumbnail(e.target.value)}
                     required
                 />
+                {validationErrors.thumbnail && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.thumbnail}</p>
+                )}
 
                 {/* Difficulty Dropdown */}
                 <select
@@ -148,7 +189,7 @@ const CreateAssignment = () => {
                     <DatePicker
                         selected={dueDate}
                         onChange={(date) => setDueDate(date)}
-                        dateFormat="yyyy-MM-dd"
+                        dateFormat="dd-MM-yyyy"
                         className="input input-bordered w-full"
                     />
                 </div>

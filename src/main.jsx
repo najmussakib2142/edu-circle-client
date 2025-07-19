@@ -7,7 +7,7 @@ import { RouterProvider } from 'react-router'
 import { ThemeProvider } from './provider/ThemeContext.jsx'
 import AuthProvider from './provider/AuthProvider.jsx'
 import { Toaster } from 'react-hot-toast';
-import { HelmetProvider } from 'react-helmet-async'
+// import { HelmetProvider } from 'react-helmet-async'
 
 
 // AOS imports
@@ -23,13 +23,13 @@ AOS.init({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <HelmetProvider>
+    {/* <HelmetProvider> */}
       <ThemeProvider>
         <AuthProvider>
           <RouterProvider router={router} />
           <Toaster position="top-right" autoClose={3000} />
         </AuthProvider>
       </ThemeProvider>
-    </HelmetProvider>
+    {/* </HelmetProvider> */}
   </StrictMode>,
 )

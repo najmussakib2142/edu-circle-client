@@ -150,22 +150,7 @@ const Navbar = () => {
                                 </button>
                             </div>
                         </div>
-                        {/* <div className="relative group">
 
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <Link to="/">
-                                    <img
-                                        className="w-12 dark:border dark:border-gray-500 h-12 rounded-full object-cover"
-                                        src={`${user ? user.photoURL : "https://i.ibb.co/VWqpdVpB/user.pngs"}`}
-                                        alt="User"
-                                    />
-                                </Link>
-                            </div>
-
-                            <div className="absolute top-14 left-1/2 -translate-x-1/2 w-max bg-gray-700 text-white text-xs font-medium py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-20">
-                                {user?.displayName || user?.email}
-                            </div>
-                        </div> */}
 
                         {
                             user && (
@@ -183,10 +168,6 @@ const Navbar = () => {
                                     <div className="absolute bottom-[-30px] left-1/2 -translate-x-1/2 w-max bg-gray-700 text-white text-xs font-medium py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-20">
                                         {user?.displayName || user?.email}
                                     </div>
-                                    {/* User's name on hover */}
-                                    {/* <div className="absolute top-14 left-1/2 -translate-x-1/2 w-max bg-gray-700 text-white text-xs font-medium py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-20">
-                                        {user?.displayName || user?.email}
-                                    </div> */}
 
                                     {/* Dropdown menu items */}
                                     <ul tabIndex={0} className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">

@@ -8,6 +8,7 @@ import useAuth from '../../hooks/useAuth';
 
 const AssignmentCard = ({ assignment }) => {
   const { user } = useAuth();
+  // const [assignments, setAssignments] = useState([]);
 
   const {
     _id,
@@ -31,10 +32,17 @@ const AssignmentCard = ({ assignment }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/assignments/${id}?email=${user.email}`)
+          .delete(`https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`)
+          // .then((res) => {
+          //   if (res.data.deletedCount > 0) {
+          //     Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
+          //   }
+          // })
           .then((res) => {
             if (res.data.deletedCount > 0) {
-              Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
+              Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success').then(() => {
+                // setAssignments(prev => prev.filter(item => item._id !== id));
+              });
             }
           })
           .catch((err) => {

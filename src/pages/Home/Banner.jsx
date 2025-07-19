@@ -23,21 +23,22 @@ const Banner = () => {
                     >
                         <div>
                             <img
-                                src="https://i.ibb.co/MkLJ0jjV/9632519-4190402.jpg"
+                                src="https://i.ibb.co/SXHXph8F/12063795-4884785.jpg"
                                 alt="Slide 1"
                                 className="w-full h-[450px] md:h-[550px] object-cover"
                             />
                         </div>
                         <div>
                             <img
-                                src="https://i.ibb.co/xtBw6w1q/2148419502.jpg"
+                                src="https://i.ibb.co/mCdBL1xd/10276612-4421964.jpg"
                                 alt="Slide 2"
                                 className="w-full h-[450px] md:h-[550px] object-cover"
                             />
                         </div>
                         <div>
                             <img
-                                src="https://i.ibb.co/F44bhR2r/13741376-2011-i203-016-hobby-cartoon.jpg"
+                                src="https://i.ibb.co/B2w7Q7dx/10276620-4416626.jpg"
+
                                 alt="Slide 3"
                                 className="w-full h-[450px] md:h-[550px] object-cover"
                             />

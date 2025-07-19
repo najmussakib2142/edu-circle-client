@@ -37,7 +37,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'assignments',
-                loader: () => fetch('http://localhost:5000/assignments'),
+                loader: () => fetch('https://edu-circle-server-seven.vercel.app/assignments'),
                 element: <AllAssignments></AllAssignments>,
                 hydrateFallbackElement: <Loading></Loading>
             },
@@ -55,14 +55,15 @@ const router = createBrowserRouter([
                 path: 'assignment/:id',
                 element:
                     <PrivateRoute><AssignmentDetails></AssignmentDetails></PrivateRoute>,
-                loader: assignmentLoader,
+                // loader: assignmentLoader,
+                loader: ({params}) =>  fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
-                // errorElement: <ErrorPage></ErrorPage>
+                // errorElement: <SignIn></SignIn>
             },
             {
                 path: 'update/:id',
                 element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
-                loader: ({params}) =>  fetch(`http://localhost:5000/assignments/${params.id}`),
+                loader: ({params}) =>  fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>
             },
             {

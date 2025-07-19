@@ -5,17 +5,17 @@ import Loading from '../shared/Loading';
 import CountSection from '../shared/CountSection';
 import FeatureSection from '../FeatureSection/FeatureSection';
 import FAQSection from '../FAQSection/FAQSection';
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
 
-    const assignmentsPromise = fetch('http://localhost:5000/assignments')
+    const assignmentsPromise = fetch('https://edu-circle-server-seven.vercel.app/assignments')
         .then(res => res.json())
     return (
         <div className=''>
-            <Helmet>
+            {/* <Helmet>
                 <title>EduCircle || Home</title>
-            </Helmet>
+            </Helmet> */}
 
             <Banner></Banner>
             <Suspense fallback={<Loading></Loading>}>

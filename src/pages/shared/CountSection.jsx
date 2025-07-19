@@ -1,6 +1,6 @@
 import React from 'react';
 import CountUp from 'react-countup';
-import { FaGraduationCap, FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa';
+import { FaGraduationCap, FaChalkboardTeacher, FaBookOpen, FaGlobe } from 'react-icons/fa';
 
 const stats = [
   {
@@ -18,6 +18,11 @@ const stats = [
     value: 50,
     label: 'Interactive Courses Offered',
   },
+  {
+    icon: <FaGlobe className="text-5xl text-pink-600" />,
+    value: 30,
+    label: 'Global Learning Partners',
+  },
 ];
 
 const CountSection = () => {
@@ -28,7 +33,7 @@ const CountSection = () => {
           Our Growing Community
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, index) => (
             <div
               key={index}
@@ -38,7 +43,7 @@ const CountSection = () => {
             >
               <div className="mb-4 flex justify-center">{stat.icon}</div>
               <h3 className="text-4xl font-extrabold text-blue-700 dark:text-white">
-                <CountUp end={stat.value} duration={3} />+
+                <CountUp end={stat.value} duration={4} />+
               </h3>
               <p className="mt-2 text-gray-700 dark:text-gray-300 font-medium">
                 {stat.label}

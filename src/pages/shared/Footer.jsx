@@ -1,11 +1,11 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import { LuSun, LuMoon, LuFacebook, LuTwitter, LuLinkedin } from "react-icons/lu";
 
 const Footer = () => {
 
     return (
-        <footer className="px-6 backdrop-blur transition-all duration-300 shadow-lg py-12 bg-transparent  border-t border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-100">
+        <footer className="px-6 backdrop-blur transition-all duration-300 shadow-lg py-12 bg-transparent  border-t border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-100 ">
             <div className="max-w-6xl pl-10 mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
 
                 {/* About */}
@@ -20,10 +20,10 @@ const Footer = () => {
                 <div className="hidden md:block">
                     <h3 className="text-lg  font-semibold mb-3 text-gray-900 dark:text-gray-100">Quick Links</h3>
                     <ul className="space-y-2">
-                        <li><Link to="/" className="hover:text-primary">Home</Link></li>
-                        <li><Link to="/AllGroups" className="hover:text-primary">Assignments</Link></li>
-                        <li><Link to="/createGroup" className="hover:text-primary">Create Assignment</Link></li>
-                        <li><Link to="/myGroups" className="hover:text-primary">My Attempts</Link></li>
+                        <li><NavLink to="/" className="hover:text-primary">Home</NavLink></li>
+                        <li><NavLink to="/assignments" className="hover:text-primary">Assignments</NavLink></li>
+                        <li><NavLink to="/createAssignment" className="hover:text-primary">Create Assignment</NavLink></li>
+                        <li><NavLink to="/pendingAssignments" className="hover:text-primary">Pending Assignments</NavLink></li>
                     </ul>
                 </div>
 

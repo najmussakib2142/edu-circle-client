@@ -21,7 +21,7 @@ const PendingAssignments = () => {
             const token = await user.getIdToken();
 
             axios
-                .get(`http://localhost:5000/submissions?status=pending`, {
+                .get(`https://edu-circle-server-seven.vercel.app/submissions?status=pending`, {
                     headers: {
                         authorization: `Bearer ${token}`,
                     },
@@ -48,7 +48,7 @@ const PendingAssignments = () => {
         }
 
         try {
-            const res = await axios.patch(`http://localhost:5000/submissions/${selected._id}`, {
+            const res = await axios.patch(`https://edu-circle-server-seven.vercel.app/submissions/${selected._id}`, {
                 obtainedMarks: parseInt(mark),
                 feedback,
                 markedBy: user.email,

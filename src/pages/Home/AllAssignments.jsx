@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import axios from 'axios';
 import { IoSearch } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
 
 
@@ -22,7 +22,7 @@ const AllAssignments = () => {
         if (searchText) params.search = searchText;
 
         try {
-            const res = await axios.get('http://localhost:5000/assignments', { params });
+            const res = await axios.get('https://edu-circle-server-seven.vercel.app/assignments', { params });
             setAssignments(res.data);
         } catch (error) {
             toast.error(error.message, "Failed to fetch assignments");
@@ -34,14 +34,14 @@ const AllAssignments = () => {
     }, [difficulty, searchText]);
 
     return (
-        <div className="px-3 py-12 md:px-10">
-            <Helmet>
+        <div className="px-3 max-w-6xl mx-auto py-12 md:px-3">
+            {/* <Helmet>
                 <title>EduCircle || Assignments</title>
-            </Helmet>
+            </Helmet> */}
 
-            <h2 className="text-4xl text-center font-bold mb-4 mt-3 text-primary"> Featured Assignments </h2>
+            <h2 className="text-4xl text-center font-bold mb-4 text-primary"> Featured Assignments </h2>
             <p className='text-xl text-center font-medium mb-6 dark:text-gray-400'>See what learners are engaging with the most.</p>
-            <div className="flex flex-wrap gap-4 mb-8 justify-center">
+            <div className="flex flex-wrap gap-4 mb-7 md:mb-14 justify-center">
                 {/*  Filter */}
                 <select
                     className="select select-bordered w-48"

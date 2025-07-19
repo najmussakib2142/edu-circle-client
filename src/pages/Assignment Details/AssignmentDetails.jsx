@@ -41,7 +41,7 @@ const AssignmentDetails = () => {
             submittedAt: new Date(),
         }
 
-        axios.post('http://localhost:5000/submissions', submission, {
+        axios.post('https://edu-circle-server-seven.vercel.app/submissions', submission, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -82,7 +82,7 @@ const AssignmentDetails = () => {
             <div className="mb-6">
                 <img src={thumbnail} alt={title} className="rounded-lg w-full h-64 object-cover" />
             </div>
-            <div className='px-5 pb-4'>
+            <div className='md:px-5 px-3 pb-4'>
 
                 <h2 className="text-3xl font-bold text-primary mb-3">{title}</h2>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">{description}</p>
@@ -94,7 +94,7 @@ const AssignmentDetails = () => {
                 </div>
 
                 {/* <Link to={`/AssignmentSubmission/${_id}`}> */}
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-3 justify-between'>
                     <motion.button
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}

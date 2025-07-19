@@ -19,7 +19,7 @@ const assignmentLoader = async ({ params }) => {
     const user = await waitForUser();
     const token = await user.getIdToken();
 
-    const res = await fetch(`http://localhost:5000/assignments/${params.id}`, {
+    const res = await fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

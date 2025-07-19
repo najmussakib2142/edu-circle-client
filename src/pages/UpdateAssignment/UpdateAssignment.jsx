@@ -12,10 +12,9 @@ const UpdateAssignment = () => {
 
     const { user } = useAuth();
     const { id } = useParams()
-    // const navigate = useNavigate()
     const { _id } = useLoaderData()
-    // const [accessToken, setAccessToken] = useState('');
-    const {accessToken, loading} = useAccessToken()
+    const [validationErrors, setValidationErrors] = useState({});
+    const { accessToken, loading } = useAccessToken()
 
     const [formData, setFormData] = useState({
         title: '',
@@ -33,7 +32,7 @@ const UpdateAssignment = () => {
 
         const fetchAssignment = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/assignments/${id}`, {
+                const res = await axios.get(`https://edu-circle-server-seven.vercel.app/assignments/${id}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -49,7 +48,7 @@ const UpdateAssignment = () => {
         };
 
         fetchAssignment();
-    }, [id,loading, accessToken]);
+    }, [id, loading, accessToken]);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -64,17 +63,43 @@ const UpdateAssignment = () => {
         const formData = new FormData(form);
         const updateAssignment = Object.fromEntries(formData.entries());
 
+        const errors = {};
+
+        if (!updateAssignment.title) errors.title = 'Title is required.';
+        if (!updateAssignment.description) {
+            errors.description = 'Description is required.';
+        } else if (updateAssignment.description.length < 20) {
+            errors.description = 'Description must be at least 20 characters.';
+        }
+
+        if (!updateAssignment.marks) {
+            errors.marks = 'Marks are required.';
+        } else if (isNaN(updateAssignment.marks)) {
+            errors.marks = 'Marks must be a number.';
+        }
+
+        if (!updateAssignment.thumbnail) errors.thumbnail = 'Thumbnail is required.';
+        if (!updateAssignment.difficulty) errors.difficulty = 'Please select difficulty.';
+
+        if (Object.keys(errors).length > 0) {
+            setValidationErrors(errors);
+            return;
+        }
+
+        setValidationErrors({}); // Clear previous errors
+
+
         Swal.fire({
             title: "Are you sure?",
             text: `You want to update this assignment?`,
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#1F1A70",
+            confirmButtonColor: "#1471e3",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, update it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/assignments/${id}`, {
+                fetch(`https://edu-circle-server-seven.vercel.app/assignments/${id}`, {
                     method: "PUT",
                     headers: {
                         'content-type': 'application/json',
@@ -122,6 +147,9 @@ const UpdateAssignment = () => {
                     required
 
                 />
+                {validationErrors.title && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
+                )}
 
 
                 {/* Description */}
@@ -137,6 +165,9 @@ const UpdateAssignment = () => {
                     onChange={handleChange}
                     required
                 />
+                {validationErrors.description && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.description}</p>
+                )}
 
 
                 {/* Marks */}
@@ -151,14 +182,16 @@ const UpdateAssignment = () => {
                     value={formData.marks}
                     onChange={handleChange}
                 />
-
+                {validationErrors.marks && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.marks}</p>
+                )}
 
                 {/* Thumbnail URL */}
                 <label htmlFor="thumbnail" className="block font-medium mb-1">
                     Thumbnail URL
                 </label>
                 <input
-                    type="text"
+                    type="url"
                     name="thumbnail"
                     className="input input-bordered w-full"
                     placeholder="Thumbnail URL"
@@ -166,6 +199,10 @@ const UpdateAssignment = () => {
                     onChange={handleChange}
                     required
                 />
+                {validationErrors.thumbnail && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.thumbnail}</p>
+                )}
+
 
                 {/* Email */}
                 <label className="block font-medium mb-1">
@@ -179,6 +216,7 @@ const UpdateAssignment = () => {
                     onChange={handleChange}
                     readOnly
                 />
+
 
                 {/* userName */}
                 <label className="block font-medium mb-1">
@@ -208,6 +246,9 @@ const UpdateAssignment = () => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
+                {validationErrors.difficulty && (
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.difficulty}</p>
+                )}
 
 
                 {/* Due Date */}
@@ -220,7 +261,7 @@ const UpdateAssignment = () => {
                         onChange={(date) =>
                             setFormData(oldData => ({ ...oldData, dueDate: date }))
                         }
-                        dateFormat="yyyy-MM-dd"
+                        dateFormat="dd-MM-yyyy"
                         className="input input-bordered w-full"
                     />
                 </div>

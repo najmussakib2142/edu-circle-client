@@ -5,7 +5,7 @@ import registerLottie from '../../assets/lotties/11.json'
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
 import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
 
@@ -75,9 +75,9 @@ const Register = () => {
 
     return (
         <div>
-            <Helmet>
+            {/* <Helmet>
                 <title>EduCircle || Register</title>
-            </Helmet>
+            </Helmet> */}
 
             <div className="hero py-20">
                 <div className="hero-content flex-col gap-10 lg:flex-row-reverse">
