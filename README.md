@@ -62,6 +62,8 @@ Feel free to fork, star, and contribute to the project! Feedback and suggestions
 
 ---
 
+Doc file: https://docs.google.com/document/d/1rZTzqLoPYEPfiRB9YMiA4-yc_KpkFsms1OsZdSg0_o8/edit?tab=t.0
+
 ## 🌟 Developed By:
 
 Najmus Sakib
