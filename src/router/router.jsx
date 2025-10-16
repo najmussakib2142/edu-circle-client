@@ -55,7 +55,6 @@ const router = createBrowserRouter([
                 path: 'assignment/:id',
                 element:
                     <PrivateRoute><AssignmentDetails></AssignmentDetails></PrivateRoute>,
-                // loader: assignmentLoader,
                 loader: ({params}) =>  fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 // errorElement: <SignIn></SignIn>
