@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+
 // Initialize AOS before render
 AOS.init({
   duration: 1000,

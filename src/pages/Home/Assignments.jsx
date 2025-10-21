@@ -40,7 +40,7 @@ const Assignments = ({ assignmentsPromise }) => {
                 <div className="text-center mt-8">
                     <button
                         onClick={handleToggle}
-                        className="btn p-5 border border-primary text-primary bg-transparent hover:bg-primary hover:text-white dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
+                        className="px-6 py-2.5 bg-indigo-500 dark:bg-indigo-500 text-white rounded-lg font-semibold transition"
                     >
                         {showAll ? 'Show Less' : 'Show More'}
                     </button>

@@ -94,7 +94,7 @@ const Navbar = () => {
                                 {links}
                             </ul>
                         </div>
-                        <Link to="/" className="font-bold text-2xl"><span className='text-primary'>EduCircle</span><span className='text-secondary'></span></Link>
+                        <Link to="/" className="font-bold text-2xl"><span className='text-indigo-600 dark:text-indigo-400'>EduCircle</span><span className='text-secondary'></span></Link>
 
                     </div>
                     <div className="navbar-center hidden lg:flex">

@@ -5,6 +5,8 @@ import Loading from '../shared/Loading';
 import CountSection from '../shared/CountSection';
 import FeatureSection from '../FeatureSection/FeatureSection';
 import FAQSection from '../FAQSection/FAQSection';
+import TestimonialsSection from '../TestimonialsSection/TestimonialsSection';
+import NewsletterSection from './NewsletterSection/NewsletterSection';
 // import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
@@ -22,8 +24,10 @@ const Home = () => {
                 <Assignments assignmentsPromise={assignmentsPromise}></Assignments>
             </Suspense>
             <FeatureSection></FeatureSection>
-            <FAQSection></FAQSection>
+            <TestimonialsSection></TestimonialsSection>
             <CountSection></CountSection>
+            <FAQSection></FAQSection>
+            {/* <NewsletterSection></NewsletterSection> */}
         </div>
     );
 };
