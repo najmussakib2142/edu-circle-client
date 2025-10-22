@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { FaTrash, FaEdit, FaEye } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaEye, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth';
 const AssignmentCard = ({ assignment }) => {
   const { user } = useAuth();
   // const [assignments, setAssignments] = useState([]);
+  const [bookmarked, setBookmarked] = useState(false);
 
   const {
     _id,
@@ -60,6 +61,28 @@ const AssignmentCard = ({ assignment }) => {
     });
   };
 
+  useEffect(() => {
+    if (user) {
+      axios.get(`https://edu-circle-server-seven.vercel.app/bookmarks`, { headers: { Authorization: `Bearer ${user.accessToken}` } })
+        .then(res => {
+          const exists = res.data.some(b => b.assignmentId === assignment._id);
+          setBookmarked(exists);
+        });
+    }
+  }, [user, assignment._id]);
+
+  const toggleBookmark = () => {
+    if (!user) return alert('Login to bookmark');
+
+    if (bookmarked) {
+      axios.delete(`https://edu-circle-server-seven.vercel.app/bookmarks/${assignment._id}`, { headers: { Authorization: `Bearer ${user.accessToken}` } })
+        .then(() => setBookmarked(false));
+    } else {
+      axios.post(`https://edu-circle-server-seven.vercel.app/bookmarks`, { assignmentId: assignment._id }, { headers: { Authorization: `Bearer ${user.accessToken}` } })
+        .then(() => setBookmarked(true));
+    }
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -78,10 +101,16 @@ const AssignmentCard = ({ assignment }) => {
         <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow">
           {difficulty}
         </div>
+
       </figure>
 
       <div className="p-5">
-        <h2 className="text-xl font-semibold text-primary mb-2">{title}</h2>
+        <div className="flex justify-between items-center mb-1">
+          <h2 className="text-xl font-semibold text-primary mb-2">{title}</h2>
+          <button onClick={toggleBookmark} className=" text-2xl text-yellow-400">
+            {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+          </button>
+        </div>
         <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
           {description.length > 70 ? `${description.slice(0, 70)}...` : description}
         </p>

@@ -42,7 +42,7 @@ const TestimonialsSection = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/reviews");
+        const { data } = await axios.get("https://edu-circle-server-seven.vercel.app/reviews");
         const mappedReviews = data.map((r) => ({
           name: r.userName,
           role: r.userEmail, // or role if available
@@ -87,7 +87,7 @@ const TestimonialsSection = () => {
                 alt={t.name}
                 className="w-16 h-16 rounded-full mx-auto mb-4 object-cover"
               />
-              <p className="text-gray-700 dark:text-gray-300 mb-4">{t.message}</p>
+              <p className="text-gray-700 line-clamp-3 dark:text-gray-300 mb-4">{t.message}</p>
               <div className="flex justify-center mb-2">
                 {[...Array(5)].map((_, i) => (
                   <FaStar

@@ -20,7 +20,7 @@ const SubmitReview = () => {
         try {
             // const token = await user.getIdToken();
             await axios.post(
-                `http://localhost:5000/reviews`,
+                `https://edu-circle-server-seven.vercel.app/reviews`,
                 { message, rating },
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             );

@@ -71,8 +71,10 @@ const Navbar = () => {
         {
             user && <>
                 {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
-                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
+                // <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
                 <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/pendingAssignments">Pending Assignments</NavLink></li>
+                {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li> */}
+                {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
 
             </>
         }
@@ -174,6 +176,7 @@ const Navbar = () => {
                                         {/* <li><span className="font-semibold">{user.displayName}</span></li> */}
                                         <li className=''><NavLink to="/createAssignment">Create Assignments</NavLink></li>
                                         <li><NavLink to="/mySubmissions">My Attempted Assignments </NavLink></li>
+                                        <li><NavLink to="/bookmarkedAssignments">My Bookmarked Assignments </NavLink></li>
                                         {/* <li><button onClick={handleSignOut}>Sign Out</button></li> */}
                                     </ul>
                                 </div>

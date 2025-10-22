@@ -18,6 +18,7 @@ import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import PendingAssignments from "../pages/PendingAssignments/PendingAssignments";
 import assignmentLoader from "../api/assignmentLoader";
 import SubmitReview from "../pages/SubmitReview/SubmitReview";
+import BookmarkedAssignments from "../pages/BookmarkedAssignments/BookmarkedAssignments";
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
             {
                 path: "submit-review",
                 element: <PrivateRoute><SubmitReview></SubmitReview></PrivateRoute>,
+            },
+            {
+                path: "bookmarkedAssignments",
+                element: <PrivateRoute><BookmarkedAssignments></BookmarkedAssignments></PrivateRoute>,
             }
         ]
     },

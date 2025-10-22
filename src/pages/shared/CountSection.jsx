@@ -20,7 +20,7 @@ const CountSection = () => {
 
   // Fetch stats from backend
   useEffect(() => {
-    fetch("http://localhost:5000/stats") // Change to your deployed backend URL
+    fetch("https://edu-circle-server-seven.vercel.app/stats") // Change to your deployed backend URL
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch((err) => console.error("Failed to fetch stats:", err));
