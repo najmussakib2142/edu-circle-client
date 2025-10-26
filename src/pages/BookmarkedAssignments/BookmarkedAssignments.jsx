@@ -68,12 +68,14 @@ const BookmarkedAssignments = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto py-10 px-4">
-            <h2 className="text-3xl font-bold text-primary mb-6 text-center">
+        <div className="max-w-6xl mx-auto py-10 px-6">
+            <h2 className="text-3xl font-bold mb-2 text-center text-primary dark:text-primary/80">
                 My Bookmarked Assignments
             </h2>
+            <div className="h-1 w-24 bg-primary dark:bg-primary/70 mx-auto mb-6 rounded-full"></div>
+            
             <motion.div
-                className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+                className="grid gap-4 pt-4 md:grid-cols-2 lg:grid-cols-3"
                 initial="hidden"
                 animate="visible"
                 variants={{

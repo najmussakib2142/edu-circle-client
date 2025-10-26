@@ -73,6 +73,7 @@ const Navbar = () => {
                 {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li>
                 // <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
                 <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/pendingAssignments">Pending Assignments</NavLink></li>
+                <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/dashboard">Dashboard</NavLink></li>
                 {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/createAssignment">Create Assignment </NavLink></li> */}
                 {/* <li className='text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary'><NavLink to="/mySubmissions">My Submissions</NavLink></li> */}
 
@@ -159,11 +160,14 @@ const Navbar = () => {
                                 <div className="dropdown dropdown-end group relative">
                                     {/* Dropdown button */}
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <img
-                                            className="w-12 dark:border dark:border-gray-500 h-12 rounded-full object-cover"
-                                            src={`${user ? user.photoURL : "https://i.ibb.co/VWqpdVpB/user.pngs"}`}
-                                            alt="User"
-                                        />
+                                        {user?.photoURL ? (
+                                            <img
+                                                className="w-12 h-12 rounded-full object-cover border border-gray-300 dark:border dark:border-primary"
+                                                src={user.photoURL}
+                                                alt="User"
+                                            />
+                                        ) : (
+                                            <FaUserCircle className="w-12 h-12 text-gray-600 dark:text-primary transition-colors" />)}
                                     </div>
 
                                     {/* Tooltip on hover */}
@@ -173,10 +177,21 @@ const Navbar = () => {
 
                                     {/* Dropdown menu items */}
                                     <ul tabIndex={0} className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li className="px-3 py-2 border-b border-gray-200 dark:border-gray-700 cursor-default">
+                                            <div className="flex flex-col">
+                                                <span className="font-semibold truncate text-gray-800 dark:text-gray-200">
+                                                    {user?.displayName || "User"}
+                                                </span>
+                                                <span className="text-sm truncate text-gray-500 dark:text-gray-400">
+                                                    {user?.email}
+                                                </span>
+                                            </div>
+                                        </li>
                                         {/* <li><span className="font-semibold">{user.displayName}</span></li> */}
-                                        <li className=''><NavLink to="/createAssignment">Create Assignments</NavLink></li>
+                                        <li className=''><NavLink to="/dashboard">Dashboard</NavLink></li>
+                                        {/* <li className=''><NavLink to="/createAssignment">Create Assignments</NavLink></li>
                                         <li><NavLink to="/mySubmissions">My Attempted Assignments </NavLink></li>
-                                        <li><NavLink to="/bookmarkedAssignments">My Bookmarked Assignments </NavLink></li>
+                                        <li><NavLink to="/bookmarkedAssignments">My Bookmarked Assignments </NavLink></li> */}
                                         {/* <li><button onClick={handleSignOut}>Sign Out</button></li> */}
                                     </ul>
                                 </div>

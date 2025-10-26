@@ -81,7 +81,7 @@ const PendingAssignments = () => {
             <h2 className="text-3xl font-bold mb-6 pt-6 text-primary text-center">📝 Pending Assignments</h2>
 
             <div className="overflow-x-auto">
-                <table className="table w-full border dark:border-gray-700">
+                <table className="table w-full border border-gray-300 dark:border-gray-700">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                             <th>Title</th>

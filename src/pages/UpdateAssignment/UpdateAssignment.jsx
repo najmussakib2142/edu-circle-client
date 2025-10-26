@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import { useParams } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import DatePicker from 'react-datepicker';
-import { useLoaderData, useParams } from 'react-router';
+import { useLoaderData, useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import useAccessToken from '../../api/useAccessToken';
@@ -15,7 +15,7 @@ const UpdateAssignment = () => {
     const { _id } = useLoaderData()
     const [validationErrors, setValidationErrors] = useState({});
     const { accessToken, loading } = useAccessToken()
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -118,10 +118,15 @@ const UpdateAssignment = () => {
                                 showConfirmButton: false,
                                 timer: 2000,
                                 timerProgressBar: true,
+                                didClose: () => {
+                                    // Navigate after toast closes
+                                    navigate('/dashboard');
+                                }
                             });
 
                         }
                     });
+                // navigate('/dashboard');
             }
         })
     }

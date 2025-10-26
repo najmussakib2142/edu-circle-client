@@ -19,6 +19,9 @@ import PendingAssignments from "../pages/PendingAssignments/PendingAssignments";
 import assignmentLoader from "../api/assignmentLoader";
 import SubmitReview from "../pages/SubmitReview/SubmitReview";
 import BookmarkedAssignments from "../pages/BookmarkedAssignments/BookmarkedAssignments";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import CreatorAssignmentDetail from "../pages/Dashboard/CreatorAssignmentDetail";
 
 const router = createBrowserRouter([
     {
@@ -43,30 +46,17 @@ const router = createBrowserRouter([
                 element: <AllAssignments></AllAssignments>,
                 hydrateFallbackElement: <Loading></Loading>
             },
-            {
-                path: 'mySubmissions',
-                element:
-                    <PrivateRoute><MySubmissions></MySubmissions></PrivateRoute>
-            },
-            {
-                path: 'createAssignment',
-                element:
-                    <PrivateRoute><CreateAssignment></CreateAssignment> </PrivateRoute>
-            },
+
+
             {
                 path: 'assignment/:id',
                 element:
                     <PrivateRoute><AssignmentDetails></AssignmentDetails></PrivateRoute>,
-                loader: ({params}) =>  fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
+                loader: ({ params }) => fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 // errorElement: <SignIn></SignIn>
             },
-            {
-                path: 'update/:id',
-                element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
-                loader: ({params}) =>  fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
-                hydrateFallbackElement: <Loading></Loading>
-            },
+
             {
                 path: 'pendingAssignments',
                 element: <PrivateRoute><PendingAssignments></PendingAssignments></PrivateRoute>
@@ -75,15 +65,47 @@ const router = createBrowserRouter([
                 path: "submit-review",
                 element: <PrivateRoute><SubmitReview></SubmitReview></PrivateRoute>,
             },
-            {
-                path: "bookmarkedAssignments",
-                element: <PrivateRoute><BookmarkedAssignments></BookmarkedAssignments></PrivateRoute>,
-            }
+
         ]
     },
     {
         path: "*",
         element: <ErrorPage></ErrorPage>
+    },
+    {
+        path: "dashboard",
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        children: [
+            {
+                index: true,
+                element: <Dashboard></Dashboard>
+            },
+            {
+                path: 'creator-assignments/:id',
+                element: <CreatorAssignmentDetail></CreatorAssignmentDetail>,
+            },
+            {
+                path: 'update/:id',
+                element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
+                loader: ({ params }) => fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>
+            },
+            {
+                path: 'createAssignment',
+                element:
+                    <PrivateRoute><CreateAssignment></CreateAssignment> </PrivateRoute>
+            },
+            {
+                path: "bookmarkedAssignments",
+                element: <PrivateRoute><BookmarkedAssignments></BookmarkedAssignments></PrivateRoute>,
+            },
+            {
+                path: 'mySubmissions',
+                element:
+                    <PrivateRoute><MySubmissions></MySubmissions></PrivateRoute>
+            },
+
+        ]
     }
 ]);
 

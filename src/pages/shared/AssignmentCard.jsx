@@ -21,45 +21,45 @@ const AssignmentCard = ({ assignment }) => {
     creatorEmail,
   } = assignment;
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will permanently delete the assignment!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(`https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`)
-          // .then((res) => {
-          //   if (res.data.deletedCount > 0) {
-          //     Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
-          //   }
-          // })
-          .then((res) => {
-            if (res.data.deletedCount > 0) {
-              Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success').then(() => {
-                // setAssignments(prev => prev.filter(item => item._id !== id));
-              });
-            }
-          })
-          .catch((err) => {
-            if (err.response?.status === 403) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Permission Denied',
-                text: 'You can only delete your own assignments.',
-              });
-            } else {
-              Swal.fire('Error', 'Something went wrong.', 'error');
-            }
-          });
-      }
-    });
-  };
+  // const handleDelete = (id) => {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'This will permanently delete the assignment!',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes, delete it!',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios
+  //         .delete(`https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`)
+  //         // .then((res) => {
+  //         //   if (res.data.deletedCount > 0) {
+  //         //     Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
+  //         //   }
+  //         // })
+  //         .then((res) => {
+  //           if (res.data.deletedCount > 0) {
+  //             Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success').then(() => {
+  //               // setAssignments(prev => prev.filter(item => item._id !== id));
+  //             });
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           if (err.response?.status === 403) {
+  //             Swal.fire({
+  //               icon: 'error',
+  //               title: 'Permission Denied',
+  //               text: 'You can only delete your own assignments.',
+  //             });
+  //           } else {
+  //             Swal.fire('Error', 'Something went wrong.', 'error');
+  //           }
+  //         });
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     if (user) {
@@ -96,7 +96,7 @@ const AssignmentCard = ({ assignment }) => {
         <img
           src={thumbnail}
           alt={title}
-          className="h-48 w-full object-cover"
+          className="h-48  w-full object-cover"
         />
         <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow">
           {difficulty}
@@ -106,12 +106,12 @@ const AssignmentCard = ({ assignment }) => {
 
       <div className="p-5">
         <div className="flex justify-between items-center mb-1">
-          <h2 className="text-xl font-semibold text-primary mb-2">{title}</h2>
+          <h2 className="text-xl font-semibold line-clamp-1 text-primary mb-2">{title}</h2>
           <button onClick={toggleBookmark} className=" text-2xl text-yellow-400">
             {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
           </button>
         </div>
-        <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+        <p className="text-sm text-gray-700 line-clamp-2 dark:text-gray-300 mb-4">
           {description.length > 70 ? `${description.slice(0, 70)}...` : description}
         </p>
 
@@ -125,13 +125,13 @@ const AssignmentCard = ({ assignment }) => {
         <div className="flex flex-wrap gap-3">
           <Link
             to={`/assignment/${_id}`}
-            className="flex items-center gap-2 btn btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+            className="flex w-full items-center gap-2 btn btn-sm bg-blue-500 hover:bg-blue-600 text-white"
             title="View Assignment"
           >
             <FaEye /> View
           </Link>
 
-          <Link
+          {/* <Link
             to={`/update/${_id}`}
             className="flex items-center gap-2 btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white"
             title="Update Assignment"
@@ -145,7 +145,7 @@ const AssignmentCard = ({ assignment }) => {
             title="Delete Assignment"
           >
             <FaTrash /> Delete
-          </button>
+          </button> */}
         </div>
       </div>
     </motion.div>

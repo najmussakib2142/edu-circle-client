@@ -7,6 +7,7 @@ import FeatureSection from '../FeatureSection/FeatureSection';
 import FAQSection from '../FAQSection/FAQSection';
 import TestimonialsSection from '../TestimonialsSection/TestimonialsSection';
 import NewsletterSection from './NewsletterSection/NewsletterSection';
+import HowItWorksSection from '../HowItWorksSection/HowItWorksSection';
 // import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
             </Helmet> */}
 
             <Banner></Banner>
+            <HowItWorksSection></HowItWorksSection>
             <Suspense fallback={<Loading></Loading>}>
                 <Assignments assignmentsPromise={assignmentsPromise}></Assignments>
             </Suspense>
