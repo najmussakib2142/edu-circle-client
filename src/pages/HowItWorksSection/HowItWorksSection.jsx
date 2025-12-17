@@ -22,7 +22,7 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-16 ">
+    <section className="py-20 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-neutral dark:text-gray-100 mb-4">
           How It Works
@@ -41,7 +41,7 @@ const HowItWorksSection = () => {
               viewport={{ once: true }}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform"
             >
-              <div className="text-primary dark:text-secondary mb-4">{step.icon}</div>
+              <div className="text-gray-700 dark:text-gray-500 mb-4">{step.icon}</div>
               <h3 className="text-xl font-semibold text-neutral dark:text-gray-100 mb-2">{step.title}</h3>
               <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
             </motion.div>

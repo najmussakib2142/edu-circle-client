@@ -29,22 +29,22 @@ const CountSection = () => {
   // Prepare data for mapping
   const statsData = [
     {
-      icon: <FaGraduationCap className="text-5xl text-blue-600" />,
+      icon: <FaGraduationCap className="text-5xl text-gray-700 dark:text-gray-500" />,
       value: stats.students,
       label: "Students Successfully Enrolled",
     },
     {
-      icon: <FaChalkboardTeacher className="text-5xl text-green-600" />,
+      icon: <FaChalkboardTeacher className="text-5xl text-gray-700 dark:text-gray-500" />,
       value: stats.instructors,
       label: "Certified Expert Instructors",
     },
     {
-      icon: <FaBookOpen className="text-5xl text-purple-600" />,
+      icon: <FaBookOpen className="text-5xl text-gray-700 dark:text-gray-500" />,
       value: stats.courses,
       label: "Interactive Courses Offered",
     },
     {
-      icon: <FaGlobe className="text-5xl text-pink-600" />,
+      icon: <FaGlobe className="text-5xl text-gray-700 dark:text-gray-500" />,
       value: stats.partners,
       label: "Global Learning Partners",
     },
@@ -69,7 +69,7 @@ const CountSection = () => {
               <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="mb-4 flex justify-center">
                 {stat.icon}
               </motion.div>
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-blue-700 dark:text-white">
+              <h3 className="text-4xl sm:text-5xl font-extrabold text-[#1471e3] dark:text-white">
                 {inView ? <CountUp end={stat.value} duration={3} /> : 0}+
               </h3>
               <p className="mt-3 text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">

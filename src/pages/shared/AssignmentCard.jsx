@@ -98,7 +98,7 @@ const AssignmentCard = ({ assignment }) => {
           alt={title}
           className="h-48  w-full object-cover"
         />
-        <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow">
+        <div className="absolute top-2 left-2 bg-gray-700 dark:bg-gray-500  text-white text-xs px-2 py-1 rounded-full shadow">
           {difficulty}
         </div>
 
@@ -106,8 +106,8 @@ const AssignmentCard = ({ assignment }) => {
 
       <div className="p-5">
         <div className="flex justify-between items-center mb-1">
-          <h2 className="text-xl font-semibold line-clamp-1 text-primary mb-2">{title}</h2>
-          <button onClick={toggleBookmark} className=" text-2xl text-yellow-400">
+          <h2 className="text-xl font-semibold line-clamp-1 text-indigo-600 dark:text-indigo-400 mb-2">{title}</h2>
+          <button onClick={toggleBookmark} className=" text-xl text-yellow-400">
             {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
           </button>
         </div>
@@ -125,7 +125,7 @@ const AssignmentCard = ({ assignment }) => {
         <div className="flex flex-wrap gap-3">
           <Link
             to={`/assignment/${_id}`}
-            className="flex w-full items-center gap-2 btn btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+            className="flex w-full items-center gap-2 btn btn-sm bg-gray-700 dark:bg-gray-400 hover:bg-gray-800 dark:hover:bg-gray-700 text-white"
             title="View Assignment"
           >
             <FaEye /> View

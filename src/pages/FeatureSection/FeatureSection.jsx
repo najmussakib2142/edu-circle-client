@@ -71,7 +71,7 @@ const FeatureSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: i * 0.1 }}
             >
-              <div className="text-4xl mb-4 text-primary dark:text-secondary">{feature.icon}</div>
+              <div className="text-4xl mb-4 text-gray-700 dark:text-gray-500">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-2 text-neutral dark:text-gray-100">{feature.title}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">{feature.description}</p>
             </motion.div>

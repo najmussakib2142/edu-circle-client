@@ -20,7 +20,7 @@ const Banner = () => {
     };
 
     return (
-        <section className="relative mb-10 w-full h-[100vh] overflow-hidden">
+        <section className="relative  w-full h-[100vh] overflow-hidden">
             {/* ===== Carousel Background ===== */}
             <Carousel
                 autoPlay
