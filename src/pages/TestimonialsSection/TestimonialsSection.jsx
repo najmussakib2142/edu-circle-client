@@ -150,7 +150,7 @@ const TestimonialsSection = () => {
               <motion.button
                 whileHover={{ scale: 1.03, translateY: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-gray-700 dark:bg-gray-500  text-white rounded-lg font-bold shadow-lg shadow-gray-500/25 transition-all flex items-center gap-2"
+                className="px-8 py-4 bg-gray-700 dark:bg-gray-500  text-white rounded-lg font-semibold transition-all flex items-center gap-2"
               >
                 Share Your Experience
               </motion.button>

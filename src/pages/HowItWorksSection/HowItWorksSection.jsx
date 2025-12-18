@@ -22,7 +22,7 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-20 bg-gray-100 dark:bg-gray-900">
+    <section className="py-7 md:py-20 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-neutral dark:text-gray-100 mb-4">
           How It Works

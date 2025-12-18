@@ -51,7 +51,7 @@ const CountSection = () => {
   ];
 
   return (
-    <section className="py-15 bg-gradient-to-b from-gray-50 dark:from-gray-900">
+    <section className="py-7 md:py-20 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-16">
           Our Growing Community
@@ -69,7 +69,7 @@ const CountSection = () => {
               <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="mb-4 flex justify-center">
                 {stat.icon}
               </motion.div>
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-[#1471e3] dark:text-white">
+              <h3 className="text-4xl sm:text-5xl font-bold text-indigo-600 dark:text-indigo-400  ">
                 {inView ? <CountUp end={stat.value} duration={3} /> : 0}+
               </h3>
               <p className="mt-3 text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">

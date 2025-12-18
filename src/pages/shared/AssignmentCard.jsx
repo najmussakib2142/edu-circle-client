@@ -107,7 +107,7 @@ const AssignmentCard = ({ assignment }) => {
       <div className="p-5">
         <div className="flex justify-between items-center mb-1">
           <h2 className="text-xl font-semibold line-clamp-1 text-indigo-600 dark:text-indigo-400 mb-2">{title}</h2>
-          <button onClick={toggleBookmark} className=" text-xl text-yellow-400">
+          <button onClick={toggleBookmark} className=" text-xl text-indigo-600 dark:text-indigo-400 ">
             {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
           </button>
         </div>
@@ -125,7 +125,7 @@ const AssignmentCard = ({ assignment }) => {
         <div className="flex flex-wrap gap-3">
           <Link
             to={`/assignment/${_id}`}
-            className="flex w-full items-center gap-2 btn btn-sm bg-gray-700 dark:bg-gray-400 hover:bg-gray-800 dark:hover:bg-gray-700 text-white"
+            className="flex w-full items-center gap-2 btn btn-sm bg-indigo-600 dark:bg-indigo-400  text-white"
             title="View Assignment"
           >
             <FaEye /> View

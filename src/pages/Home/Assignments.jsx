@@ -28,7 +28,7 @@ const Assignments = ({ assignmentsPromise }) => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto py-7 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto py-7 md:py-20 px-4 md:px-6">
             <h2 className="text-3xl md:text-4xl font-extrabold text-neutral dark:text-gray-100  text-center  mb-3 ">Top Picks for You</h2>
             <p className='text-xl text-center text-gray-600 font-medium mb-10 dark:text-gray-500'>
                 Challenge your skills with our top picks.
