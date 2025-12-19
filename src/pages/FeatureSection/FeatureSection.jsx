@@ -12,7 +12,7 @@ const FeatureSection = () => {
     <section className="w-full py-7 md:py-20 bg-base-100 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold mb-12 text-center text-neutral dark:text-gray-100"
+          className="text-3xl sm:text-4xl font-extrabold mb-12 text-center text-neutral dark:text-gray-100"
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}

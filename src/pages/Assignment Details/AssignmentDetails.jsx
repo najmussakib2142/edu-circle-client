@@ -102,7 +102,7 @@ const AssignmentDetails = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-2xl mx-auto py-5 my-12 p-4 bg-base-100 rounded-lg shadow-md border border-gray-300 dark:border-gray-700"
+            className="max-w-2xl  mx-auto py-8 my-12  "
         >
             <div className="mb-6">
                 <img src={thumbnail} alt={title} className="rounded-lg w-full h-64 object-cover" />
@@ -122,12 +122,12 @@ const AssignmentDetails = () => {
                     </motion.button>
                 </div>
 
-                <p className="text-gray-700 dark:text-gray-300 mb-4">{description}</p>
+                <p className="text-gray-700  dark:text-gray-300 mb-4">{description}</p>
 
-                <div className="flex flex-wrap gap-3 text-sm mb-6">
+                <div className="flex flex-wrap py-1 gap-3 text-sm mb-6">
                     <span className="badge text-lg p-3 font-medium badge-secondary">Marks: {marks}</span>
-                    <span className="badge text-lg p-3 font-medium badge-accent">Difficulty: {difficulty}</span>
-                    <span className="badge text-lg p-3 font-medium badge-info">Due: {new Date(dueDate).toLocaleDateString()}</span>
+                    <span className="badge text-lg p-3 text-white font-medium badge-accent">Difficulty: {difficulty}</span>
+                    <span className="badge text-lg p-3 text-white font-medium badge-info">Due: {new Date(dueDate).toLocaleDateString()}</span>
                 </div>
 
                 {/* <Link to={`/AssignmentSubmission/${_id}`}> */}
@@ -140,7 +140,7 @@ const AssignmentDetails = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
                         onClick={() => setShowModal(true)}
-                        className="flex items-center justify-center gap-2 px-6 py-3 
+                        className="flex items-center justify-center gap-2 px-5 py-3 
                bg-indigo-600 text-white font-semibold rounded-lg 
                shadow-md hover:bg-indigo-700 transition duration-200"
                     >
@@ -151,10 +151,10 @@ const AssignmentDetails = () => {
                     {/* Back to Home Button */}
                     <Link
                         to="/"
-                        className="flex items-center justify-center gap-2 px-6 py-3 
-               bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 
+                        className="flex items-center justify-center  gap-2 px-5 py-3 
+                text-gray-700 dark:text-gray-300 
                font-semibold rounded-lg shadow-md 
-               hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-200"
+               hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-400 transition duration-200"
                     >
                         <IoMdArrowBack className="text-lg" />
                         Back to Home

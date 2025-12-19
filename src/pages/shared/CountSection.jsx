@@ -53,7 +53,7 @@ const CountSection = () => {
   return (
     <section className="py-7 md:py-20 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-16">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-neutral text-gray-800 dark:text-white mb-16">
           Our Growing Community
         </h2>
 
