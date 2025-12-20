@@ -10,7 +10,7 @@ const Footer = () => {
 
                 {/* About */}
                 <div>
-                    <Link to="/" className="text-3xl font-bold text-primary">EduCircle</Link>
+                    <Link to="/" className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">EduCircle</Link>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                         EduCircle is your collaborative online group study platform. Create, share, attempt, and grade assignments with friends in real-time.
                     </p>

@@ -20,95 +20,109 @@ const Banner = () => {
     };
 
     return (
-        <section className="relative  w-full h-[100vh] overflow-hidden">
-            {/* ===== Carousel Background ===== */}
-            <Carousel
-                autoPlay
-                infiniteLoop
-                showThumbs={false}
-                showStatus={false}
-                showArrows={false}
-                interval={5000}
-                transitionTime={1200}
-                className="absolute top-0 left-0 w-full h-full"
-            >
-                {[
-                    "https://i.ibb.co/SXHXph8F/12063795-4884785.jpg",
-                    "https://i.ibb.co/mCdBL1xd/10276612-4421964.jpg",
-                    "https://i.ibb.co/B2w7Q7dx/10276620-4416626.jpg",
-                ].map((src, i) => (
-                    <div className="w-full h-[100vh] md:h-[100vh]">
-                        <img
-                            src={src}
-                            alt={`Slide ${i + 1}`}
-                            className="w-full h-full object-cover brightness-75 dark:brightness-50"
-                        />
-                    </div>
-                ))}
-            </Carousel>
+        <section className="relative py-16 w-full min-h-[90vh] flex items-center bg-gray-50 dark:bg-gray-950 overflow-hidden">
+            {/* Background Decorative Circles */}
+            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
-            {/* ===== Gradient Overlay ===== */}
-            <div className="bg-gradient-to-r from-[var(--color-primary)]/30 via-[var(--color-secondary)]/20 to-[var(--color-accent)]/30
-dark:from-[var(--color-primary)]/40 dark:via-[var(--color-secondary)]/30 dark:to-[var(--color-accent)]/30
-"></div>
+            <div className="container  px-6 md:px-14  grid md:grid-cols-2 gap-12 mx-auto  items-center z-10">
 
-            {/* ===== Hero Content ===== */}
-            <div className="relative z-20 flex flex-col items-center justify-center text-center h-full px-4 md:px-10">
-                <motion.h1
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                    className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text
-               bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)]
-               drop-shadow-lg"
-                >
-                    Welcome to eduCircle
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                    className="text-lg md:text-2xl text-gray-100 dark:text-gray-200 mt-4 max-w-3xl leading-relaxed"
-                >
-                    Learn, grow, and achieve with top instructors. Empower your education journey and take your skills to the next level.
-                </motion.p>
-
-                {/* ===== Glassmorphic Form Card ===== */}
+                {/* Left Column: Content */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.6 }}
-                    className="mt-8 bg-white/20 dark:bg-gray-800/30 backdrop-blur-md rounded-xl shadow-xl p-6 flex flex-col md:flex-row items-center gap-4 w-full max-w-xl"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
                 >
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email..."
-                        className="flex-1 px-4 py-3 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none bg-white/50 dark:bg-gray-700/50"
-                    />
-                    <button
-                        onClick={handleSubscribe}
-                        className="px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold shadow-lg transition-transform transform hover:scale-105"
-                    >
-                        Subscribe
-                    </button>
+                    <span className="text-indigo-600 font-semibold tracking-widest uppercase text-sm">
+                        Future-Proof Your Career
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight mt-4">
+                        Unlock Your Potential with <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">EduCircle</span>
+                    </h1>
+                    <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-lg">
+                        Join over 15,000+ students mastering new skills through interactive assignments and world-class mentorship.
+                    </p>
+
+                    <div className="mt-10 flex flex-col sm:flex-row gap-4">
+                        <Link to="/assignments" className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-center transition-all shadow-lg shadow-indigo-200 dark:shadow-none">
+                            Explore Courses
+                        </Link>
+                        <button className="px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-all">
+                            Watch Demo
+                        </button>
+                    </div>
+
+                    {/* Trust Badge */}
+                    <div className="flex mt-8  4 flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
+                        <div className="flex -space-x-4">
+                            {[1, 2, 3, 4].map((i) => (
+                                <img
+                                    key={i}
+                                    className="w-12 h-12 rounded-full border-4 border-white dark:border-gray-950 object-cover"
+                                    src={`https://i.pravatar.cc/150?u=${i + 20}`}
+                                    alt="User"
+                                />
+                            ))}
+                            <div className="w-12 h-12 rounded-full border-4 border-white dark:border-gray-950 bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+                                +2k
+                            </div>
+                        </div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                            <div className="flex text-yellow-500 mb-1">
+                                {"★".repeat(5)}
+                            </div>
+                            <p>Trusted by <span className="font-bold text-gray-900 dark:text-white">2,000+</span> global learners</p>
+                        </div>
+                    </div>
                 </motion.div>
 
-                {/* ===== CTA Button ===== */}
-                <Link to="/assignments">
-                    <motion.button
-                        whileHover={{ scale: 1.05, backgroundColor: "#7F3DFF" }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-6 px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-bold shadow-xl hover:shadow-2xl transition-all"
+                {/* Right Column: Visual Component */}
+                <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="relative flex-1 flex justify-center items-center mt-12 lg:mt-0"
                     >
-                        Discover Your Circle
-                    </motion.button>
-                </Link>
-            </div>
+                        {/* Main Image Decoration */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
+                        
+                        <div className="relative z-10 w-full max-w-[500px]">
+                            <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border-[8px] border-white dark:border-gray-800 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                <img 
+                                    src="https://i.ibb.co/SXHXph8F/12063795-4884785.jpg" 
+                                    alt="Student Learning" 
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
 
-            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnHover />
+                            {/* Floating Card 1: New Course */}
+                            <motion.div 
+                                animate={{ y: [0, -10, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -bottom-8 -left-8 bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-2xl z-20 hidden md:flex items-center gap-4 border border-gray-100 dark:border-gray-700"
+                            >
+                                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-600 text-xl font-bold">
+                                    ✓
+                                </div>
+                                <div>
+                                    <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">Just Added</p>
+                                    <p className="text-sm font-bold text-gray-900 dark:text-white">UI/UX Masterclass</p>
+                                </div>
+                            </motion.div>
+
+                            {/* Floating Card 2: Student Stats */}
+                            <motion.div 
+                                animate={{ y: [0, 10, 0] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -top-6 -right-6 bg-indigo-600 p-4 rounded-2xl shadow-xl z-20 hidden md:block"
+                            >
+                                <p className="text-white text-center">
+                                    <span className="block text-2xl font-black italic">500+</span>
+                                    <span className="text-[10px] uppercase font-medium opacity-80">Courses Online</span>
+                                </p>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+            </div>
         </section>
     );
 };
