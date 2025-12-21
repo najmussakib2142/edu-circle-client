@@ -30,7 +30,7 @@ const Assignments = ({ assignmentsPromise }) => {
     return (
         <div className="max-w-6xl mx-auto py-7 md:py-20 px-4 md:px-6">
             <h2 className="text-3xl md:text-4xl font-extrabold text-neutral dark:text-gray-100  text-center  mb-3 ">Top Picks for You</h2>
-            <p className='text-xl text-center text-gray-600 font-medium mb-10 dark:text-gray-500'>
+            <p className='text-xl text-center text-gray-600 font-medium mb-10 md:mb-20 dark:text-gray-500'>
                 Challenge your skills with our top picks.
             </p>
 
@@ -51,7 +51,7 @@ const Assignments = ({ assignmentsPromise }) => {
             </motion.div>
 
             {assignments.length > 6 && (
-                <div className="text-center mt-8">
+                <div className="text-center mt-10  md:mt-20">
                     <button
                         onClick={handleToggle}
                         className="px-6 py-2.5 bg-gray-700 dark:bg-gray-500 hover:bg-gray-800 dark:hover:bg-gray-700 text-white cursor-pointer rounded-lg font-semibold transition"

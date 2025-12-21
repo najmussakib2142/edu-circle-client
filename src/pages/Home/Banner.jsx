@@ -20,12 +20,12 @@ const Banner = () => {
     };
 
     return (
-        <section className="relative py-16 w-full min-h-[90vh] flex items-center bg-gray-50 dark:bg-gray-950 overflow-hidden">
-            {/* Background Decorative Circles */}
+        <section className=" py-16 w-full min-h-[90vh] flex items-center bg-gray-50 dark:bg-gray-950 overflow-hidden">
+           <div className="relative max-w-6xl mx-auto   w-full">
+             {/* Background Decorative Circles */}
             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
-            <div className="container  px-6 md:px-14  grid md:grid-cols-2 gap-12 mx-auto  items-center z-10">
-
+            <div className="container px-8 grid md:grid-cols-2 gap-12 mx-auto items-center z-10">
                 {/* Left Column: Content */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
@@ -123,6 +123,7 @@ const Banner = () => {
                         </div>
                     </motion.div>
             </div>
+           </div>
         </section>
     );
 };
