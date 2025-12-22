@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { FaTrash, FaEdit, FaEye, FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { FaBookmark, FaRegBookmark, FaStar, FaEye } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 
-const AssignmentCard = ({ assignment }) => {
+const AssignmentCard = ({ assignment, isFeatured, layoutView }) => {
+
   const { user } = useAuth();
-  // const [assignments, setAssignments] = useState([]);
   const [bookmarked, setBookmarked] = useState(false);
 
   const {
@@ -21,53 +21,21 @@ const AssignmentCard = ({ assignment }) => {
     creatorEmail,
   } = assignment;
 
-  // const handleDelete = (id) => {
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'This will permanently delete the assignment!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes, delete it!',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axios
-  //         .delete(`https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`)
-  //         // .then((res) => {
-  //         //   if (res.data.deletedCount > 0) {
-  //         //     Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
-  //         //   }
-  //         // })
-  //         .then((res) => {
-  //           if (res.data.deletedCount > 0) {
-  //             Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success').then(() => {
-  //               // setAssignments(prev => prev.filter(item => item._id !== id));
-  //             });
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           if (err.response?.status === 403) {
-  //             Swal.fire({
-  //               icon: 'error',
-  //               title: 'Permission Denied',
-  //               text: 'You can only delete your own assignments.',
-  //             });
-  //           } else {
-  //             Swal.fire('Error', 'Something went wrong.', 'error');
-  //           }
-  //         });
-  //     }
-  //   });
-  // };
+  const diffStyles = {
+    Easy: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+    Medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
+    Hard: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+  };
 
   useEffect(() => {
     if (user) {
-      axios.get(`https://edu-circle-server-seven.vercel.app/bookmarks`, { headers: { Authorization: `Bearer ${user.accessToken}` } })
-        .then(res => {
-          const exists = res.data.some(b => b.assignmentId === assignment._id);
-          setBookmarked(exists);
-        });
+      axios.get(`https://edu-circle-server-seven.vercel.app/bookmarks`, { 
+        headers: { Authorization: `Bearer ${user.accessToken}` } 
+      })
+      .then(res => {
+        const exists = res.data.some(b => b.assignmentId === assignment._id);
+        setBookmarked(exists);
+      });
     }
   }, [user, assignment._id]);
 
@@ -75,79 +43,174 @@ const AssignmentCard = ({ assignment }) => {
     if (!user) return alert('Login to bookmark');
 
     if (bookmarked) {
-      axios.delete(`https://edu-circle-server-seven.vercel.app/bookmarks/${assignment._id}`, { headers: { Authorization: `Bearer ${user.accessToken}` } })
-        .then(() => setBookmarked(false));
-    } else {
-      axios.post(`https://edu-circle-server-seven.vercel.app/bookmarks`, { assignmentId: assignment._id }, { headers: { Authorization: `Bearer ${user.accessToken}` } })
-        .then(() => setBookmarked(true));
+      axios.delete(`https://edu-circle-server-seven.vercel.app/bookmarks/${assignment._id}`, { 
+        headers: { Authorization: `Bearer ${user.accessToken}` } 
+      })
+      .then(() => setBookmarked(false));
+    } 
+    else {
+      axios.post(`https://edu-circle-server-seven.vercel.app/bookmarks`, 
+        { assignmentId: assignment._id }, 
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
+      )
+      .then(() => setBookmarked(true));
     }
   };
 
   return (
     <motion.div
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2 }}
-      className="rounded-2xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+      layout
+      className={`group relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden
+
+      ${layoutView === "list"
+        ? "flex flex-row items-center gap-6 p-4 min-h-[150px]"
+        : "flex flex-col h-full"
+      }
+      `}
     >
-      <figure className="relative">
+
+      {/* Image */}
+      <div
+        className={`
+        overflow-hidden aspect-video bg-gray-200 rounded-xl
+
+        ${layoutView === "list"
+          ? "min-w-36 min-h-28 max-w-36"
+          : isFeatured ? "h-64 md:h-80 lg:h-96 w-full" : "h-52 w-full"
+        }
+      `}
+      >
         <img
           src={thumbnail}
           alt={title}
-          className="h-48  w-full object-cover"
+          className={`w-full h-full object-cover 
+          transition-transform duration-500 group-hover:scale-105`}
         />
-        <div className="absolute top-2 left-2 bg-gray-700 dark:bg-gray-500  text-white text-xs px-2 py-1 rounded-full shadow">
-          {difficulty}
-        </div>
+      </div>
 
-      </figure>
+      {/* CONTENT PANEL */}
+      <div
+        className={`
+        flex flex-col flex-grow
 
-      <div className="p-5">
-        <div className="flex justify-between items-center mb-1">
-          <h2 className="text-xl font-semibold line-clamp-1 text-indigo-600 dark:text-indigo-400 mb-2">{title}</h2>
-          <button onClick={toggleBookmark} className=" text-xl text-indigo-600 dark:text-indigo-400 ">
-            {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-          </button>
-        </div>
-        <p className="text-sm text-gray-700 line-clamp-2 dark:text-gray-300 mb-4">
-          {description.length > 70 ? `${description.slice(0, 70)}...` : description}
+        ${layoutView === "list"
+          ? "pr-4 gap-2"
+          : "p-6"
+        }
+      `}
+      >
+
+        {/* Title */}
+        <h3
+          className={`
+          font-bold text-gray-900 dark:text-white transition-colors
+          group-hover:text-indigo-600
+          
+          ${layoutView === "list"
+            ? "text-lg line-clamp-1"
+            : isFeatured ? "text-2xl md:text-3xl mb-3" : "text-xl mb-3 line-clamp-1"
+          }
+        `}
+        >
+          {title}
+        </h3>
+
+        {/* Description */}
+        <p
+          className={`
+          text-gray-500 dark:text-gray-400
+
+          ${layoutView === "list"
+            ? "text-sm line-clamp-2 max-w-[80%]"
+            : isFeatured ? "text-base mb-6 line-clamp-3" : "text-sm mb-6 line-clamp-2"
+          }
+        `}
+        >
+          {description}
         </p>
 
-        <div className="flex items-center justify-between mb-4 text-sm text-gray-600 dark:text-gray-400">
-          <span>
-            <strong>Marks:</strong> {marks}
-          </span>
-          <span className="italic text-xs">By: {creatorEmail}</span>
-        </div>
+        {/* Bottom row */}
+        <div
+          className={`
+          flex items-center justify-between w-full
 
-        <div className="flex flex-wrap gap-3">
-          <Link
-            to={`/assignment/${_id}`}
-            className="flex w-full items-center gap-2 btn btn-sm bg-indigo-600 dark:bg-indigo-400  text-white"
-            title="View Assignment"
-          >
-            <FaEye /> View
-          </Link>
+          ${layoutView === "list"
+            ? "mt-auto"
+            : "pt-4 border-t border-gray-200 dark:border-gray-700"
+          }
+        `}
+        >
 
-          {/* <Link
-            to={`/update/${_id}`}
-            className="flex items-center gap-2 btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white"
-            title="Update Assignment"
-          >
-            <FaEdit /> Edit
-          </Link>
+          {/* Creator */}
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold shadow-md">
+              {creatorEmail ? creatorEmail[0].toUpperCase() : 'U'}
+            </div>
 
-          <button
-            onClick={() => handleDelete(_id)}
-            className="flex items-center gap-2 btn btn-sm bg-red-500 hover:bg-red-600 text-white"
-            title="Delete Assignment"
-          >
-            <FaTrash /> Delete
-          </button> */}
+            <div className="flex flex-col">
+              <span className="text-[10px] text-gray-400 uppercase font-bold">Creator</span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 font-bold truncate max-w-[120px]">
+                {creatorEmail?.split('@')[0]}
+              </span>
+            </div>
+          </div>
+
+          {/* Marks + CTA */}
+          <div className="flex flex-col items-end gap-1">
+            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
+              Score
+            </span>
+
+            <Link
+              to={`/assignment/${_id}`}
+              className={`flex items-center gap-2 font-bold text-indigo-600 dark:text-indigo-400 transition-all
+              ${layoutView === "list" ? "text-sm" : isFeatured ? "text-lg" : "text-sm hover:gap-3"}
+              `}
+            >
+              {layoutView === "list" ? "View" : isFeatured ? "Start Challenge" : "Details"} 
+              <FaEye />
+            </Link>
+
+          </div>
+
         </div>
       </div>
+
+      {/* Bookmark */}
+      <button
+        onClick={toggleBookmark}
+        className={`
+        absolute p-2 rounded-xl bg-white/80 dark:bg-gray-900/80 text-indigo-600 shadow-lg hover:scale-110 transition-transform active:scale-90 z-20 
+
+        ${layoutView === "list" ? "top-3 right-3" : "top-4 right-4"}
+        `}
+      >
+        {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+      </button>
+
+      {/* Difficulty Tag */}
+      <span
+        className={`
+        absolute text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-md
+
+        ${layoutView === "list"
+          ? "top-3 left-[155px]"
+          : "top-4 left-4"
+        }
+
+        ${diffStyles[difficulty] || diffStyles.Medium}
+        `}
+      >
+        {difficulty}
+      </span>
+
+      {/* Marks Badge */}
+      {layoutView !== "list" && (
+        <div className="absolute bottom-16 right-0 bg-indigo-600 text-white px-4 py-1 rounded-l-full font-semibold text-sm shadow-xl">
+          {marks} Marks
+        </div>
+      )}
+
     </motion.div>
   );
 };

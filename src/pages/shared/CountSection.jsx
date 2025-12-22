@@ -51,9 +51,9 @@ const CountSection = () => {
   ];
 
   return (
-    <section className="py-7 md:py-20 bg-gray-100 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-neutral text-gray-800 dark:text-white mb-16">
+    <section className="py-7 md:py-20 ">
+      <div className="max-w-6xl mx-auto px-8 text-center">
+        <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-16">
           Our Growing Community
         </h2>
 
@@ -61,7 +61,7 @@ const CountSection = () => {
           {statsData.map((stat, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl transition-transform hover:scale-105 flex flex-col items-center"
+              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500/50 transition-transform hover:scale-102 flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}

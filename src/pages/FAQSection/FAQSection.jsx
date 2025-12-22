@@ -2,14 +2,14 @@ import React from "react";
 
 const FAQSection = () => {
     return (
-        <div className="">
+        <div className="bg-gray-100 dark:bg-gray-900 ">
             <div className="py-7 md:py-20 px-6 md:px-12  max-w-5xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-neutral mb-16 text-center dark:text-white">
+                <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white  mb-16 text-center ">
                     Frequently Asked Questions
                 </h2>
 
                 <div className="space-y-4">
-                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-base-300 rounded-lg">
+                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border  border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 rounded-lg">
                         <input type="radio" name="faq-accordion" defaultChecked />
                         <div
                             tabIndex={0}
@@ -22,7 +22,7 @@ const FAQSection = () => {
                         </div>
                     </div>
 
-                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-base-300 rounded-lg">
+                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 rounded-lg">
                         <input type="radio" name="faq-accordion" />
                         <div
                             tabIndex={0}
@@ -35,7 +35,7 @@ const FAQSection = () => {
                         </div>
                     </div>
 
-                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-base-300 rounded-lg">
+                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 rounded-lg">
                         <input type="radio" name="faq-accordion" />
                         <div
                             tabIndex={0}
@@ -48,7 +48,7 @@ const FAQSection = () => {
                         </div>
                     </div>
 
-                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-base-300 rounded-lg">
+                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 rounded-lg">
                         <input type="radio" name="faq-accordion" />
                         <div
                             tabIndex={0}
@@ -61,7 +61,7 @@ const FAQSection = () => {
                         </div>
                     </div>
 
-                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-base-300 rounded-lg">
+                    <div className="collapse hover:scale-105 transition duration-300 hover:shadow-lg collapse-arrow bg-base-100/40 border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 rounded-lg">
                         <input type="radio" name="faq-accordion" />
                         <div
                             tabIndex={0}

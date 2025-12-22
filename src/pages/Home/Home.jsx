@@ -12,8 +12,11 @@ import HowItWorksSection from '../HowItWorksSection/HowItWorksSection';
 
 const Home = () => {
 
-    const assignmentsPromise = fetch('https://edu-circle-server-seven.vercel.app/assignments')
-        .then(res => res.json())
+    const API_URL = import.meta.env.VITE_REACT_APP_API_URL || import.meta.env.VITE_REACT_APP_LIVE_API_URL;
+    const assignmentsPromise = fetch(`${API_URL}/assignments/home`).then(res => res.json());
+
+    // const assignmentsPromise = fetch('https://edu-circle-server-seven.vercel.app/assignments')
+    //     .then(res => res.json())
     return (
         <div className=''>
             {/* <Helmet>

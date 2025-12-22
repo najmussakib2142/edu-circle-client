@@ -9,10 +9,10 @@ const FeatureSection = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="w-full py-7 md:py-20 bg-base-100 dark:bg-gray-900">
+    <section className="w-full py-7 md:py-20 bg-gray-50 dark:bg-gray-950">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2
-          className="text-3xl sm:text-4xl font-extrabold mb-12 text-center text-neutral dark:text-gray-100"
+          className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white  mb-12 md:mb-20 text-center "
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}

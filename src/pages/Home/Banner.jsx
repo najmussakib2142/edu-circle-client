@@ -20,17 +20,18 @@ const Banner = () => {
     };
 
     return (
-        <section className=" py-16 w-full min-h-[90vh] flex items-center bg-gray-50 dark:bg-gray-950 overflow-hidden">
+        <section className="py-4 md:py-16 w-full min-h-[90vh] flex items-center bg-gray-50 dark:bg-gray-950 overflow-hidden">
            <div className="relative max-w-6xl mx-auto   w-full">
              {/* Background Decorative Circles */}
             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
-            <div className="container px-8 grid md:grid-cols-2 gap-12 mx-auto items-center z-10">
+            <div className=" grid md:grid-cols-2 gap-12 items-center w-full z-10 relative px-6 md:px-8 ">
                 {/* Left Column: Content */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
+                    className="order-2 md:order-1"
                 >
                     <span className="text-indigo-600 font-semibold tracking-widest uppercase text-sm">
                         Future-Proof Your Career
@@ -46,7 +47,7 @@ const Banner = () => {
                         <Link to="/assignments" className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-center transition-all shadow-lg shadow-indigo-200 dark:shadow-none">
                             Explore Courses
                         </Link>
-                        <button className="px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-all">
+                        <button className="px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold hover:bg-gray-50 dark:hover:dark:bg-gray-900 transition-all">
                             Watch Demo
                         </button>
                     </div>
@@ -67,7 +68,7 @@ const Banner = () => {
                             </div>
                         </div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">
-                            <div className="flex text-yellow-500 mb-1">
+                            <div className="flex sm:justify-center md:justify-start text-yellow-500 mb-1">
                                 {"★".repeat(5)}
                             </div>
                             <p>Trusted by <span className="font-bold text-gray-900 dark:text-white">2,000+</span> global learners</p>
@@ -80,7 +81,7 @@ const Banner = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="relative flex-1 flex justify-center items-center mt-12 lg:mt-0"
+                        className="relative order-1 md:order-2 flex-1 flex justify-center items-center mt-12 lg:mt-0"
                     >
                         {/* Main Image Decoration */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
@@ -88,7 +89,8 @@ const Banner = () => {
                         <div className="relative z-10 w-full max-w-[500px]">
                             <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border-[8px] border-white dark:border-gray-800 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                                 <img 
-                                    src="https://i.ibb.co/SXHXph8F/12063795-4884785.jpg" 
+                                    // src="https://i.ibb.co/SXHXph8F/12063795-4884785.jpg" 
+                                    src="https://i.ibb.co.com/wkCMhyL/8725864-3993401.jpg" 
                                     alt="Student Learning" 
                                     className="w-full h-full object-cover"
                                 />
@@ -98,7 +100,7 @@ const Banner = () => {
                             <motion.div 
                                 animate={{ y: [0, -10, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -bottom-8 -left-8 bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-2xl z-20 hidden md:flex items-center gap-4 border border-gray-100 dark:border-gray-700"
+                                className="absolute -bottom-8 -left-8 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-2xl z-20 hidden md:flex items-center gap-4 border border-gray-100 dark:border-gray-700"
                             >
                                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-600 text-xl font-bold">
                                     ✓
@@ -113,10 +115,10 @@ const Banner = () => {
                             <motion.div 
                                 animate={{ y: [0, 10, 0] }}
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -top-6 -right-6 bg-indigo-600 p-4 rounded-2xl shadow-xl z-20 hidden md:block"
+                                className="absolute -top-6 -right-6 bg-indigo-600 p-2 md:p-4 rounded-2xl shadow-xl z-20 "
                             >
                                 <p className="text-white text-center">
-                                    <span className="block text-2xl font-black italic">500+</span>
+                                    <span className="block text-xl md:text-2xl font-black italic">500+</span>
                                     <span className="text-[10px] uppercase font-medium opacity-80">Courses Online</span>
                                 </p>
                             </motion.div>

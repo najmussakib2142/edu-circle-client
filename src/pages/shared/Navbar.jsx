@@ -85,8 +85,8 @@ const Navbar = () => {
         <div className=''>
             <div className={`fixed top-0 w-full bg-base-100/80 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300  z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
                 } shadow`}>
-                <div className='max-w-6xl mx-auto'>
-                    <div className="navbar  py-0  z-50 md:px-8 lg:px-8  ">
+                <div className='max-w-7xl mx-auto'>
+                    <div className="navbar  py-0  z-50 md:px-18 lg:px-14  ">
                         <div className="navbar-start">
                             <div className="dropdown">
                                 <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
