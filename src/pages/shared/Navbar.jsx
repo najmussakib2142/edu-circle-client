@@ -199,23 +199,30 @@ const Navbar = () => {
                                 )
                             }
 
+                            {user ? (
+                                <button
+                                    onClick={handleSignOut}
+                                    className="btn border border-indigo-600 bg-transparent text-indigo-600 dark:border-white/70 dark:text-white  hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors"
+                                >
+                                    Sign Out
+                                </button>
+                            ) : (
+                                <>
+                                    <Link
+                                        to="/register"
+                                        className="btn border border-indigo-600 bg-transparent text-indigo-600 dark:border-white/70 dark:text-white hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors"
+                                    >
+                                        Register
+                                    </Link>
 
-                            {
-                                user ?
-                                    <button onClick={handleSignOut}
-                                        className='btn border border-indigo-600 bg-transparent dark:border-white/70 text-indigo-600  dark:text-white  hover:text-white hover:border-indigo-600 hover:bg-indigo-600'>
-                                        Sign Out
-                                    </button>
-                                    :
-                                    <>
-                                        <Link to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
-                                         dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</Link>
-                                        <Link
-                                            to="/signIn" className="btn bg-primary text-white border-primary hover:bg-white hover:text-primary hover:border-primary
-                                          dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</Link>
-
-                                    </>
-                            }
+                                    <Link
+                                        to="/signIn"
+                                        className="btn border border-indigo-600 bg-indigo-600 text-white dark:bg-white/10 dark:text-white hover:bg-transparent hover:text-indigo-600 hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:text-white transition-colors"
+                                    >
+                                        Sign In
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

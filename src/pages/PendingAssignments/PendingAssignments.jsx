@@ -13,27 +13,31 @@ const PendingAssignments = () => {
     const [mark, setMark] = useState('');
     const [feedback, setFeedback] = useState('');
     const [error, setError] = useState('');
+    const [loadingState, setLoadingState] = useState(true);
 
     useEffect(() => {
         const fetchSubmissions = async () => {
             if (!user) return;
 
-            const token = await user.getIdToken();
+            setLoadingState(true);
 
-            axios
-                .get(`https://edu-circle-server-seven.vercel.app/submissions?status=pending`, {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((res) => setSubmissions(res.data))
-                .catch((err) => toast.error(err.message, 'Error loading submissions'));
+            try {
+                const token = await user.getIdToken();
+                const res = await axios.get(`https://edu-circle-server-seven.vercel.app/submissions?status=pending`, {
+                    headers: { authorization: `Bearer ${token}` },
+                });
+                setSubmissions(res.data || []);
+            } catch (err) {
+                toast.error(err.message || 'Error loading submissions');
+            } finally {
+                setLoadingState(false); 
+            }
         };
 
         fetchSubmissions();
     }, [user]);
 
-    if (loading || !user) {
+    if (loading || !user || loadingState) {
         return <Loading></Loading>
     }
 

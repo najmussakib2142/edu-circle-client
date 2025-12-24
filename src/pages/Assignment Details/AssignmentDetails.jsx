@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from 'react-router';
 import { FaBookmark, FaExternalLinkAlt, FaRegBookmark } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { use, useEffect, useState } from 'react';
+import { use, useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../provider/AuthContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ const AssignmentDetails = () => {
     const assignment = useLoaderData()
     // console.log(assignment);
     const [showModal, setShowModal] = useState(false);
-    const { user } = use(AuthContext)
+    const { user } = useContext(AuthContext)
     const { accessToken } = useAccessToken()
     const [bookmarked, setBookmarked] = useState(false);
 

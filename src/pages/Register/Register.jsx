@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react';
-import React, { use, useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import registerLottie from '../../assets/lotties/11.json'
 import { Link, useNavigate } from 'react-router';
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const Register = () => {
 
-    const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext)
+    const { createUser, setUser, updateUser, googleSignIn } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
     const [error, setError] = useState('')

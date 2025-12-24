@@ -1,9 +1,25 @@
-import React, { use } from 'react';
+import React, {useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const SubmissionsList = ({ mySubmissionsPromise }) => {
 
-    const submissions = use(mySubmissionsPromise);
+    const [submissions, setSubmissions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        mySubmissionsPromise
+            .then(data => {
+                setSubmissions(data);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+            .finally(() => setLoading(false));
+    }, [mySubmissionsPromise]);
+
+    if (loading) {
+        return <p className="text-center">Loading...</p>;
+    }
 
     return (
         <div className="max-w-5xl mx-auto p-6">

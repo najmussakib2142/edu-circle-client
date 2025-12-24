@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router';
 import registerLottie from '../../assets/lotties/12.json'
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 const SignIn = () => {
 
-    const { signInUser, googleSignIn } = use(AuthContext)
+    const { signInUser, googleSignIn } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     // console.log('location in signin', location);

@@ -12,7 +12,7 @@ const DashboardLayout = () => {
                 {/* <Link to="/" className="text-2xl pt-2 font-bold inline-block">
                     eduCircle
                 </Link> */}
-                <Link to="/" className="font-bold text-2xl"><span className='text-indigo-600 dark:text-indigo-400'>EduCircle</span><span className='text-secondary'></span></Link>
+                <Link to="/" className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">EduCircle</Link>
                 <span className="divider"></span>
                 <ul className="space-y-3">
                     <li className="pt-1">
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
                             end
                             className={({ isActive }) =>
                                 `flex items-center gap-2   rounded-md ${location.pathname === "/dashboard" || isActive
-                                    ? "text-black dark:text-white font-semibold underline  "
+                                    ? "font-semibold underline text-[#101828] dark:text-gray-100 hover:text-primary dark:hover:text-secondary hover:underline "
                                     : "text-[#101828] py-2 dark:text-gray-100 hover:text-primary dark:hover:text-secondary hover:underline"
                                 }`
                             }
