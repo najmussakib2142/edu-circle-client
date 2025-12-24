@@ -69,10 +69,10 @@ const BookmarkedAssignments = () => {
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-6">
-            <h2 className="text-3xl font-bold mb-2 text-center text-primary dark:text-primary/80">
+            <h2 className="text-3xl font-bold mb-2 text-center text-gray-900 dark:text-white">
                 My Bookmarked Assignments
             </h2>
-            <div className="h-1 w-24 bg-primary dark:bg-primary/70 mx-auto mb-6 rounded-full"></div>
+            <div className="h-1 w-24 bg-indigo-600 dark:bg-indigo-600 mx-auto mb-6 rounded-full"></div>
             
             <motion.div
                 className="grid gap-4 pt-4 md:grid-cols-2 lg:grid-cols-3"

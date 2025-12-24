@@ -1,82 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CountUp from "react-countup";
 import { FaGraduationCap, FaChalkboardTeacher, FaBookOpen, FaGlobe } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const CountSection = () => {
-  const [stats, setStats] = useState({
-    students: 0,
-    instructors: 0,
-    courses: 0,
-    partners: 0,
-  });
+// --- Advanced Tilt Card Component ---
+const TiltCard = ({ children, isVisible }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  // Intersection Observer to trigger CountUp when visible
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  });
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
 
-  // Fetch stats from backend
-  useEffect(() => {
-    fetch("https://edu-circle-server-seven.vercel.app/stats") // Change to your deployed backend URL
-      .then((res) => res.json())
-      .then((data) => setStats(data))
-      .catch((err) => console.error("Failed to fetch stats:", err));
-  }, []);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
-  // Prepare data for mapping
-  const statsData = [
-    {
-      icon: <FaGraduationCap className="text-5xl text-gray-700 dark:text-gray-500" />,
-      value: stats.students,
-      label: "Students Successfully Enrolled",
-    },
-    {
-      icon: <FaChalkboardTeacher className="text-5xl text-gray-700 dark:text-gray-500" />,
-      value: stats.instructors,
-      label: "Certified Expert Instructors",
-    },
-    {
-      icon: <FaBookOpen className="text-5xl text-gray-700 dark:text-gray-500" />,
-      value: stats.courses,
-      label: "Interactive Courses Offered",
-    },
-    {
-      icon: <FaGlobe className="text-5xl text-gray-700 dark:text-gray-500" />,
-      value: stats.partners,
-      label: "Global Learning Partners",
-    },
-  ];
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <section className="py-7 md:py-20 ">
-      <div className="max-w-6xl mx-auto px-8 text-center">
-        <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-16">
-          Our Growing Community
-        </h2>
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      className="relative group h-full"
+    >
+      {children}
+    </motion.div>
+  );
+};
 
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {statsData.map((stat, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500/50 transition-transform hover:scale-102 flex flex-col items-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="mb-4 flex justify-center">
-                {stat.icon}
-              </motion.div>
-              <h3 className="text-4xl sm:text-5xl font-bold text-indigo-600 dark:text-indigo-400  ">
-                {inView ? <CountUp end={stat.value} duration={3} /> : 0}+
-              </h3>
-              <p className="mt-3 text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
+const CountSection = () => {
+  const [stats, setStats] = useState(null);
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  useEffect(() => {
+    fetch("https://edu-circle-server-seven.vercel.app/stats")
+      .then((res) => res.json())
+      .then((data) => setStats(data))
+      .catch((err) => console.error("API Error:", err));
+  }, []);
+
+  const statsData = stats ? [
+    { icon: <FaGraduationCap />, value: stats.students, label: "Learners", sub: "Worldwide joining", color: "bg-blue-500" },
+    { icon: <FaChalkboardTeacher />, value: stats.instructors, label: "Mentors", sub: "Industry experts", color: "bg-indigo-600" },
+    { icon: <FaBookOpen />, value: stats.courses, label: "Courses", sub: "Hand-picked content", color: "bg-fuchsia-600" },
+    { icon: <FaGlobe />, value: stats.partners, label: "Partners", sub: "Leading institutions", color: "bg-emerald-500" },
+  ] : [];
+
+  return (
+    <section className="relative py-20 overflow-hidden bg-[#fafafa] dark:bg-[#050505]">
+      {/* Background Decor: Grid and Radial Glow */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none" 
+           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L30 0 M30 30 L60 30 M30 30 L30 60 M30 30 L0 30' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E")` }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-indigo-500/10 blur-[120px] rounded-full" />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="text-left max-w-2xl">
+            <h2 className="text-indigo-600 font-bold tracking-tighter text-lg mb-2 italic">Our Momentum</h2>
+            <h1 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white leading-[0.9]">
+              Growth that <br className="" /> speaks <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-fuchsia-500">for itself.</span>
+            </h1>
+          </div>
+          <p className="text-gray-500 dark:text-gray-400 max-w-xs text-sm border-l-2 border-indigo-500 pl-4">
+            Real-time data synced with our global learning infrastructure.
+          </p>
+        </div>
+
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {!stats ? (
+            [...Array(4)].map((_, i) => <div key={i} className="h-64 rounded-3xl bg-gray-200 dark:bg-gray-800 animate-pulse" />)
+          ) : (
+            statsData.map((stat, index) => (
+              <TiltCard key={index} isVisible={inView}>
+                <div className="h-full bg-white dark:bg-gray-900/50 backdrop-blur-sm p-10 rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-sm flex flex-col items-start text-left relative overflow-hidden group">
+                  
+                  {/* Mouse Follow Glow Effect */}
+                  <div className="absolute -inset-px bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className={`p-3 rounded-xl text-white mb-8 shadow-lg ${stat.color} scale-110`}>
+                    {stat.icon}
+                  </div>
+
+                  <div className="mt-auto">
+                    <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">{stat.label}</p>
+                    <div className="text-5xl font-bold text-gray-900 dark:text-white flex items-center gap-1">
+                      <CountUp end={stat.value} duration={3} delay={index * 0.1} separator="," />
+                      <span className="text-indigo-500 text-3xl">+</span>
+                    </div>
+                    <p className="text-gray-500 dark:text-gray-500 text-xs mt-2 italic">{stat.sub}</p>
+                  </div>
+                </div>
+              </TiltCard>
+            ))
+          )}
         </div>
       </div>
     </section>

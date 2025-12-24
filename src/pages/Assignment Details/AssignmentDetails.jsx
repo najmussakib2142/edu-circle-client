@@ -109,7 +109,7 @@ const AssignmentDetails = () => {
             </div>
             <div className='md:px-5 px-3 pb-4'>
                 <div className="flex justify-between items-center mb-3">
-                    <h2 className="text-3xl font-bold text-primary">{title}</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{title}</h2>
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}

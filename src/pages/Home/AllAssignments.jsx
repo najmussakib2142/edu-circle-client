@@ -53,7 +53,7 @@ const AllAssignments = () => {
                 <title>EduCircle || Assignments</title>
             </Helmet> */}
 
-            <h2 className="text-4xl text-center font-bold mb-4 text-primary"> Featured Assignments </h2>
+            <h2 className="text-4xl text-center font-bold mb-4 text-gray-900 dark:text-white"> Featured Assignments </h2>
             <p className='text-xl text-center font-medium mb-6 dark:text-gray-400'>See what learners are engaging with the most.</p>
             <div className="flex flex-wrap gap-4 mb-7 md:mb-14 justify-center">
                 {/*  Filter */}

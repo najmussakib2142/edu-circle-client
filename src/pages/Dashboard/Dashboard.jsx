@@ -118,7 +118,7 @@ const Dashboard = () => {
                     <div>
                         {/* <h1 className="text-2xl font-bold">{user?.displayName || "User"}</h1> */}
                         <h1 className="text-3xl font-bold mb-2">
-                            Welcome, {user?.displayName || "User"} 👋
+                            Welcome, {user?.displayName || "User"} 
                         </h1>
                         <p className="text-white/90 dark:text-white/80">{user?.email}</p>
                         <p className="text-sm text-white/70 dark:text-white/60 mt-1">Creator / Student</p>

@@ -113,7 +113,7 @@ const CreateAssignment = () => {
 
     return (
         <div className="max-w-3xl mx-auto px-5 py-10">
-            <h2 className="text-3xl font-bold mb-6 text-primary">Create New Assignment</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Create New Assignment</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
 

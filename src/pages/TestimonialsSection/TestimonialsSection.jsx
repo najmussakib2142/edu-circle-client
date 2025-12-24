@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaStar, FaQuoteLeft } from "react-icons/fa";
+import { FaStar, FaQuoteLeft, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
 import axios from "axios";
@@ -113,8 +113,8 @@ const TestimonialsSection = () => {
                       <FaStar
                         key={i}
                         className={`h-4 w-4 ${i < t.rating
-                            ? "text-yellow-400"
-                            : "text-gray-300 dark:text-gray-700"
+                          ? "text-yellow-400"
+                          : "text-gray-300 dark:text-gray-700"
                           }`}
                       />
                     ))}
@@ -149,32 +149,39 @@ const TestimonialsSection = () => {
         </Carousel>
 
 
-        {/* <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-6">
-          {dynamicTestimonials.length > 3 && (
+        <div className="pt-16 flex flex-col sm:flex-row justify-center items-center gap-6">
+          {/* {dynamicTestimonials.length > 3 && (
             <button
               onClick={() => setShowAll(!showAll)}
               className="group flex items-center gap-2 text-gray-600 dark:text-gray-300 font-semibold hover:dark:text-gray-400 hover:text-gray-700  transition-colors"
-            >
+            }>
               <span className="border-2 px-8 py-4 rounded-lg border-gray-500 group-hover:border-gray-700 transition-all">
                 {showAll ? "Show fewer stories" : "Read all stories"}
               </span>
             </button>
-          )}
+          )} */}
 
           {user && (
             <Link to="/submit-review">
               <motion.button
-                whileHover={{ scale: 1.03, translateY: -2 }}
+                whileHover={{ scale: 1.02, backgroundColor: "rgba(0,0,0,0.02)" }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-gray-700 dark:bg-gray-500  text-white rounded-lg font-semibold transition-all flex items-center gap-2"
+                className="px-6 py-3 border border-slate-200 dark:border-white/10 dark:text-white rounded-full text-sm font-medium tracking-wide transition-colors flex items-center gap-3 group"
               >
                 Share Your Experience
+                <motion.span
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 3 }}
+                  className="text-indigo-500"
+                >
+                  <FaArrowRight />
+                </motion.span>
               </motion.button>
             </Link>
           )}
-        </div> */}
+        </div>
       </div>
-    </section>
+    </section >
 
   );
 };

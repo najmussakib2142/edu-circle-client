@@ -23,7 +23,7 @@ const SubmissionsList = ({ mySubmissionsPromise }) => {
 
     return (
         <div className="max-w-5xl mx-auto p-6">
-            <h2 className="text-3xl font-bold mb-6 text-primary text-center">📚 My Submissions</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">📚 My Submissions</h2>
 
             <div className="overflow-x-auto">
                 <table className="table w-full border border-gray-300 dark:border-gray-700">
