@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { use, useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { useTheme } from '../../provider/ThemeContext';
@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 const Navbar = () => {
 
     const { theme, toggleTheme } = useTheme();
-    const { user, signOutUser } = use(AuthContext)
+    const { user, signOutUser } = useContext(AuthContext);
 
     const [showNavbar, setShowNavbar] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -201,14 +201,20 @@ const Navbar = () => {
 
 
                             {
-                                user ? <button onClick={handleSignOut} className='btn border-primary text-primary hover:bg-primary hover:text-white hover:border-primary'>Sign Out</button> : <>
-                                    <Link to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
-             dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</Link>
-                                    <Link
-                                        to="/signIn" className="btn bg-primary text-white border-primary hover:bg-white hover:text-primary hover:border-primary
-             dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</Link>
+                                user ?
+                                    <button onClick={handleSignOut}
+                                        className='btn border border-indigo-600 bg-transparent dark:border-white/70 text-indigo-600  dark:text-white  hover:text-white hover:border-indigo-600 hover:bg-indigo-600'>
+                                        Sign Out
+                                    </button>
+                                    :
+                                    <>
+                                        <Link to="/register" className="btn border-primary text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary
+                                         dark:border-gray-700 dark:text-white dark:hover:bg-primary dark:hover:text-white">Register</Link>
+                                        <Link
+                                            to="/signIn" className="btn bg-primary text-white border-primary hover:bg-white hover:text-primary hover:border-primary
+                                          dark:bg-primary dark:text-base-100 dark:border-gray-900 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white">SignIn</Link>
 
-                                </>
+                                    </>
                             }
                         </div>
                     </div>

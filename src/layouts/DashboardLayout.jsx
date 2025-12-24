@@ -21,7 +21,7 @@ const DashboardLayout = () => {
                             end
                             className={({ isActive }) =>
                                 `flex items-center gap-2   rounded-md ${location.pathname === "/dashboard" || isActive
-                                    ? "text-secondary font-semibold underline  "
+                                    ? "text-black dark:text-white font-semibold underline  "
                                     : "text-[#101828] py-2 dark:text-gray-100 hover:text-primary dark:hover:text-secondary hover:underline"
                                 }`
                             }

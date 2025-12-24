@@ -4,9 +4,13 @@ import { FaStar, FaQuoteLeft } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
 import axios from "axios";
-// import { FaStar,  } from "react-icons/fa";
-
-// Static fallback testimonials
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../../components/ui/carousel";
 const fallbackTestimonials = [
   {
     name: "Alice Johnson",
@@ -37,7 +41,7 @@ const shuffleArray = (array) => {
 
 const TestimonialsSection = () => {
   const [dynamicTestimonials, setDynamicTestimonials] = useState([]);
-  const [showAll, setShowAll] = useState(false);
+  // const [showAll, setShowAll] = useState(false);
   const user = useAuth();
 
   useEffect(() => {
@@ -63,13 +67,13 @@ const TestimonialsSection = () => {
     fetchReviews();
   }, []);
 
-  const displayedTestimonials = showAll
-    ? dynamicTestimonials.slice(0, 6) // Show up to 6 cards
-    : dynamicTestimonials.slice(0, 3); // Initially show 3
+  // const displayedTestimonials = showAll
+  //   ? dynamicTestimonials.slice(0, 6) // Show up to 6 cards
+  //   : dynamicTestimonials.slice(0, 3); // Initially show 3
 
   return (
     <section className="py-20 bg-white/60 dark:bg-gray-950/60 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 relative">
+      <div className="max-w-6xl mx-auto px-4 lg:px-16 relative">
         {/* Decorative Background Element */}
         <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-400/10 blur-3xl rounded-full" />
 
@@ -82,58 +86,70 @@ const TestimonialsSection = () => {
           </p>
         </div>
 
-        {/* Grid with auto row heights to handle varying content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-fr">
-          <AnimatePresence mode="popLayout">
-            {displayedTestimonials.map((t, index) => (
-              <motion.div
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {dynamicTestimonials.map((t, index) => (
+              <CarouselItem
                 key={t.id || index}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="group relative bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 p-8 rounded-3xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col h-full"
+                className="md:basis-1/2 lg:basis-1/3"
               >
-                <FaQuoteLeft className="text-indigo-200 dark:text-indigo-900/40 text-4xl absolute top-6 right-8" />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="group relative bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 p-8 rounded-3xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col h-full"
+                >
+                  <FaQuoteLeft className="text-indigo-200 dark:text-indigo-900/40 text-4xl absolute top-6 right-8" />
 
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <FaStar
-                      key={i}
-                      className={`h-4 w-4 ${i < t.rating ? "text-yellow-400" : "text-gray-300 dark:text-gray-700"}`}
-                    />
-                  ))}
-                </div>
+                  {/* Rating */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar
+                        key={i}
+                        className={`h-4 w-4 ${i < t.rating
+                            ? "text-yellow-400"
+                            : "text-gray-300 dark:text-gray-700"
+                          }`}
+                      />
+                    ))}
+                  </div>
 
-                <p className="relative z-10 text-gray-700 dark:text-gray-300 italic leading-relaxed mb-8 flex-grow">
-                  "{t.message}"
-                </p>
+                  {/* Message */}
+                  <p className="text-gray-700 dark:text-gray-300 italic leading-relaxed mb-8 grow">
+                    "{t.message}"
+                  </p>
 
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="relative">
+                  {/* User */}
+                  <div className="flex items-center gap-4 mt-auto">
                     <img
                       src={t.avatar}
                       alt={t.name}
                       className="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-500/20"
                     />
-                    <div className="absolute inset-0 rounded-full shadow-inner" />
+                    <div>
+                      <h3 className="font-bold text-gray-900 dark:text-white">
+                        {t.name}
+                      </h3>
+                      <p className="text-sm text-gray-500">{t.role}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white leading-tight">
-                      {t.name}
-                    </h3>
-                    <p className="text-sm text-gray-700 dark:text-gray-500 font-medium">
-                      {t.role}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </CarouselItem>
             ))}
-          </AnimatePresence>
-        </div>
+          </CarouselContent>
 
-        <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-6">
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+
+
+        {/* <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-6">
           {dynamicTestimonials.length > 3 && (
             <button
               onClick={() => setShowAll(!showAll)}
@@ -156,7 +172,7 @@ const TestimonialsSection = () => {
               </motion.button>
             </Link>
           )}
-        </div>
+        </div> */}
       </div>
     </section>
 

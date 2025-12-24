@@ -1,4 +1,4 @@
-import React, { use, useState, useMemo } from 'react';
+import React, {  useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from 'react-router';
 import { FaArrowRight, FaFire, FaThLarge, FaListUl, FaAward, FaEye } from 'react-icons/fa';
@@ -19,7 +19,7 @@ const getDifficultyStyle = (difficulty) => {
     }
 };
 
-const CustomAssignmentCard = ({ assignment, viewMode }) => {
+const CustomAssignmentCard = ({ assignment }) => {
     const { title, thumbnail, description, marks, difficulty, creatorEmail } = assignment;
 
     const currentStyle = getDifficultyStyle(difficulty);
@@ -38,7 +38,7 @@ const CustomAssignmentCard = ({ assignment, viewMode }) => {
                 </div>
             </div>
 
-            <div className="p-6 flex flex-col justify-between flex-grow">
+            <div className="p-6 flex flex-col justify-between grow">
                 <div>
                     <h3 className="font-black text-gray-900 dark:text-white leading-tight mb-3 group-hover:text-indigo-600 transition-colors text-xl">
                         {title}
@@ -48,12 +48,12 @@ const CustomAssignmentCard = ({ assignment, viewMode }) => {
                     </p>
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold uppercase">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold uppercase">
                         {creatorEmail?.charAt(0)}
                     </div>
                     <div className="flex flex-col">
                         <span className="text-[10px] text-gray-400 uppercase font-bold">Creator</span>
-                        <span className="text-xs text-gray-700 dark:text-gray-300 font-bold truncate max-w-[120px]">
+                        <span className="text-xs text-gray-700 dark:text-gray-300 font-bold truncate max-w-30">
                             {creatorEmail?.split('@')[0]}
                         </span>
                     </div>
@@ -137,7 +137,7 @@ const StandardCard = ({ assignment }) => {
             </div>
 
             {/* Content Area */}
-            <div className="flex flex-col flex-grow px-5 pt-2 pb-4">
+            <div className="flex flex-col grow px-5 pt-2 pb-4">
                 <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 transition-colors line-clamp-1">
                     {assignment.title}
                 </h3>
@@ -148,7 +148,7 @@ const StandardCard = ({ assignment }) => {
                 {/* Footer / Creator Info */}
                 <div className="mt-auto relative pt-6 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-[10px] font-bold">
+                        <div className="w-8 h-8 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-[10px] font-bold">
                             {assignment.creatorEmail ? assignment.creatorEmail[0].toUpperCase() : 'U'}
                         </div>
                         <div className="flex flex-col pt-1">
@@ -176,8 +176,23 @@ const StandardCard = ({ assignment }) => {
 }
 
 const Assignments = ({ assignmentsPromise }) => {
-    const assignments = use(assignmentsPromise);
+    const [assignments, setAssignments] = useState([]);
     const [viewMode, setViewMode] = useState("grid");
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        assignmentsPromise
+            .then((data) => {
+                setAssignments(Array.isArray(data) ? data : []);
+            })
+            .catch((err) => {
+                console.error("Failed to load assignments", err);
+                setAssignments([]);
+            })
+            .finally(() => setLoading(false));
+    }, [assignmentsPromise]);
+
+    if (loading) return null;
 
     return (
         <section className="py-20 bg-gray-50 dark:bg-gray-950 transition-colors duration-500 relative overflow-hidden">
@@ -194,7 +209,7 @@ const Assignments = ({ assignmentsPromise }) => {
                             <FaFire className="animate-pulse" /> Trending Now
                         </motion.div>
                         <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tighter">
-                            Curated <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">Challenges.</span>
+                            Curated <span className="text-transparent bg-clip-text bg-linear-to-tr from-indigo-600 to-purple-500">Challenges.</span>
                         </h2>
                     </div>
 
@@ -229,7 +244,7 @@ const Assignments = ({ assignmentsPromise }) => {
                     }
                 >
                     <AnimatePresence mode="popLayout">
-                        {assignments.map((item, index) => {
+                        {Array.isArray(assignments) &&assignments.map((item, index) => {
                             const isFeatured = index === 0 && viewMode === "grid";
 
                             return (
@@ -258,7 +273,7 @@ const Assignments = ({ assignmentsPromise }) => {
                 </motion.div>
 
                 {/* Decorative Background */}
-                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-125 h-125 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
             </div>
         </section>
     );

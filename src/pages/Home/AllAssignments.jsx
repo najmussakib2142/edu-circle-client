@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import axios from 'axios';
 import { IoSearch } from "react-icons/io5";
 import { toast } from 'react-toastify';
+import Loading from '../shared/Loading';
 // import { Helmet } from 'react-helmet-async';
 
 
@@ -15,23 +16,36 @@ const AllAssignments = () => {
     const [assignments, setAssignments] = useState([]);
     const [difficulty, setDifficulty] = useState('');
     const [searchText, setSearchText] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const fetchAssignments = async () => {
+        setLoading(true);
+
         const params = {};
         if (difficulty) params.difficulty = difficulty;
         if (searchText) params.search = searchText;
 
         try {
             const res = await axios.get('https://edu-circle-server-seven.vercel.app/assignments', { params });
-            setAssignments(res.data);
+            setAssignments(res.data.data || []);
         } catch (error) {
             toast.error(error.message, "Failed to fetch assignments");
+        } finally {
+            setLoading(false);
         }
     }
 
     useEffect(() => {
         fetchAssignments();
     }, [difficulty, searchText]);
+
+    if (loading) {
+        return (
+            <div>
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <div className="px-3 max-w-6xl mx-auto py-12 md:px-3">

@@ -12,8 +12,32 @@ import HowItWorksSection from '../HowItWorksSection/HowItWorksSection';
 
 const Home = () => {
 
-    const API_URL = import.meta.env.VITE_REACT_APP_API_URL || import.meta.env.VITE_REACT_APP_LIVE_API_URL;
-    const assignmentsPromise = fetch(`${API_URL}/assignments/home`).then(res => res.json());
+    const LOCAL_API = import.meta.env.VITE_REACT_APP_API_URL;
+    const LIVE_API = import.meta.env.VITE_REACT_APP_LIVE_API_URL;
+
+    const fetchAssignments = async () => {
+        try {
+            const res = await fetch(`${LOCAL_API}/assignments/home`, {
+                signal: AbortSignal.timeout(3000), // wait max 3s
+            });
+
+            if (!res.ok) throw new Error("Local API error");
+            return await res.json();
+        } catch (err) {
+            console.warn("Local API failed, falling back to LIVE API");
+
+            const liveRes = await fetch(`${LIVE_API}/assignments/home`);
+            if (!liveRes.ok) throw new Error("Live API error");
+
+            return await liveRes.json();
+        }
+    };
+    const assignmentsPromise = fetchAssignments();
+
+    // const API_URL = import.meta.env.PROD
+    //     ? import.meta.env.VITE_REACT_APP_LIVE_API_URL
+    //     : import.meta.env.VITE_REACT_APP_API_URL;
+    // const assignmentsPromise = fetch(`${API_URL}/assignments/home`).then(res => res.json());
 
     // const assignmentsPromise = fetch('https://edu-circle-server-seven.vercel.app/assignments')
     //     .then(res => res.json())
