@@ -16,27 +16,27 @@ const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext);
 
     const [showNavbar, setShowNavbar] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    // const [lastScrollY, setLastScrollY] = useState(0);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const currentScrollY = window.scrollY;
 
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                // Scrolling Down
-                setShowNavbar(false);
-            } else {
-                // Scrolling Up
-                setShowNavbar(true);
-            }
+    //         if (currentScrollY > lastScrollY && currentScrollY > 100) {
+    //             // Scrolling Down
+    //             setShowNavbar(false);
+    //         } else {
+    //             // Scrolling Up
+    //             setShowNavbar(true);
+    //         }
 
-            setLastScrollY(currentScrollY);
-        };
+    //         setLastScrollY(currentScrollY);
+    //     };
 
-        window.addEventListener('scroll', handleScroll);
+    //     window.addEventListener('scroll', handleScroll);
 
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
+    //     return () => window.removeEventListener('scroll', handleScroll);
+    // }, [lastScrollY]);
 
 
     const handleSignOut = () => {

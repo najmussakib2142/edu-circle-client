@@ -195,7 +195,7 @@ const Assignments = ({ assignmentsPromise }) => {
     if (loading) return null;
 
     return (
-        <section className="py-20 bg-gray-50 dark:bg-gray-950 transition-colors duration-500 relative overflow-hidden">
+        <section className="py-20 bg-white dark:bg-[#020617] transition-colors duration-500 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 md:px-14 relative z-10">
 
                 {/* Header Section (Unchanged) */}

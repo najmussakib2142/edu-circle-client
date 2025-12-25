@@ -22,7 +22,7 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-20 bg-white dark:bg-gray-950 overflow-hidden">
+    <section className="py-20 bg-white dark:bg-[#020617] overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
@@ -59,7 +59,7 @@ const HowItWorksSection = () => {
               >
                 {/* Icon Circle Container */}
                 <div className="relative z-10 flex-shrink-0">
-                  <div className="w-16 h-16 md:w-24 md:h-24 relative flex items-center justify-center bg-white dark:bg-gray-950">
+                  <div className="w-16 h-16 md:w-24 md:h-24 relative flex items-center justify-center bg-white dark:bg-[#020617]">
                     
                     {/* WATERMARK NUMBER - Positioned behind icon */}
                     <span className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl font-black text-gray-50 dark:text-gray-900 select-none pointer-events-none -z-10 transition-colors group-hover:text-indigo-50 dark:group-hover:text-indigo-900/20">

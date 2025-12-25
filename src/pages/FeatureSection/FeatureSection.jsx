@@ -9,7 +9,7 @@ const FeatureSection = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="w-full py-7 md:py-20 bg-gray-50 dark:bg-gray-950">
+    <section className="w-full py-7 md:py-20 bg-white dark:bg-[#020617]">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2
           className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white  mb-12 md:mb-20 text-center "

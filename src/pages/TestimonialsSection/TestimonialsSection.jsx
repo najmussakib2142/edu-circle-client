@@ -72,10 +72,10 @@ const TestimonialsSection = () => {
   //   : dynamicTestimonials.slice(0, 3); // Initially show 3
 
   return (
-    <section className="py-20 bg-white/60 dark:bg-gray-950/60 overflow-hidden">
+    <section className="py-20  dark:bg-[#020617] overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 lg:px-16 relative">
         {/* Decorative Background Element */}
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-400/10 blur-3xl rounded-full" />
+        {/* <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-400/10 blur-3xl rounded-full" /> */}
 
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">
