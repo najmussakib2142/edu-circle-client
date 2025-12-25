@@ -13,33 +13,42 @@ const Dashboard = () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const token = localStorage.getItem("access-token"); // assuming you store Firebase token here
+    // const token = localStorage.getItem("access-token"); // assuming you store Firebase token here
 
     // 🔹 Fetch user-created assignments
     useEffect(() => {
-        if (!user?.email) return;
-        fetch(
-            `http://localhost:5000/assignments?email=${user.email}`, // use your backend base URL
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                const created = data.filter(
-                    (a) => a.creatorEmail === user.email
-                );
-                setAssignments(created);
+        const fetchMyAssignments = async () => {
+            // 1. Wait until user is actually available
+            if (!user) return;
+
+            setLoading(true);
+            try {
+                // 2. Get a fresh token directly from Firebase (No LocalStorage needed!)
+                const token = await user.getIdToken();
+
+                // 3. Use the dedicated "my-assignments" endpoint
+                const res = await axios.get(`http://localhost:5000/my-assignments?email=${user.email}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+
+                // 4. Set the data (ensure it's an array)
+                setAssignments(res.data || []);
+            } catch (err) {
+                console.error("Dashboard fetch error:", err);
+                // Even if it fails, stop the loading spinner
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => setLoading(false));
-    }, [user]);
+            }
+        };
+
+        fetchMyAssignments();
+    }, [user]); // Only depend on the user object 
 
     // 🔹 Fetch global stats for header
     useEffect(() => {
-        fetch("http://localhost:5000/stats")
+        fetch("https://edu-circle-server-seven.vercel.app/stats")
             .then((res) => res.json())
             .then((data) => setStats(data))
             .catch(console.error);
@@ -50,7 +59,7 @@ const Dashboard = () => {
         // if (!confirm("Are you sure you want to delete this assignment?")) return;
 
         // fetch(
-        //     `http://localhost:5000/assignments/${id}?email=${user.email}`,
+        //     `https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`,
         //     {
         //         method: "DELETE",
         //         headers: { Authorization: `Bearer ${token}` },
@@ -71,7 +80,7 @@ const Dashboard = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(`http://localhost:5000/assignments/${id}?email=${user.email}`)
+                    .delete(`https://edu-circle-server-seven.vercel.app/assignments/${id}?email=${user.email}`)
                     // .then((res) => {
                     //   if (res.data.deletedCount > 0) {
                     //     Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success');
@@ -80,7 +89,7 @@ const Dashboard = () => {
                     .then((res) => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire('Deleted!', 'Your assignment has been deleted.', 'success').then(() => {
-                                // setAssignments(prev => prev.filter(item => item._id !== id));
+                                setAssignments(prev => prev.filter(item => item._id !== id));
                             });
                         }
                     })
@@ -118,7 +127,7 @@ const Dashboard = () => {
                     <div>
                         {/* <h1 className="text-2xl font-bold">{user?.displayName || "User"}</h1> */}
                         <h1 className="text-3xl font-bold mb-2">
-                            Welcome, {user?.displayName || "User"} 
+                            Welcome, {user?.displayName || "User"}
                         </h1>
                         <p className="text-white/90 dark:text-white/80">{user?.email}</p>
                         <p className="text-sm text-white/70 dark:text-white/60 mt-1">Creator / Student</p>
@@ -166,70 +175,73 @@ const Dashboard = () => {
                     You haven’t created any assignments yet.
                 </p>
             ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {assignments.map((a) => (
-                        <div
-                            key={a._id}
-                            className="card bg-base-200 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden"
-                        >
-                            {/* Thumbnail */}
-                            <figure className="relative">
-                                <img
-                                    src={a.thumbnail || "https://via.placeholder.com/400x250"}
-                                    alt={a.title}
-                                    className="w-full h-48 object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
-                                />
-
-                                {/* Clickable transparent overlay */}
-                                <Link
-                                    to={`/dashboard/creator-assignments/${a._id}`}
-                                    className="absolute inset-0 z-10"
-                                    title="View Assignment"
-                                ></Link>
-
-                                <div className="absolute top-2 right-2 flex gap-2 z-20">
-                                    <span className="badge badge-info text-xs capitalize">{a.difficulty}</span>
-                                    <span className="badge badge-primary text-xs">{a.marks} Marks</span>
-                                </div>
-                            </figure>
-
-
-                            {/* Card Body */}
-                            <div className="card-body p-4">
-                                <h3 className="font-semibold text-lg line-clamp-1">{a.title}</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{a.description}</p>
-
-                                {/* Footer */}
-                                <div className="mt-3 flex justify-between items-center text-xs">
-                                    <p className="text-sm text-gray-700 dark:text-gray-300">
-                                        Due: {new Date(a.dueDate).toLocaleDateString()}
-                                    </p>
-
-                                    <div className="flex gap-2">
-                                        <Link
-                                            to={`/dashboard/update/${a._id}`}
-                                            className="btn btn-sm btn-circle btn-outline border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-info hover:border-info tooltip tooltip-top before:bg-gray-800 before:text-gray-100 dark:before:bg-gray-100 dark:before:text-gray-800"
-                                            data-tip="Edit Assignment"
-                                        >
-                                            <FaEdit />
-                                        </Link>
-
-                                        <button
-                                            onClick={() => handleDelete(a._id)}
-                                            className="btn btn-sm btn-circle btn-outline border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-error hover:border-error tooltip tooltip-top before:bg-gray-800 before:text-gray-100 dark:before:bg-gray-100 dark:before:text-gray-800"
-                                            data-tip="Delete Assignment"
-                                        >
-                                            <FaTrash />
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    ))}
+                <div className="overflow-x-auto bg-base-100 rounded-2xl shadow-sm border border-base-300">
+                    <table className="table table-zebra w-full">
+                        {/* Head */}
+                        <thead className="bg-base-100 border ">
+                            <tr >
+                                <th>Info</th>
+                                <th>Difficulty</th>
+                                <th>Marks</th>
+                                <th>Due Date</th>
+                                <th className="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {assignments.map((a) => (
+                                <tr key={a._id} className="hover">
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle w-12 h-12">
+                                                    <img src={a.thumbnail} alt={a.title} />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold line-clamp-1">{a.title}</div>
+                                                <div className="text-sm opacity-50">ID: {a._id.slice(-6)}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span className={`badge badge-sm capitalize ${a.difficulty === 'hard' ? 'badge-error' :
+                                                a.difficulty === 'medium' ? 'badge-warning' : 'badge-success'
+                                            }`}>
+                                            {a.difficulty}
+                                        </span>
+                                    </td>
+                                    <td className="font-mono font-semibold">{a.marks}</td>
+                                    <td>{new Date(a.dueDate).toLocaleDateString()}</td>
+                                    <td>
+                                        <div className="flex justify-center gap-2">
+                                            <Link
+                                                to={`/dashboard/update/${a._id}`}
+                                                className="btn btn-ghost btn-xs text-info"
+                                                title="Edit"
+                                            >
+                                                <FaEdit size={16} />
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(a._id)}
+                                                className="btn btn-ghost btn-xs text-error"
+                                                title="Delete"
+                                            >
+                                                <FaTrash size={16} />
+                                            </button>
+                                            <Link
+                                                to={`/dashboard/creator-assignments/${a._id}`}
+                                                className="btn btn-ghost btn-xs dark:text-primary-content"
+                                                title="View Details"
+                                            >
+                                                <FaBookOpen size={16} />
+                                            </Link>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-
             )}
         </div>
     );

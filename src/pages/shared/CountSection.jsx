@@ -65,11 +65,11 @@ const CountSection = () => {
   ] : [];
 
   return (
-    <section className="relative py-20 overflow-hidden bg-white dark:bg-[#020617]">
+    <section className="relative pt-10 pb-20 overflow-hidden bg-white dark:bg-[#020617]">
       {/* Background Decor: Grid and Radial Glow */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none" 
+      <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.03] pointer-events-none" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L30 0 M30 30 L60 30 M30 30 L30 60 M30 30 L0 30' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E")` }} />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-indigo-500/10 blur-[120px] rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] dark:bg-[#020617] blur-[120px] rounded-full" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8">
         <div className="flex flex-col md:flex-row justify-between md:items-end mb-16 gap-6">

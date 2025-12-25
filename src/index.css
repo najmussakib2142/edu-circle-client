@@ -47,7 +47,7 @@ body {
 
 /* Apply to body and text */
 body {
-  background-color: var(--color-base-100);
+  /* background-color: var(--color-base-100); */
   color: var(--color-neutral);
   font-family: 'Poppins', sans-serif;
 }

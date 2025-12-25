@@ -133,7 +133,7 @@ const UpdateAssignment = () => {
 
     return (
         <div className="max-w-3xl mx-auto px-5 py-10">
-            <h2 className="text-3xl font-bold mb-6 text-primary">Update This Assignment</h2>
+            <h2 className="text-3xl font-bold mb-6 text-black dark:text-white">Update This Assignment</h2>
 
 
             <form onSubmit={handleUpdate} className="space-y-6">

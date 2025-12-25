@@ -72,7 +72,7 @@ const TestimonialsSection = () => {
   //   : dynamicTestimonials.slice(0, 3); // Initially show 3
 
   return (
-    <section className="py-20  dark:bg-[#020617] overflow-hidden">
+    <section className="py-20 bg-white dark:bg-[#020617] overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 lg:px-16 relative">
         {/* Decorative Background Element */}
         {/* <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-400/10 blur-3xl rounded-full" /> */}
@@ -103,7 +103,7 @@ const TestimonialsSection = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="group relative bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 p-8 rounded-3xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col h-full"
+                  className="group relative bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 transition-all flex flex-col h-full hover:shadow-2xl  p-8    duration-300 shadow-sm "
                 >
                   <FaQuoteLeft className="text-indigo-200 dark:text-indigo-900/40 text-4xl absolute top-6 right-8" />
 

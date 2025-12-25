@@ -38,7 +38,7 @@ const FeatureSection = () => {
               {features.map((feature, i) => (
                 <motion.div
                   key={i}
-                  className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition-all"
+                  className=" bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md hover:shadow-lg transition-all"
                   whileHover={{ scale: 1.02 }}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ const FeatureSection = () => {
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all"
+              className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-indigo-500/50 transition-all flex flex-col h-full hover:shadow-2xl p-6  shadow-md "
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 30 }}

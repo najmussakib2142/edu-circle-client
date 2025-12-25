@@ -28,7 +28,7 @@ const CreateAssignment = () => {
 
     useEffect(() => {
         if (!accessToken && !loading) {
-            
+
             navigate('/login');
         }
     }, [accessToken, loading, navigate])
@@ -112,91 +112,134 @@ const CreateAssignment = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto px-5 py-10">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Create New Assignment</h2>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-
-                {/* Title */}
-
-                <input
-                    type="text"
-                    placeholder="Assignment Title"
-                    className="input input-bordered w-full"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
-                {validationErrors.title && (
-                    <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
-                )}
-
-                {/* Description */}
-                <textarea
-                    placeholder="Assignment Description (at least 20 characters)"
-                    className="textarea textarea-bordered w-full"
-                    rows="4"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
-                {validationErrors.description && (
-                    <p className="text-red-500 text-sm mt-1">{validationErrors.description}</p>
-                )}
-
-                {/* Marks */}
-                <input
-                    type="number"
-                    placeholder="Marks"
-                    className="input input-bordered w-full"
-                    value={marks}
-                    onChange={(e) => setMarks(e.target.value)}
-                    required
-                />
-                {validationErrors.marks && (
-                    <p className="text-red-500 text-sm mt-1">{validationErrors.marks}</p>
-                )}
-
-                {/* Thumbnail URL */}
-                <input
-                    type="url"
-                    placeholder="Thumbnail Image URL"
-                    className="input input-bordered w-full"
-                    value={thumbnail}
-                    onChange={(e) => setThumbnail(e.target.value)}
-                    required
-                />
-                {validationErrors.thumbnail && (
-                    <p className="text-red-500 text-sm mt-1">{validationErrors.thumbnail}</p>
-                )}
-
-                {/* Difficulty Dropdown */}
-                <select
-                    value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value)}
-                    className="select select-bordered w-1/2"
-                    required
-                >
-                    <option value="">Select Difficulty Level</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-
-                {/* Due Date */}
-                <div>
-                    <label className="block mb-1 font-medium">Due Date</label>
-                    <DatePicker
-                        selected={dueDate}
-                        onChange={(date) => setDueDate(date)}
-                        dateFormat="dd-MM-yyyy"
-                        className="input input-bordered w-full"
-                    />
+        <div className="max-w-3xl mx-auto px-6 py-12">
+            {/* Card Container */}
+            <div className=" shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                <div className="mb-8 text-center">
+                    <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
+                        Create New Assignment
+                    </h2>
+                    <p className="text-gray-500 dark:text-gray-400 mt-2">Fill in the details to publish a new task for your students.</p>
                 </div>
 
-                {/* Submit Button */}
-                <button type="submit" className="btn btn-primary w-full">Create Assignment</button>
-            </form>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Title */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Assignment Title</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="e.g. Introduction to React"
+                            className="input input-bordered focus:input-primary w-full bg-gray-50 dark:bg-gray-900"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                        {validationErrors.title && (
+                            <p className="text-error text-xs mt-1 italic">{validationErrors.title}</p>
+                        )}
+                    </div>
+
+                    {/* Description */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Description</span>
+                        </label>
+                        <textarea
+                            placeholder="Write a clear instruction for this assignment..."
+                            className="textarea textarea-bordered focus:textarea-primary w-full bg-gray-50 dark:bg-gray-900 leading-relaxed"
+                            rows="4"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                        {validationErrors.description && (
+                            <p className="text-error text-xs mt-1 italic">{validationErrors.description}</p>
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Marks */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Total Marks</span>
+                            </label>
+                            <input
+                                type="number"
+                                placeholder="100"
+                                className="input input-bordered focus:input-primary w-full bg-gray-50 dark:bg-gray-900"
+                                value={marks}
+                                onChange={(e) => setMarks(e.target.value)}
+                                required
+                            />
+                            {validationErrors.marks && (
+                                <p className="text-error text-xs mt-1 italic">{validationErrors.marks}</p>
+                            )}
+                        </div>
+
+                        {/* Difficulty Dropdown */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Difficulty Level</span>
+                            </label>
+                            <select
+                                value={difficulty}
+                                onChange={(e) => setDifficulty(e.target.value)}
+                                className="select select-bordered focus:select-primary w-full bg-gray-50 dark:bg-gray-900"
+                                required
+                            >
+                                <option value="" disabled>Select level</option>
+                                <option value="easy">🟢 Easy</option>
+                                <option value="medium">🟡 Medium</option>
+                                <option value="hard">🔴 Hard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Thumbnail URL */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Thumbnail Image URL</span>
+                        </label>
+                        <input
+                            type="url"
+                            placeholder="https://example.com/image.jpg"
+                            className="input input-bordered focus:input-primary w-full bg-gray-50 dark:bg-gray-900"
+                            value={thumbnail}
+                            onChange={(e) => setThumbnail(e.target.value)}
+                            required
+                        />
+                        {validationErrors.thumbnail && (
+                            <p className="text-error text-xs mt-1 italic">{validationErrors.thumbnail}</p>
+                        )}
+                    </div>
+
+                    {/* Due Date */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Deadline</span>
+                        </label>
+                        <DatePicker
+                            selected={dueDate}
+                            onChange={(date) => setDueDate(date)}
+                            dateFormat="dd-MM-yyyy"
+                            className="input input-bordered focus:input-primary w-full bg-gray-50 dark:bg-gray-900"
+                            wrapperClassName="w-full"
+                        />
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="pt-4">
+                        <button
+                            type="submit"
+                            className="btn btn-primary w-full text-lg font-bold shadow-lg hover:shadow-primary/30 transition-all duration-300"
+                        >
+                            Create Assignment
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
