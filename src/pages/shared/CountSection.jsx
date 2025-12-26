@@ -65,7 +65,7 @@ const CountSection = () => {
   ] : [];
 
   return (
-    <section className="relative pt-10 pb-20 overflow-hidden bg-white dark:bg-[#020617]">
+    <section className="relative pt-10 pb-10 md:pb-20 overflow-hidden bg-white dark:bg-[#020617]">
       {/* Background Decor: Grid and Radial Glow */}
       <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.03] pointer-events-none" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L30 0 M30 30 L60 30 M30 30 L30 60 M30 30 L0 30' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E")` }} />
@@ -87,13 +87,13 @@ const CountSection = () => {
           </p>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {!stats ? (
             [...Array(4)].map((_, i) => <div key={i} className="h-64 rounded-3xl bg-gray-200 dark:bg-gray-800 animate-pulse" />)
           ) : (
             statsData.map((stat, index) => (
               <TiltCard key={index} isVisible={inView}>
-                <div className="h-full bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm py-8 px-10 rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-sm flex flex-col items-start text-left relative overflow-hidden group">
+                <div className="h-full bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm p-4 md:py-8 md:px-10 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm flex flex-col items-start text-left relative overflow-hidden group">
                   
                   {/* Mouse Follow Glow Effect */}
                   <div className="absolute -inset-px bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

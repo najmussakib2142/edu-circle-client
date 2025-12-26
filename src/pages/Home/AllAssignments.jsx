@@ -73,29 +73,38 @@ const AllAssignments = () => {
                 </p>
             </div>
 
-            <div className="flex  flex-col md:flex-row items-center justify-between gap-4 mb-12 bg-gray-50 dark:bg-neutral-900/50 p-2 rounded-2xl border border-gray-100 dark:border-neutral-800">
+            <div className="grid grid-cols-12 gap-4 mt-6 mb-10">
 
-                {/* Search Input Group */}
-                <div className="relative w-full md:flex-1">
+                {/* Search */}
+                <div className="col-span-8 relative">
                     <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </span>
+
                     <input
                         type="text"
-                        className="w-full bg-white dark:bg-[#1f2937] py-3 pl-10 pr-4 rounded-xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all border-none shadow-sm"
+                        className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-sm
+                 focus:outline-none focus:ring-2 focus:ring-black/40
+                 bg-white text-gray-900 placeholder-gray-500"
                         placeholder="Search by title..."
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                     />
                 </div>
 
-                {/* Filter Dropdown */}
-                <div className="flex items-center gap-2 w-full md:w-auto">
-                    <label className="hidden sm:block text-xs font-semibold uppercase tracking-wider text-gray-400 ml-2">Filter:</label>
+                {/* Filter */}
+                <div className="col-span-4 flex items-center gap-2">
+                    <label className="hidden sm:block text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        Filter:
+                    </label>
+
                     <select
-                        className="w-full md:w-44 bg-white dark:bg-[#1f2937] py-3 px-4 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all border-none shadow-sm cursor-pointer appearance-none"
+                        className="w-full py-3 px-4 border border-gray-300 rounded-sm
+                 focus:outline-none focus:ring-2 focus:ring-black/40
+                 bg-white text-gray-900"
                         value={difficulty}
                         onChange={(e) => setDifficulty(e.target.value)}
                     >
@@ -105,7 +114,9 @@ const AllAssignments = () => {
                         <option value="hard">Hard</option>
                     </select>
                 </div>
+
             </div>
+
 
             {/* Assignment Cards */}
             <motion.div

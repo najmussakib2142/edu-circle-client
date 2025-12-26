@@ -14,6 +14,7 @@ const Navbar = () => {
 
     const { theme, toggleTheme } = useTheme();
     const { user, signOutUser } = useContext(AuthContext);
+    const [isOpen, setOpen] = useState(false);
 
     const [showNavbar, setShowNavbar] = useState(true);
     // const [lastScrollY, setLastScrollY] = useState(0);
@@ -81,14 +82,19 @@ const Navbar = () => {
         }
     </>
 
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+        return () => (document.body.style.overflow = 'auto');
+    }, [isOpen]);
+
     return (
         <div className=''>
-            <div className={`fixed top-0 w-full bg-base-100/80 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300  z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+            <div className={`fixed top-0 w-full bg-white dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300  z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
                 } shadow`}>
                 <div className='max-w-7xl mx-auto'>
                     <div className="navbar  py-0  z-50 md:px-18 lg:px-14  ">
                         <div className="navbar-start">
-                            <div className="dropdown">
+                            {/* <div className="dropdown">
                                 <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /> </svg>
                                 </div>
@@ -97,9 +103,21 @@ const Navbar = () => {
                                     className="menu menu-sm left-0 text-[#101828] dropdown-content bg-base-100  z-1 w-[80vw] p-2 shadow">
                                     {links}
                                 </ul>
-                            </div>
-                            <Link to="/" className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">EduCircle</Link>
-
+                            </div> */}
+                            <button
+                                onClick={() => setOpen(true)}
+                                className='btn btn-ghost lg:hidden'
+                                aria-label='open menu'
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                        d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                            <span className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
+                                EduCircle
+                            </span>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu text-[#101828] menu-horizontal px-1">
@@ -107,14 +125,14 @@ const Navbar = () => {
                             </ul>
                         </div>
 
-                        <div className="navbar-end md:gap-3 gap-1">
+                        <div className="navbar-end md:gap-3 gap-2 flex items-center">
                             <div>
-                                <div className='hidden md:block'>
+                                <div className=''>
                                     <div className="flex items-center space-x-1 md:space-x-2">
-                                        <div className="flex items-center bg-gray-300 dark:bg-gray-700 rounded-full md:p-0.5 transition-colors">
+                                        <div className="flex items-center bg-gray-300 dark:bg-gray-700 rounded-2xl p-1  md:p-0.5 transition-colors">
                                             <button
                                                 onClick={() => toggleTheme('light')}
-                                                className={`md:p-1 rounded-full transition-colors ${theme === 'light'
+                                                className={`p-1 md:p-1 rounded-full transition-colors ${theme === 'light'
                                                     ? 'bg-white text-yellow-600'
                                                     : 'text-gray-600 dark:text-gray-300'
                                                     }`}
@@ -124,7 +142,7 @@ const Navbar = () => {
                                             </button>
                                             <button
                                                 onClick={() => toggleTheme('dark')}
-                                                className={` md:p-1 rounded-full transition-colors ${theme === 'dark'
+                                                className={`p-1 md:p-1 rounded-full transition-colors ${theme === 'dark'
                                                     ? 'bg-white text-indigo-500'
                                                     : 'text-gray-600 dark:text-gray-300'
                                                     }`}
@@ -136,7 +154,7 @@ const Navbar = () => {
                                     </div>
                                 </div>
 
-                                <div className="block md:hidden">
+                                {/* <div className="block md:hidden">
                                     <button
                                         onClick={toggleTheme}
                                         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
@@ -152,7 +170,7 @@ const Navbar = () => {
                                                 )
                                         }
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
 
 
@@ -215,18 +233,68 @@ const Navbar = () => {
                                         Register
                                     </Link>
 
-                                    <Link
-                                        to="/signIn"
-                                        className="btn border border-indigo-600 bg-indigo-600 text-white dark:bg-white/10 dark:text-white hover:bg-transparent hover:text-indigo-600 hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:text-white transition-colors"
-                                    >
-                                        Sign In
-                                    </Link>
+                                    <div className='hidden md:block'>
+                                        <Link
+                                            to="/signIn"
+                                            className="btn  border border-indigo-600 bg-indigo-600 text-white dark:bg-indigo-600 dark:text-white hover:bg-transparent hover:text-indigo-600 hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:text-white transition-colors"
+                                        >
+                                            Sign In
+                                        </Link>
+                                    </div>
                                 </>
                             )}
                         </div>
                     </div>
                 </div>
             </div>
+            {/* Mobile Menu Overlay */
+                isOpen && (
+                    <div
+                        onClick={() => setOpen(false)}
+                        className='fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden'
+                    />
+                )
+            }
+            <motion.aside
+                initial={{ x: "-100%" }}
+                animate={{ x: isOpen ? 0 : "-100%" }}
+                transition={{ type: "spring", stiffness: 260, damping: 30 }}
+                className="fixed  top-0 left-0 h-full w-[80vw] max-w-xs bg-base-100 dark:bg-gray-900 z-50  p-5 lg:hidden shadow-xl"
+            >
+                {/* Header */}
+                <div className="flex pb-3 border-b border-b-indigo-600 dark:border-b-indigo-400 items-center justify-start gap-3 mb-6">
+                    <button
+                        onClick={() => setOpen(false)}
+                        className="text-2xl font-bold"
+                    >
+                        ✕
+                    </button>
+                    <span className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
+                        EduCircle
+                    </span>
+                </div>
+
+                {/* Navigation Links */}
+                <ul
+                    onClick={() => setOpen(false)}
+                    className="menu gap-2 text-lg"
+                >
+                    {links}
+
+                    <div className='pl-3 pt-3'>
+                        <Link
+                            to="/signIn"
+                            className="btn  border border-indigo-600 bg-indigo-600 text-white dark:bg-indigo-600 dark:text-white hover:bg-transparent hover:text-indigo-600 hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:text-white transition-colors"
+                        >
+                            Sign In
+                        </Link>
+                    </div>
+
+                </ul>
+
+
+            </motion.aside>
+
         </div>
     );
 };

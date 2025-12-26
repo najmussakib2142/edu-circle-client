@@ -11,7 +11,7 @@ const RootLayout = () => {
     const { state } = useNavigation()
 
     return (
-        <div className=' mt-[70px]'>
+        <div className=' mt-[65px] md:mt-[70px]'>
             
             <nav className=''>
                 <Navbar></Navbar>

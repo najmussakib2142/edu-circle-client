@@ -1,12 +1,16 @@
-import { FaHome, FaPlusCircle, FaClipboardList, FaBookmark } from "react-icons/fa";
+import { useState } from "react";
+import { FaHome,FaBars , FaPlusCircle, FaClipboardList, FaBookmark } from "react-icons/fa";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
+// import { FaBars } from "react-icons/fa";
 
 const DashboardLayout = () => {
+    const [open, setOpen] = useState(false);
     const location = useLocation();
 
 
     return (
         <div className="flex min-h-screen  ">
+            
             <aside className="w-64 bg-base-200 p-6 hidden md:block">
                 {/* <h2 className="text-2xl font-bold">eduCircle</h2> */}
                 {/* <Link to="/" className="text-2xl pt-2 font-bold inline-block">

@@ -27,7 +27,7 @@ const Dashboard = () => {
                 const token = await user.getIdToken();
 
                 // 3. Use the dedicated "my-assignments" endpoint
-                const res = await axios.get(`http://localhost:5000/my-assignments?email=${user.email}`, {
+                const res = await axios.get(`https://edu-circle-server-seven.vercel.app/my-assignments?email=${user.email}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
@@ -205,7 +205,7 @@ const Dashboard = () => {
                                     </td>
                                     <td>
                                         <span className={`badge badge-sm capitalize ${a.difficulty === 'hard' ? 'badge-error' :
-                                                a.difficulty === 'medium' ? 'badge-warning' : 'badge-success'
+                                            a.difficulty === 'medium' ? 'badge-warning' : 'badge-success'
                                             }`}>
                                             {a.difficulty}
                                         </span>

@@ -6,7 +6,7 @@ import { MdOutlineAssignment, MdOutlineDarkMode, MdLeaderboard } from "react-ico
 import { FaSearch, FaUserCheck, FaShieldAlt } from "react-icons/fa";
 
 const FeatureSection = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <section className="w-full py-7 md:py-20 bg-white dark:bg-[#020617]">

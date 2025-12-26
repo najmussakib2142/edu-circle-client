@@ -74,7 +74,7 @@ const SignIn = () => {
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className="card-body">
-                            <h1 className="text-4xl font-bold text-primary text-center">Login now!</h1>
+                            <h1 className="text-4xl font-bold text-black dark:text-white text-center">Login now!</h1>
                             <form onSubmit={handleSignIn} className="fieldset">
                                 {/* email */}
                                 <label className="label">Email</label>
@@ -104,10 +104,14 @@ const SignIn = () => {
                                 </label> */}
                                 <div><a className="link link-hover">Forgot password?</a></div>
                                 {error && <p className='text-red-500 text-sm'>{error}</p>}
-                                <button className="btn  mt-4">Sign In</button>
+                                <button className="w-full mt-4 px-4 py-2 rounded-sm font-medium transition-colors
+  bg-gray-900 text-white hover:bg-gray-800 
+  dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 cursor-pointer">Sign In</button>
                                 <div className="divider">OR</div>
                                 <button onClick={handleGoogleLogIn}
-                                    className="btn hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-100 hover:border hover:border-primary dark:border-gray-600 dark:hover:bg-gray-700 transition mt-1 bg-base-100 text-black border-[#e5e5e5]">
+                                    className="w-full mt-1 px-4 py-2 flex items-center justify-center gap-2 rounded-md font-medium transition-all border
+  bg-white text-gray-900 border-gray-300 hover:bg-gray-100 hover:border-primary
+  dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-500">
 
                                     <svg aria-label="Google logo" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
                                     Login with Google

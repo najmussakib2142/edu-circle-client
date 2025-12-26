@@ -33,7 +33,7 @@ const FAQItem = ({ faq, index, activeIndex, setActiveIndex }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className={`border-b px-4 border-slate-200 dark:border-slate-800 transition-all duration-300 ${
+      className={`border-b md:px-4 border-slate-200 dark:border-slate-800 transition-all duration-300 ${
         isOpen ? "bg-indigo-50/30 dark:bg-indigo-500/5" : ""
       }`}
     >
