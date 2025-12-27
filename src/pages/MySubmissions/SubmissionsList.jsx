@@ -1,5 +1,6 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Loading from '../shared/Loading';
 
 const SubmissionsList = ({ mySubmissionsPromise }) => {
 
@@ -17,9 +18,7 @@ const SubmissionsList = ({ mySubmissionsPromise }) => {
             .finally(() => setLoading(false));
     }, [mySubmissionsPromise]);
 
-    if (loading) {
-        return <p className="text-center">Loading...</p>;
-    }
+    if (loading) return <Loading />;    
 
     return (
         <div className="max-w-5xl mx-auto p-6">

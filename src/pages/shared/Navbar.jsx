@@ -115,9 +115,9 @@ const Navbar = () => {
                                         d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             </button>
-                            <span className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
+                            <Link to={"/"} className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
                                 EduCircle
-                            </span>
+                            </Link>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu text-[#101828] menu-horizontal px-1">
@@ -269,9 +269,9 @@ const Navbar = () => {
                     >
                         ✕
                     </button>
-                    <span className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
+                    <Link to={"/"} className="font-extrabold text-2xl text-indigo-600 dark:text-indigo-400">
                         EduCircle
-                    </span>
+                    </Link>
                 </div>
 
                 {/* Navigation Links */}

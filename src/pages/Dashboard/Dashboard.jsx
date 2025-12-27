@@ -176,7 +176,7 @@ const Dashboard = () => {
                 </p>
             ) : (
                 <div className="overflow-x-auto bg-base-100 rounded-2xl shadow-sm border border-base-300">
-                    <table className="table table-zebra w-full">
+                    <table className="table table-zebra min-w-max whitespace-nowrap">
                         {/* Head */}
                         <thead className="bg-base-100 border ">
                             <tr >
