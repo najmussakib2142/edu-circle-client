@@ -71,7 +71,7 @@ const CreatorAssignmentDetail = () => {
                         {/* Quick Stats Card */}
                         <div className="card bg-base-200/50 border border-base-300 rounded-3xl p-6">
                             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                                <FaInfoCircle className="text-primary" /> Submission Details
+                                <FaInfoCircle className="text-black dark:text-white" /> Submission Details
                             </h2>
                             
                             <div className="space-y-4">
@@ -81,7 +81,7 @@ const CreatorAssignmentDetail = () => {
                                         <div className="p-2 bg-yellow-100 text-yellow-700 rounded-lg"><FaTrophy /></div>
                                         <span className="font-medium opacity-70">Total Marks</span>
                                     </div>
-                                    <span className="text-2xl font-black text-primary">{assignment.marks}</span>
+                                    <span className="text-2xl font-black text-indigo-600 dark:text-white">{assignment.marks}</span>
                                 </div>
 
                                 {/* Date */}

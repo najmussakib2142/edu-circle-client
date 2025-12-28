@@ -16,7 +16,7 @@ import AllAssignments from "../pages/Home/AllAssignments";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import PendingAssignments from "../pages/PendingAssignments/PendingAssignments";
-import assignmentLoader from "../api/assignmentLoader";
+// import assignmentLoader from "../api/assignmentLoader";
 import SubmitReview from "../pages/SubmitReview/SubmitReview";
 import BookmarkedAssignments from "../pages/BookmarkedAssignments/BookmarkedAssignments";
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
             {
                 path: 'assignment/:id',
                 element:
-                    <PrivateRoute><AssignmentDetails></AssignmentDetails></PrivateRoute>,
+                    <AssignmentDetails></AssignmentDetails>,
                 loader: ({ params }) => fetch(`https://edu-circle-server-seven.vercel.app/assignments/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 // errorElement: <SignIn></SignIn>
