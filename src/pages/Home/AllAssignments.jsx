@@ -19,6 +19,9 @@ const AllAssignments = () => {
     const [loading, setLoading] = useState(true);
 
     const [debouncedSearch, setDebouncedSearch] = useState(searchText);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const limit = 6;
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -32,13 +35,21 @@ const AllAssignments = () => {
     const fetchAssignments = async () => {
         setLoading(true);
 
-        const params = {};
-        if (difficulty) params.difficulty = difficulty;
-        if (debouncedSearch) params.search = debouncedSearch;
+        // const params = {};
+        // if (difficulty) params.difficulty = difficulty;
+        // if (debouncedSearch) params.search = debouncedSearch;
+
+        const params = {
+            page: currentPage,
+            limit: limit,
+            difficulty,
+            search: debouncedSearch
+        };
 
         try {
             const res = await axios.get('https://edu-circle-server-seven.vercel.app/assignments', { params });
             setAssignments(res.data.data || []);
+            setTotalPages(res.data.totalPages || 1);
         } catch (error) {
             toast.error(error.message, "Failed to fetch assignments");
         } finally {
@@ -48,6 +59,10 @@ const AllAssignments = () => {
 
     useEffect(() => {
         fetchAssignments();
+    }, [difficulty, debouncedSearch, currentPage]);
+
+    useEffect(() => {
+        setCurrentPage(1);
     }, [difficulty, debouncedSearch]);
 
     if (loading) {
@@ -138,6 +153,38 @@ const AllAssignments = () => {
                     <p className="text-center text-gray-500 col-span-full">No assignments found.</p>
                 )}
             </motion.div>
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-12">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                    >
+                        Previous
+                    </button>
+
+                    {[...Array(totalPages)].map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`px-4 py-2 border rounded-md transition ${currentPage === index + 1
+                                    ? 'bg-black text-white dark:bg-white dark:text-black font-bold'
+                                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                                }`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
