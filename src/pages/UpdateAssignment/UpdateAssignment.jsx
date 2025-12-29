@@ -16,6 +16,9 @@ const UpdateAssignment = () => {
     const [validationErrors, setValidationErrors] = useState({});
     const { accessToken, loading } = useAccessToken()
     const navigate = useNavigate()
+    const [newThumbnail, setNewThumbnail] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const [uploading, setUploading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -39,8 +42,16 @@ const UpdateAssignment = () => {
                 });
                 const assignment = res.data;
                 setFormData({
-                    ...assignment,
-                    dueDate: new Date(assignment.dueDate)
+                    title: assignment.title || '',
+                    description: assignment.description || '',
+                    marks: assignment.marks || '',
+                    thumbnail: assignment.thumbnail || '',
+                    difficulty: assignment.difficulty || '',
+                    dueDate: assignment.dueDate
+                        ? new Date(assignment.dueDate)
+                        : new Date(),
+                    userEmail: assignment.userEmail || user?.email || '',
+                    userName: assignment.userName || user?.displayName || '',
                 });
             } catch (error) {
                 Swal.fire('Error!', 'Failed to load assignment data.', 'error', error);
@@ -57,79 +68,107 @@ const UpdateAssignment = () => {
         }))
     }
 
-    const handleUpdate = e => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const updateAssignment = Object.fromEntries(formData.entries());
 
         const errors = {};
 
-        if (!updateAssignment.title) errors.title = 'Title is required.';
-        if (!updateAssignment.description) {
-            errors.description = 'Description is required.';
-        } else if (updateAssignment.description.length < 20) {
+        if (!formData.title) errors.title = 'Title is required.';
+        if (!formData.description || formData.description.length < 20) {
             errors.description = 'Description must be at least 20 characters.';
         }
-
-        if (!updateAssignment.marks) {
-            errors.marks = 'Marks are required.';
-        } else if (isNaN(updateAssignment.marks)) {
+        if (!formData.marks || isNaN(formData.marks)) {
             errors.marks = 'Marks must be a number.';
         }
-
-        if (!updateAssignment.thumbnail) errors.thumbnail = 'Thumbnail is required.';
-        if (!updateAssignment.difficulty) errors.difficulty = 'Please select difficulty.';
+        if (!formData.difficulty) {
+            errors.difficulty = 'Please select difficulty.';
+        }
 
         if (Object.keys(errors).length > 0) {
             setValidationErrors(errors);
             return;
         }
 
-        setValidationErrors({}); // Clear previous errors
+        setValidationErrors({});
 
+        let thumbnailUrl = formData.thumbnail;
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: `You want to update this assignment?`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#1471e3",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, update it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`https://edu-circle-server-seven.vercel.app/assignments/${id}`, {
+        try {
+            // ✅ Upload only if new image selected
+            if (newThumbnail) {
+                setUploading(true);
+                thumbnailUrl = await uploadToCloudinary(newThumbnail);
+            }
+
+            const updateAssignment = {
+                ...formData,
+                thumbnail: thumbnailUrl,
+                dueDate: formData.dueDate.toISOString(),
+            };
+
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You want to update this assignment?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#1471e3",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, update it!",
+            });
+
+            if (!result.isConfirmed) return;
+
+            const res = await fetch(
+                `https://edu-circle-server-seven.vercel.app/assignments/${id}`,
+                {
                     method: "PUT",
                     headers: {
                         'content-type': 'application/json',
                         authorization: `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(updateAssignment)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.modifiedCount) {
-                            Swal.fire({
-                                toast: true,
-                                position: "top-end",
-                                icon: "success",
-                                title: `Your Assignment has updated successfully!`,
-                                showConfirmButton: false,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                didClose: () => {
-                                    // Navigate after toast closes
-                                    navigate('/dashboard');
-                                }
-                            });
+                }
+            );
 
-                        }
-                    });
-                // navigate('/dashboard');
+            const data = await res.json();
+
+            if (data.modifiedCount) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "Assignment updated successfully!",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+
+                navigate('/dashboard');
             }
-        })
-    }
+
+        } catch (error) {
+            Swal.fire('Error!', 'Failed to update assignment.', 'error');
+        } finally {
+            setUploading(false);
+        }
+    };
+
+
+    const uploadToCloudinary = async (imageFile) => {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append(
+            'upload_preset',
+            import.meta.env.VITE_PUBLIC_CLOUDINARY_PRESET
+        );
+
+        const res = await axios.post(
+            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+            formData
+        );
+
+        return res.data.secure_url;
+    };
 
     return (
         <div className="max-w-3xl mx-auto px-5 py-10">
@@ -191,22 +230,52 @@ const UpdateAssignment = () => {
                     <p className="text-red-500 text-sm mt-1">{validationErrors.marks}</p>
                 )}
 
-                {/* Thumbnail URL */}
-                <label htmlFor="thumbnail" className="block font-medium mb-1">
-                    Thumbnail URL
+                {/* Thumbnail Update */}
+                <label className="block font-medium mb-1">
+                    Assignment Thumbnail
                 </label>
-                <input
-                    type="url"
-                    name="thumbnail"
-                    className="input input-bordered w-full"
-                    placeholder="Thumbnail URL"
-                    value={formData.thumbnail}
-                    onChange={handleChange}
-                    required
-                />
-                {validationErrors.thumbnail && (
-                    <p className="text-red-500 text-sm mt-1">{validationErrors.thumbnail}</p>
+
+                {/* Existing Image Preview */}
+                {formData.thumbnail && !preview && (
+                    <img
+                        src={formData.thumbnail}
+                        alt="Current thumbnail"
+                        className="h-40 w-full object-cover rounded-xl mb-3 border"
+                    />
                 )}
+
+                {/* New Image Preview */}
+                {preview && (
+                    <img
+                        src={preview}
+                        alt="New thumbnail preview"
+                        className="h-40 w-full object-cover rounded-xl mb-3 border"
+                    />
+                )}
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    className="file-input file-input-bordered w-full"
+                    onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            setNewThumbnail(file);
+                            setPreview(URL.createObjectURL(file));
+                        }
+                    }}
+                />
+
+                <p className="text-xs text-gray-500 mt-1">
+                    Upload a new image only if you want to change it
+                </p>
+
+                {validationErrors.thumbnail && (
+                    <p className="text-red-500 text-sm mt-1">
+                        {validationErrors.thumbnail}
+                    </p>
+                )}
+
 
 
                 {/* Email */}
@@ -275,8 +344,11 @@ const UpdateAssignment = () => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="btn btn-primary w-full
-                ">Update Assignment</button>
+                    className="btn btn-primary w-full"
+                    disabled={uploading}
+                >
+                    {uploading ? 'Uploading...' : 'Update Assignment'}
+                </button>
             </form>
 
         </div>

@@ -36,6 +36,7 @@ const CreateAssignment = () => {
             navigate('/login');
         }
     }, [accessToken, loading, navigate])
+    
     // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
