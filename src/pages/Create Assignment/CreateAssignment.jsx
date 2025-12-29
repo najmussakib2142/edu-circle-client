@@ -14,9 +14,12 @@ const CreateAssignment = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [marks, setMarks] = useState('');
-    const [thumbnail, setThumbnail] = useState('');
+    const [thumbnail, setThumbnail] = useState(null);
     const [difficulty, setDifficulty] = useState('');
     const [dueDate, setDueDate] = useState(new Date());
+    const [uploading, setUploading] = useState(false);
+    const [preview, setPreview] = useState(null);
+
 
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -24,6 +27,7 @@ const CreateAssignment = () => {
     const [validationErrors, setValidationErrors] = useState({});
     // const token = user.accessToken;
     // console.log(token);
+
 
 
     useEffect(() => {
@@ -35,6 +39,7 @@ const CreateAssignment = () => {
     // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
+
 
         if (loading) {
             return <Loading></Loading>
@@ -67,7 +72,9 @@ const CreateAssignment = () => {
             errors.marks = 'Marks must be a number.';
         }
 
-        if (!thumbnail) errors.thumbnail = 'Thumbnail URL is required.';
+        if (!thumbnail) {
+            errors.thumbnail = 'Please upload an image.';
+        }
         if (!difficulty) errors.difficulty = 'Please select a difficulty level.';
 
         if (Object.keys(errors).length > 0) {
@@ -78,20 +85,25 @@ const CreateAssignment = () => {
         setValidationErrors({});
 
 
-        const newAssignment = {
-            title,
-            description,
-            marks,
-            thumbnail,
-            difficulty,
-            dueDate,
-            creatorEmail: user?.email,
-            creatorName: user?.displayName,
-        };
+
+
+
 
         try {
-            // POST to server (replace url)
-            // const accessToken = await user.getIdToken();
+            setUploading(true);
+            const imageUrl = await uploadToCloudinary(thumbnail);
+
+            const newAssignment = {
+                title,
+                description,
+                marks,
+                thumbnail: imageUrl,
+                difficulty,
+                dueDate,
+                creatorEmail: user?.email,
+                creatorName: user?.displayName,
+            };
+
             const res = await axios.post('https://edu-circle-server-seven.vercel.app/assignments',
                 newAssignment,
                 {
@@ -108,8 +120,29 @@ const CreateAssignment = () => {
         } catch (error) {
             // console.error(error);
             Swal.fire('Error!', 'Something went wrong.', 'error', error);
+        } finally {
+            setUploading(false);
         }
     };
+
+    const uploadToCloudinary = async (imageFile) => {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('upload_preset', import.meta.env.VITE_PUBLIC_CLOUDINARY_PRESET);
+        // formData.append('cloud_name', import.meta.env.VITE_PUBLIC_CLOUDINARY_CLOUD_NAME);
+
+        try {
+            const res = await axios.post(
+                `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+                formData
+            );
+            return res.data.secure_url;
+        }
+        catch (error) {
+            throw new Error('Image upload failed');
+        }
+
+    }
 
     return (
         <div className="max-w-3xl mx-auto px-6 py-12">
@@ -197,23 +230,51 @@ const CreateAssignment = () => {
                         </div>
                     </div>
 
-                    {/* Thumbnail URL */}
+                    {/* Thumbnail Upload */}
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">Thumbnail Image URL</span>
+                            <span className="label-text font-semibold text-gray-700 dark:text-gray-300">
+                                Assignment Thumbnail
+                            </span>
                         </label>
+
                         <input
-                            type="url"
-                            placeholder="https://example.com/image.jpg"
-                            className="input input-bordered focus:input-primary w-full bg-gray-50 dark:bg-gray-900"
-                            value={thumbnail}
-                            onChange={(e) => setThumbnail(e.target.value)}
-                            required
+                            type="file"
+                            accept="image/*"
+                            className="file-input file-input-bordered w-full"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    setThumbnail(file);
+                                    setPreview(URL.createObjectURL(file));
+                                }
+                            }}
                         />
+
+                        <p className="text-xs text-gray-500 mt-1">
+                            Upload a cover image (JPG, PNG, WEBP)
+                        </p>
+
+                        {/* Image Preview */}
+                        {preview && (
+                            <div className="mt-4">
+                                <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                                <img
+                                    src={preview}
+                                    alt="Thumbnail preview"
+                                    className="h-40 w-full object-cover rounded-xl border"
+                                />
+                            </div>
+                        )}
+
+                        {/* Validation Error */}
                         {validationErrors.thumbnail && (
-                            <p className="text-error text-xs mt-1 italic">{validationErrors.thumbnail}</p>
+                            <p className="text-error text-xs mt-2 italic">
+                                {validationErrors.thumbnail}
+                            </p>
                         )}
                     </div>
+
 
                     {/* Due Date */}
                     <div className="form-control">
@@ -235,7 +296,7 @@ const CreateAssignment = () => {
                             type="submit"
                             className="btn btn-primary w-full text-lg font-bold shadow-lg hover:shadow-primary/30 transition-all duration-300"
                         >
-                            Create Assignment
+                            {uploading ? 'Uploading ...' : 'Create Assignment'}
                         </button>
                     </div>
                 </form>

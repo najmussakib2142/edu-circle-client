@@ -7,6 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import useAccessToken from '../../api/useAccessToken';
 import { IoMdArrowBack } from "react-icons/io";
+import Loading from '../shared/Loading';
 
 
 const AssignmentDetails = () => {
@@ -14,7 +15,7 @@ const AssignmentDetails = () => {
     const assignment = useLoaderData()
     // console.log(assignment);
     const [showModal, setShowModal] = useState(false);
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const { accessToken } = useAccessToken()
     const [bookmarked, setBookmarked] = useState(false);
 
@@ -32,6 +33,15 @@ const AssignmentDetails = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!user) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Login required',
+                text: 'Please login to submit the assignment'
+            });
+            return;
+        }
 
         const submission = {
             assignmentId: assignment._id,
@@ -75,6 +85,8 @@ const AssignmentDetails = () => {
 
     }
 
+
+
     useEffect(() => {
         if (user) {
             axios.get(`https://edu-circle-server-seven.vercel.app/bookmarks`, { headers: { Authorization: `Bearer ${user.accessToken}` } })
@@ -97,7 +109,9 @@ const AssignmentDetails = () => {
         }
     };
 
-
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <motion.div
@@ -196,7 +210,7 @@ const AssignmentDetails = () => {
                         </div>
 
 
-                        {user.email === creatorEmail ? (
+                        {user?.email === creatorEmail ? (
                             <div className="alert bg-info/10 border-info/20 rounded-2xl">
                                 <div className="flex flex-col items-start gap-1">
                                     <span className="font-bold text-info">Creator View</span>
@@ -213,6 +227,7 @@ const AssignmentDetails = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     onClick={() => setShowModal(true)}
+                                    
                                     className="group w-full relative flex items-center justify-center gap-3 px-8 py-4 bg-linear-to-r from-indigo-600 to-blue-600 text-white font-bold rounded-xl shadow-lg transition-all"
                                 >
                                     <FaExternalLinkAlt className="group-hover:rotate-12 transition-transform" />
@@ -293,7 +308,8 @@ const AssignmentDetails = () => {
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                             type="submit"
-                                            className="flex-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none transition-all"
+                                            disabled={!user}
+                                            className="flex-2 bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none transition-all"
                                         >
                                             Send Submission
                                         </motion.button>
