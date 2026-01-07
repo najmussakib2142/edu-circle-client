@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { useTheme } from '../../provider/ThemeContext';
@@ -89,7 +89,7 @@ const Navbar = () => {
 
     return (
         <div className=''>
-            <div className={`fixed top-0 w-full bg-white dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur transition-all duration-300  z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+            <div className={`fixed top-0 w-full bg-white dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 backdrop-blur  z-50 transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
                 } shadow`}>
                 <div className='max-w-7xl mx-auto'>
                     <div className="navbar  py-0  z-50 md:px-18 lg:px-14  ">
@@ -190,7 +190,7 @@ const Navbar = () => {
                                         </div>
 
                                         {/* Tooltip on hover */}
-                                        <div className="absolute bottom-[-30px] left-1/2 -translate-x-1/2 w-max bg-gray-700 text-white text-xs font-medium py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-20">
+                                        <div className="absolute -bottom-7.5 left-1/2 -translate-x-1/2 w-max bg-gray-700 text-white text-xs font-medium py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-20">
                                             {user?.displayName || user?.email}
                                         </div>
 

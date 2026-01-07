@@ -105,8 +105,7 @@ const SignIn = () => {
                                 <div><a className="link link-hover">Forgot password?</a></div>
                                 {error && <p className='text-red-500 text-sm'>{error}</p>}
                                 <button className="w-full mt-4 px-4 py-2 rounded-sm font-medium transition-colors
-  bg-gray-900 text-white hover:bg-gray-800 
-  dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 cursor-pointer">Sign In</button>
+  bg-gray-900 text-white hover:bg-gray-800  dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 cursor-pointer">Sign In</button>
                                 <div className="divider">OR</div>
                                 <button onClick={handleGoogleLogIn}
                                     className="w-full mt-1 px-4 py-2 flex items-center justify-center gap-2 rounded-md font-medium transition-all border

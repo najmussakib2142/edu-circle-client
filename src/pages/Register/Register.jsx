@@ -1,10 +1,11 @@
 import Lottie from 'lottie-react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import registerLottie from '../../assets/lotties/11.json'
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 // import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
@@ -13,16 +14,23 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
     const [error, setError] = useState('')
+    const [imagePreview, setImagePreview] = useState(null);
+    const [uploading, setUploading] = useState(false);
 
-    const handleRegister = e => {
+
+    const handleRegister = async (e) => {
         e.preventDefault();
         setError('');
+        setUploading(true);
+
         const form = e.target;
-        const formData = new FormData(form)
+        const formData = new FormData(form);
+
         const email = formData.get('email')
         const password = formData.get('password')
         const name = formData.get('name')
-        const photo = formData.get('photo')
+        const imageFile = formData.get('photo');
+
 
         const uppercaseReg = /[A-Z]/;
         const lowercaseReg = /[a-z]/;
@@ -41,25 +49,34 @@ const Register = () => {
         }
 
         // create user
-        createUser(email, password)
-            .then(result => {
+        try {
+            // 1️⃣ upload image to cloudinary
+            const imageURL = await uploadToCloudinary(imageFile);
 
-                const user = result.user;
-                updateUser({ displayName: name, photoURL: photo })
-                    .then(() => {
-                        setUser({ ...user, displayName: name, photoURL: photo })
-                        // console.log(result.user);
-                        toast.success("Registration Successful!"); navigate('/')
-                    })
-                    .catch((error) => {
-                        setError(error.message)
-                        setUser(user)
-                    })
-            })
-            .catch(error => {
-                const errorCode = error.code;
-                setError(errorCode);
-            })
+            // 2️⃣ create firebase user
+            const result = await createUser(email, password);
+
+            // 3️⃣ update profile with cloudinary image url
+            await updateUser({
+                displayName: name,
+                photoURL: imageURL,
+            });
+
+            setUser({
+                ...result.user,
+                displayName: name,
+                photoURL: imageURL,
+            });
+
+            toast.success("Registration Successful!");
+            navigate('/');
+
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setUploading(false);
+        }
+
     }
 
     const handleGoogleLogIn = () => {
@@ -71,6 +88,38 @@ const Register = () => {
             .error(error => {
                 toast.error(error.message)
             })
+    }
+
+    const uploadToCloudinary = async (imageFile) => {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append(
+            'upload_preset',
+            import.meta.env.VITE_PUBLIC_CLOUDINARY_PRESET
+        );
+
+        const res = await axios.post(
+            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+            formData
+        );
+
+        return res.data.secure_url;
+    };
+
+    useEffect(() => {
+        return () => {
+            if (imagePreview) {
+                URL.revokeObjectURL(imagePreview);
+            }
+        };
+    }, [imagePreview]);
+
+    {
+        uploading && (
+            <div className="flex justify-center mt-3">
+                <span className="loading loading-spinner loading-md"></span>
+            </div>
+        )
     }
 
     return (
@@ -89,9 +138,11 @@ const Register = () => {
                                 {/* name */}
                                 <label className="label">Your Name</label>
                                 <input required name='name' type="text" className="input select-primary " placeholder="Enter your name" />
-                                {/* photo */}
-                                <label className="label">Photo URL</label>
-                                <input required name='photo' type="text" className="input select-primary" placeholder="Enter your URL" />
+
+
+
+
+
                                 {/* email */}
                                 <label className="label">Email</label>
                                 <input required name='email' type="email" className="input select-primary" placeholder="Email" />
@@ -107,24 +158,64 @@ const Register = () => {
                                     />
                                     <button
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className='absolute btn btn-xs right-5 top-2'
+                                        className='absolute border border-gray-300 dark:border-none btn btn-xs right-5 top-2'
                                         type='button'
                                     >
                                         {showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
                                     </button>
                                 </div>
+
+                                {/* photo */}
+                                <label className="label">Photo</label>
+                                <label className="block cursor-pointer">
+                                    <div className="flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-lg p-4 hover:border-[#1471e3] transition">
+
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt="Preview"
+                                                className="w-24 h-24 rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <>
+                                                <span className="text-sm text-gray-500">
+                                                    Click to upload profile photo
+                                                </span>
+                                                <span className="text-xs text-gray-400">
+                                                    PNG, JPG up to 2MB
+                                                </span>
+                                            </>
+                                        )}
+
+                                        <input
+                                            required
+                                            name="photo"
+                                            type="file"
+                                            accept="image/*"
+                                            className="hidden"
+                                            onChange={(e) => {
+                                                const file = e.target.files[0];
+                                                if (file) {
+                                                    setImagePreview(URL.createObjectURL(file));
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                </label>
                                 {/* check box */}
-                                <label className="label py-1">
-                                    <input name='terms' type="checkbox" className="checkbox" />
+                                <label className="label py-1 mt-2">
+                                    <input name='terms' type="checkbox" className="checkbox border " />
                                     Accept Term & conditions
                                 </label>
 
                                 {error && <p className='text-red-500 text-sm'>{error}</p>}
 
-                                <button className="w-full mt-4 px-4 py-2 rounded-sm font-medium transition-colors
-  bg-gray-900 text-white hover:bg-gray-800 
-  dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 cursor-pointer">
-                                    Register
+                                <button
+                                    disabled={uploading}
+                                    className={`w-full mt-4 px-4 py-2 rounded-sm font-medium transition-colors ${uploading
+                                        ? "bg-gray-400 cursor-not-allowed"
+                                        : "bg-gray-900 text-white hover:bg-gray-800  dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 cursor-pointer"}`}>
+                                    {uploading ? "Uploading..." : "Register"}
                                 </button>
                                 <div className="divider">OR</div>
 
