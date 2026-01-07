@@ -27,7 +27,7 @@ const Navbar = () => {
     //             // Scrolling Down
     //             setShowNavbar(false);
     //         } else {
-    //             // Scrolling Up
+    //             // Scrolling Upfi
     //             setShowNavbar(true);
     //         }
 

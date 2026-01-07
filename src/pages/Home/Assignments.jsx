@@ -175,6 +175,81 @@ const StandardCard = ({ assignment }) => {
     )
 }
 
+const SkeletonPulse = ({ className }) => (
+    <div className={`animate-pulse bg-gray-200 dark:bg-gray-800 rounded-md ${className}`} />
+);
+
+const CardSkeleton = ({ viewMode, isFeatured }) => {
+    // List View Skeleton (CustomAssignmentCard)
+    if (viewMode === "list") {
+        return (
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 flex gap-3 flex-col md:flex-row h-auto p-0 overflow-hidden">
+                <SkeletonPulse className="w-full md:w-72 aspect-video rounded-none" />
+                <div className="p-6 flex flex-col justify-between grow space-y-4">
+                    <div className="space-y-2">
+                        <SkeletonPulse className="h-6 w-3/4" />
+                        <SkeletonPulse className="h-4 w-full" />
+                        <SkeletonPulse className="h-4 w-5/6" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <SkeletonPulse className="w-8 h-8 rounded-full" />
+                        <div className="space-y-1">
+                            <SkeletonPulse className="h-2 w-12" />
+                            <SkeletonPulse className="h-3 w-20" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Grid View: Featured Skeleton
+    if (isFeatured) {
+        return (
+            <div className="h-full bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row overflow-hidden">
+                <SkeletonPulse className="lg:w-3/5 h-64 lg:h-auto rounded-none" />
+                <div className="p-8 lg:w-2/5 flex flex-col justify-center space-y-4">
+                    <SkeletonPulse className="h-4 w-32" />
+                    <SkeletonPulse className="h-10 w-full" />
+                    <div className="space-y-2">
+                        <SkeletonPulse className="h-4 w-full" />
+                        <SkeletonPulse className="h-4 w-full" />
+                        <SkeletonPulse className="h-4 w-2/3" />
+                    </div>
+                    <div className="flex justify-between items-end pt-4">
+                        <SkeletonPulse className="h-10 w-20" />
+                        <SkeletonPulse className="w-14 h-14 rounded-2xl" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Grid View: Standard Skeleton
+    return (
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col h-full p-0 overflow-hidden">
+            <SkeletonPulse className="aspect-video rounded-none mb-5" />
+            <div className="px-5 pb-6 space-y-4">
+                <SkeletonPulse className="h-6 w-3/4" />
+                <div className="space-y-2">
+                    <SkeletonPulse className="h-3 w-full" />
+                    <SkeletonPulse className="h-3 w-5/6" />
+                </div>
+                <div className="pt-6 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <SkeletonPulse className="w-8 h-8 rounded-full" />
+                        <div className="space-y-1">
+                            <SkeletonPulse className="h-2 w-10" />
+                            <SkeletonPulse className="h-3 w-16" />
+                        </div>
+                    </div>
+                    <SkeletonPulse className="h-4 w-12" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Assignments = ({ assignmentsPromise }) => {
     const [assignments, setAssignments] = useState([]);
     const [viewMode, setViewMode] = useState("grid");
@@ -192,7 +267,8 @@ const Assignments = ({ assignmentsPromise }) => {
             .finally(() => setLoading(false));
     }, [assignmentsPromise]);
 
-    if (loading) return null;
+    // if (loading) return null;
+    const skeletonItems = [1, 2, 3, 4, 5];
 
     return (
         <section className="py-20 bg-white dark:bg-[#020617] transition-colors duration-500 relative overflow-hidden">
@@ -245,33 +321,52 @@ const Assignments = ({ assignmentsPromise }) => {
                             : "flex flex-col gap-6"
                     }
                 >
-                    <AnimatePresence mode="popLayout">
-                        {Array.isArray(assignments) && assignments.map((item, index) => {
+                    {loading ? (
+                        // RENDER SKELETONS
+                        skeletonItems.map((_, index) => {
                             const isFeatured = index === 0 && viewMode === "grid";
-
                             return (
-                                <motion.div
-                                    key={item._id}
-                                    layout
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                                <div
+                                    key={`skeleton-${index}`}
                                     className={
                                         viewMode === "grid"
                                             ? isFeatured ? "lg:col-span-8 lg:row-span-1" : "lg:col-span-4"
                                             : "w-full"
                                     }
                                 >
-                                    {viewMode === "list" ? (
-                                        <CustomAssignmentCard assignment={item} viewMode={viewMode} />
-                                    ) : (
-                                        isFeatured ? <FeaturedCard assignment={item} /> : <StandardCard assignment={item} />
-                                    )}
-                                </motion.div>
-                            );
-                        })}
-                    </AnimatePresence>
+                                    <CardSkeleton viewMode={viewMode} isFeatured={isFeatured} />
+                                </div>
+                            )
+                        })
+                    ) : (
+                        // RENDER ACTUAL CONTENT
+                        <AnimatePresence mode="popLayout">
+                            {assignments.map((item, index) => {
+                                const isFeatured = index === 0 && viewMode === "grid";
+                                return (
+                                    <motion.div
+                                        key={item._id}
+                                        layout
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                                        className={
+                                            viewMode === "grid"
+                                                ? isFeatured ? "lg:col-span-8 lg:row-span-1" : "lg:col-span-4"
+                                                : "w-full"
+                                        }
+                                    >
+                                        {viewMode === "list" ? (
+                                            <CustomAssignmentCard assignment={item} />
+                                        ) : (
+                                            isFeatured ? <FeaturedCard assignment={item} /> : <StandardCard assignment={item} />
+                                        )}
+                                    </motion.div>
+                                );
+                            })}
+                        </AnimatePresence>
+                    )}
                 </motion.div>
 
                 {/* Decorative Background */}
@@ -281,4 +376,8 @@ const Assignments = ({ assignmentsPromise }) => {
     );
 };
 
+
+
 export default Assignments;
+
+// feat(ui): add responsive loading skeletons for assignments
