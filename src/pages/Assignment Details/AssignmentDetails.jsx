@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from 'react-router';
+import { Link, useLoaderData, useNavigate } from 'react-router';
 import { FaArrowLeft, FaBookmark, FaCalendarAlt, FaCheckCircle, FaExternalLinkAlt, FaInfoCircle, FaRegBookmark, FaTimes, FaTrophy, FaUserEdit } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useContext, useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ const AssignmentDetails = () => {
     const { user, loading } = useContext(AuthContext)
     const { accessToken } = useAccessToken()
     const [bookmarked, setBookmarked] = useState(false);
+    const navigate = useNavigate();
 
     const {
         title,
@@ -40,7 +41,7 @@ const AssignmentDetails = () => {
                 title: 'Login required',
                 text: 'Please login to submit the assignment'
             });
-            return;
+            return navigate("/signIn");;
         }
 
         const submission = {
@@ -226,8 +227,10 @@ const AssignmentDetails = () => {
                                     whileTap={{ scale: 0.98 }}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    onClick={() => setShowModal(true)}
-                                    
+                                    onClick={() => {
+                                        if (!user) return navigate("/signIn", { state: { from: location.pathname } });
+                                        setShowModal(true);
+                                    }}
                                     className="group w-full relative flex items-center justify-center gap-3 px-8 py-4 bg-linear-to-r from-indigo-600 to-blue-600 text-white font-bold rounded-xl shadow-lg transition-all"
                                 >
                                     <FaExternalLinkAlt className="group-hover:rotate-12 transition-transform" />

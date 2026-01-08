@@ -2,23 +2,25 @@ import Lottie from 'lottie-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import registerLottie from '../../assets/lotties/11.json'
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loading from '../shared/Loading';
+import useAuth from '@/hooks/useAuth';
 // import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
 
-    const { createUser, setUser, updateUser, googleSignIn } = useContext(AuthContext);
+    const { createUser, setUser, updateUser, googleSignIn } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
     const [error, setError] = useState('')
     const [imagePreview, setImagePreview] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [imageError, setImageError] = useState('');
-
+     const location = useLocation();
+    const from = location.state?.from || '/';
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -74,7 +76,9 @@ const Register = () => {
             await updateUser({ displayName: name, photoURL: imageURL });
             setUser({ ...result.user, displayName: name, photoURL: imageURL });
             toast.success("Registration Successful!");
-            navigate('/');
+            // 2. Use replace: true to clean up navigation history
+            // navigate('/', { replace: true });
+            navigate(from, { replace: true });
         } catch (err) {
             setError(err.message);
         } finally {
@@ -88,7 +92,7 @@ const Register = () => {
         googleSignIn()
             .then(() => {
                 toast.success("Logged in with Google!");
-                navigate(location.state ? location.state : "/");
+                navigate(from, { replace: true });
             })
             .error(error => {
                 toast.error(error.message)

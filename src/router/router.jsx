@@ -34,21 +34,11 @@ const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: 'register',
-                element: <Register></Register>
-            },
-            {
-                path: 'signIn',
-                element: <SignIn></SignIn>
-            },
-            {
                 path: 'assignments',
                 loader: () => fetch('https://edu-circle-server-seven.vercel.app/assignments'),
                 element: <AllAssignments></AllAssignments>,
                 hydrateFallbackElement: <Loading></Loading>
             },
-
-
             {
                 path: 'assignment/:id',
                 element:
@@ -57,7 +47,6 @@ const router = createBrowserRouter([
                 hydrateFallbackElement: <Loading></Loading>,
                 // errorElement: <SignIn></SignIn>
             },
-
             {
                 path: 'pendingAssignments',
                 element: <PrivateRoute><PendingAssignments></PendingAssignments></PrivateRoute>
@@ -65,6 +54,14 @@ const router = createBrowserRouter([
             {
                 path: "submit-review",
                 element: <PrivateRoute><SubmitReview></SubmitReview></PrivateRoute>,
+            },
+            {
+                path: 'register',
+                element: <Register></Register>
+            },
+            {
+                path: 'signIn',
+                element: <SignIn></SignIn>
             },
 
         ]

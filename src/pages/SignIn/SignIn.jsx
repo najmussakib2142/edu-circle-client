@@ -15,8 +15,11 @@ const SignIn = () => {
     const location = useLocation();
     // console.log('location in signin', location);
     const navigate = useNavigate();
-    const from = location.state || '/'
+    const from = location.state?.from || "/";
     const [error, setError] = useState("")
+
+    console.log(location);
+    console.log(from);
 
     const handleSignIn = e => {
         e.preventDefault();
@@ -38,7 +41,7 @@ const SignIn = () => {
                     timer: 2000
                 });
 
-                navigate(from)
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 const errorCode = error.code;
@@ -53,7 +56,7 @@ const SignIn = () => {
         googleSignIn()
             .then(() => {
                 toast.success("Logged in with Google!");
-                navigate(from)
+                 navigate(from, { replace: true });
             })
             .error(error => {
                 const errorCode = error.code;
@@ -63,7 +66,7 @@ const SignIn = () => {
 
 
     return (
-        <div>
+        <div className='min-h-screen flex items-center'>
             {/* <Helmet>
                 <title>EduCircle || SignIN</title>
             </Helmet> */}
@@ -117,7 +120,12 @@ const SignIn = () => {
                                 </button>
 
                                 <p className='text-center pt-3'>Dont’t Have An Account ?
-                                    <Link className='text-blue-600 hover:underline' to="/register"> Register </Link>
+                                    <Link
+                                        state={{ from }}
+                                        className='text-blue-600 hover:underline' to="/register"
+                                    >
+                                        Register
+                                    </Link>
                                 </p>
 
                             </form>

@@ -305,7 +305,7 @@ const Assignments = ({ assignmentsPromise }) => {
                                     <FaListUl /> List
                                 </button>
                             </div>
-                            <Link to="/assignments" className="w-full sm:w-auto group flex items-center justify-center gap-2 font-bold text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xl transition-all active:scale-95">
+                            <Link to="/assignments" className="w-full sm:w-auto group flex items-center justify-center gap-2 font-bold text-indigo-600 dark:hover:text-indigo-400 transition-all active:scale-95">
                                 Explore All <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </div>
@@ -379,5 +379,3 @@ const Assignments = ({ assignmentsPromise }) => {
 
 
 export default Assignments;
-
-// feat(ui): add responsive loading skeletons for assignments
