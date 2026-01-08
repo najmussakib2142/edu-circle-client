@@ -36,11 +36,15 @@ const AuthProvider = ({ children }) => {
 
 
     useEffect(() => {
+         console.log("🔥 Auth listener registered");
+
         const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            console.log("👤 Auth state changed:", currentUser);
             setUser(currentUser);
             setLoading(false);
         })
         return () => {
+            console.log("🧹 Auth listener cleanup");
             unSubscribe();
         }
     }, [])

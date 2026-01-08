@@ -6,6 +6,7 @@ import Lottie from 'lottie-react';
 
 const ErrorPage = () => {
     const navigate = useNavigate();
+console.log("🧭 Router source:", useNavigate.toString());
 
     const handleGoHome = () => {
         navigate('/');

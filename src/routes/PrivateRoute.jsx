@@ -8,12 +8,19 @@ const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth()
     const location = useLocation()
 
+    console.log("🔐 PrivateRoute check:", {
+        path: location.pathname,
+        user,
+        loading
+    });
+
     if (loading) {
         return <Loading></Loading>
     }
 
     if (!user) {
-        return <Navigate to='/signIn' state={location.pathname}></Navigate>
+        console.log("⛔ Redirecting to login");
+        return <Navigate to='/signIn' state={{ from: location.pathname }} replace></Navigate>
         // return <Navigate to='/signIn' state={{ from: location }} replace></Navigate>
 
     }

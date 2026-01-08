@@ -6,6 +6,7 @@ import { AuthContext } from '../../provider/AuthContext';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { FaUserCircle } from 'react-icons/fa';
 
 
 
@@ -46,7 +47,7 @@ const Navbar = () => {
             text: "You want to log out?",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#1471e3",
+            confirmButtonColor: "#3949AB",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, log me out!"
         }).then((result) => {

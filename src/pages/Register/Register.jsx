@@ -19,7 +19,7 @@ const Register = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [imageError, setImageError] = useState('');
-     const location = useLocation();
+    const location = useLocation();
     const from = location.state?.from || '/';
 
     const handleRegister = async (e) => {
@@ -72,13 +72,16 @@ const Register = () => {
 
         // 2️⃣ Now create Firebase user
         try {
-            const result = await createUser(email, password);
+            // const result = await createUser(email, password);
+            await createUser(email, password);
             await updateUser({ displayName: name, photoURL: imageURL });
-            setUser({ ...result.user, displayName: name, photoURL: imageURL });
+            // setUser({ ...result.user, displayName: name, photoURL: imageURL });
             toast.success("Registration Successful!");
-            // 2. Use replace: true to clean up navigation history
-            // navigate('/', { replace: true });
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+           console.log("➡️ Register navigating to:", from);
+            setTimeout(() => {
+                navigate(from, { replace: true });
+            }, 500);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -94,7 +97,7 @@ const Register = () => {
                 toast.success("Logged in with Google!");
                 navigate(from, { replace: true });
             })
-            .error(error => {
+            .catch(error => {
                 toast.error(error.message)
             })
     }
@@ -124,15 +127,15 @@ const Register = () => {
     }, [imagePreview]);
 
     return (
-        <div>
+        <div className='min-h-screen flex items-center'>
             {/* <Helmet>
                 <title>EduCircle || Register</title>
             </Helmet> */}
 
             <div className="hero py-20">
-                <div className="hero-content flex-col gap-10 lg:flex-row-reverse">
+                <div className="hero-content flex-col gap-20 lg:flex-row-reverse">
 
-                    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-lg">
                         <div className="card-body">
                             <h1 className="text-4xl font-bold text-black dark:text-white text-center">Register your account</h1>
 

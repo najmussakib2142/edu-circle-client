@@ -33,7 +33,7 @@ const SubmitReview = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto py-20 px-4">
+        <div className="md:min-h-screen grid place-content-center  max-w-2xl mx-auto py-20 px-4">
             <h2 className="text-3xl font-bold mb-3 text-center">Share Your Experience</h2>
             <p className="text-center text-gray-500 dark:text-gray-400 mb-8">
                 Help our community by submitting your honest review. Your feedback will guide future students and instructors.

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar, FaQuoteLeft, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import axios from "axios";
 import {
   Carousel,
@@ -43,6 +43,9 @@ const TestimonialsSection = () => {
   const [dynamicTestimonials, setDynamicTestimonials] = useState([]);
   // const [showAll, setShowAll] = useState(false);
   const user = useAuth();
+  // const location = useLocation();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -90,6 +93,7 @@ const TestimonialsSection = () => {
           opts={{
             align: "start",
             loop: true,
+            
           }}
           className="w-full"
         >
@@ -164,6 +168,9 @@ const TestimonialsSection = () => {
           {user && (
             <Link to="/submit-review">
               <motion.button
+                onClick={() => {
+                  if (!user) return navigate("/signIn", { state: { from: location.pathname } });
+                }}
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(0,0,0,0.02)" }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 border border-slate-200 dark:border-white/10 dark:text-white rounded-full text-sm font-medium tracking-wide transition-colors flex items-center gap-3 group"
